@@ -165,7 +165,10 @@ class _ListAvatarState extends State<ListAvatar> {
                   ),
                   child:IconButton(
                     color: Colors.grey,
-                    icon: Image.network(data.picture.toString()),
+                    icon: Image.network(data.picture.toString(),
+                        errorBuilder: (context,error,stacktrace){
+                          return Icon(Icons.signal_wifi_bad_sharp);
+                        }),
                     onPressed: () {
                       },
                   ),
@@ -236,7 +239,11 @@ class _ListPostsState extends State<ListPosts> {
                     SizedBox(
                         height: 55,
                         width: 55,
-                        child: Image.network(data.user!.picture.toString())
+                        child: Image.network(data.user!.picture.toString(),
+                          errorBuilder: (context,error,stacktrace){
+                            return Icon(Icons.signal_wifi_bad_sharp);
+                          }
+                        ),
                     ),
                     const SizedBox(width: 10,),
                     Container(

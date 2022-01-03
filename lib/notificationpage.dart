@@ -76,22 +76,42 @@ class _ListNotificationsState extends State<ListNotifications> {
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
+    List<Notifier> listNotifiersNew=[];
+    List<Notifier> listNotifiersEarlier=[];
+    List<Notifier> listNotifiers=[];
+    listNotifiers.addAll(dataConvert.listNotifiers);
+    for(int i=0;i<dataConvert.listNotifiers.length;i++){
+      if(dataConvert.listNotifiers[i].read=="false"){
+        listNotifiersNew.add(dataConvert.listNotifiers[i]);
+      }
+      else {
+        listNotifiersEarlier.add(dataConvert.listNotifiers[i]);
+      }
+    }
+    listNotifiers.clear();
+    listNotifiers.add(Notifier());
+    listNotifiers.addAll(listNotifiersNew);
+    listNotifiers.add(Notifier());
+    listNotifiers.addAll(listNotifiersEarlier);
     return Expanded(
         child: ListView.builder(
-          itemCount: dataConvert.listNotifiers.length,
+          itemCount: listNotifiers.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context,i)
           {
-            Notifier notifier=dataConvert.listNotifiers[i];
+            Notifier notifier=listNotifiers[i];
             if(i==0){
               return _buildTitleNew();
-            }else{
-
+            }else if(notifier.id==null){//vi list co 2 cho bi null ma cho
+              // null dau tien da duoc xac dinh i=0 nen vi tri null 2 ko can
+              // them index xac dinh
+              return _buildTitleEarlier();
             }
             return _buildRow(notifier);
           },
         ),
     );
+
   }
   Widget _buildRow(Notifier data) {
     return Container(
@@ -119,7 +139,10 @@ class _ListNotificationsState extends State<ListNotifications> {
                     SizedBox(
                         width: 50,
                         height: 50,
-                        child: Image.network(data.user!.picture.toString())
+                        child: Image.network(data.user!.picture.toString(),
+                            errorBuilder: (context,error,stacktrace){
+                              return Icon(Icons.signal_wifi_bad_sharp);
+                            })
                     ),
                     const SizedBox(width: 10,),
                     Container(
@@ -175,26 +198,12 @@ class _ListNotificationsState extends State<ListNotifications> {
   }
   Widget _buildTitleEarlier(){
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
         SizedBox(height: 15,),
         Text(
           "Earlier",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black54,
-          ),
-        ),
-        SizedBox(height: 15,),
-      ],
-    );
-  }
-  Widget _buildTitleThisWeek(){
-    return Column(
-      children: const [
-        SizedBox(height: 15,),
-        Text(
-          "This week",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

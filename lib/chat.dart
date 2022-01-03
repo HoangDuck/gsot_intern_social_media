@@ -148,7 +148,10 @@ class _ListMessagesState extends State<ListMessages> {
                     SizedBox(
                         height: 50,
                         width: 50,
-                        child: Image.network(data.user!.picture.toString())
+                        child: Image.network(data.user!.picture.toString(),
+                            errorBuilder: (context,error,stacktrace){
+                              return Icon(Icons.signal_wifi_bad_sharp);
+                            })
                     ),
                     const SizedBox(width: 10,),
                     Container(
@@ -290,7 +293,10 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
                   ),
                   child:IconButton(
                     color: Colors.grey,
-                    icon: Image.network(data.picture.toString()),
+                    icon: Image.network(data.picture.toString(),
+                        errorBuilder: (context,error,stacktrace){
+                          return Icon(Icons.signal_wifi_bad_sharp);
+                        }),
                     onPressed: () {
                       },
                   ),
