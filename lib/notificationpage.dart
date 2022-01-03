@@ -151,8 +151,8 @@ class _ListNotificationsState extends State<ListNotifications> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text.rich(
-                            TextSpan(
+                          RichText(
+                            text:TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
                               style: const TextStyle(
