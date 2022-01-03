@@ -91,12 +91,14 @@ class _ListAvatarState extends State<ListAvatar> {
   Widget _buildSuggestions(){
     DataConvert dataConvert=Provider.of<DataConvert>(context);
     return ListView.builder(
-      itemCount: dataConvert.listUsers.length,
+      itemCount: dataConvert.listUsers.length+1,
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context,i){
-        if(i==0) return _AddingWidget();
-        return _buildRow(dataConvert.listUsers[i]);
+        if(i==0){
+          return _AddingWidget();
+        }
+        return _buildRow(dataConvert.listUsers[i-1]);
       },
     );
   }
@@ -234,7 +236,7 @@ class _ListPostsState extends State<ListPosts> {
                     SizedBox(
                         height: 55,
                         width: 55,
-                        child: Image.network(data.image.toString())
+                        child: Image.network(data.user!.picture.toString())
                     ),
                     const SizedBox(width: 10,),
                     Container(

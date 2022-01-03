@@ -81,7 +81,7 @@ class LoginPageUI extends StatelessWidget {
                 ),
               )
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 30),
           TextFormField(
               controller: txtToDoControllerPassword,
               decoration: const InputDecoration(
@@ -92,7 +92,7 @@ class LoginPageUI extends StatelessWidget {
               ),
               obscureText: true,
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 30),
           ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -110,7 +110,7 @@ class LoginPageUI extends StatelessWidget {
                 var password=userLogin!.password.toString();
                 if(username==txtToDoControllerUsername.text
                     && password==txtToDoControllerPassword.text){
-                  Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: const PageAfterLogin()));
+                  Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SafeArea(child: PageAfterLogin())));
                 }
               }catch(e){
                 print(e.toString());
@@ -124,13 +124,13 @@ class LoginPageUI extends StatelessWidget {
                 ),
               ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        side: const BorderSide(color: Colors.blue)
+                        side: BorderSide(color: Colors.blue)
                     )
                 )
             ),
