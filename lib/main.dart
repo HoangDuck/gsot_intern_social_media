@@ -7,6 +7,7 @@ import 'package:social_media/model/user_login.dart';
 import 'package:social_media/notificationpage.dart';
 import 'package:social_media/popupadd.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:social_media/profilepage.dart';
 import 'homepage.dart';
 
 void main() {
@@ -73,7 +74,6 @@ class LoginPageUI extends StatelessWidget {
           ),
           TextFormField(
               controller: txtToDoControllerUsername,
-            //controller: username,
               decoration: const InputDecoration(
                 labelText: "Username",
                 border: OutlineInputBorder( //Outline border type for TextField
@@ -242,7 +242,7 @@ class _PagesState extends State<Pages> {
       body: PageView(
         controller: _myPage,
         children: <Widget>[
-          const HomePage(),
+          HomePage(),
           Container(
               padding: const EdgeInsets.all(10),
               child: const ChatPage(),
@@ -254,9 +254,7 @@ class _PagesState extends State<Pages> {
             padding: const EdgeInsets.all(10),
             child: const NotificationPage(),
           ),
-          const Center(
-            child: Text('Empty Body 4'),
-          )
+          ProfilePage()
         ],
         physics: const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
       ),

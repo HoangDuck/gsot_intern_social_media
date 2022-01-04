@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/dto/data_converter.dart';
 import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
