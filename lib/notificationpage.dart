@@ -130,50 +130,48 @@ class _ListNotificationsState extends State<ListNotifications> {
                 ),
               ]
           ),
-          child: Column(
-            children: [
-              SizedBox(
-                child: Row(
-                  children: [
-                    const SizedBox(width: 10,),
-                    SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: Image.network(data.user!.picture.toString(),
-                            errorBuilder: (context,error,stacktrace){
-                              return Icon(Icons.signal_wifi_bad_sharp);
-                            })
-                    ),
-                    const SizedBox(width: 10,),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RichText(
-                            text:TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                              ),
-                              children: [
-                                TextSpan(text: data.user!.name.toString()+" ", style: const TextStyle(fontWeight: FontWeight.bold)),
-                                TextSpan(text: data.content.toString()),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 5,),
-                          Text(data.time.toString(), style: const TextStyle(fontSize: 15),)
-                        ],
-                      ),
-                    ),
-                  ],
+          child: SizedBox(
+            child: Row(
+              children: [
+                const SizedBox(width: 10,),
+                SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Image.network(data.user!.picture.toString(),
+                        errorBuilder: (context,error,stacktrace){
+                          return Icon(Icons.signal_wifi_bad_sharp);
+                        })
                 ),
-              ),
-            ],
+                const SizedBox(width: 10,),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                            // Note: Styles for TextSpans must be explicitly defined.
+                            // Child text spans will inherit styles from parent
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.black,
+                            ),
+                            children: [
+                              TextSpan(text: data.user!.name.toString()+" ", style: TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: data.content.toString()),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text(data.time.toString(), style: TextStyle(fontSize: 15),)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
     );
