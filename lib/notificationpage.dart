@@ -137,10 +137,12 @@ class _ListNotificationsState extends State<ListNotifications> {
                 SizedBox(
                     width: 50,
                     height: 50,
-                    child: Image.network(data.user!.picture.toString(),
-                        errorBuilder: (context,error,stacktrace){
-                          return Icon(Icons.signal_wifi_bad_sharp);
-                        })
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundImage:
+                      NetworkImage(data.user!.picture.toString()),
+                      backgroundColor: Colors.transparent,
+                    ),
                 ),
                 const SizedBox(width: 10,),
                 Expanded(

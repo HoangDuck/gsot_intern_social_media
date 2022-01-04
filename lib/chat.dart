@@ -148,10 +148,12 @@ class _ListMessagesState extends State<ListMessages> {
                     SizedBox(
                         height: 50,
                         width: 50,
-                        child: Image.network(data.user!.picture.toString(),
-                            errorBuilder: (context,error,stacktrace){
-                              return Icon(Icons.signal_wifi_bad_sharp);
-                            })
+                        child: CircleAvatar(
+                          radius: 30.0,
+                          backgroundImage:
+                          NetworkImage(data.user!.picture.toString()),
+                          backgroundColor: Colors.transparent,
+                        ),
                     ),
                     const SizedBox(width: 10,),
                     Container(
@@ -257,7 +259,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        maxHeight: 91.0,
+        maxHeight: 85.0,
       ),
       child: ListView.builder(
         itemCount: dataConvert.listUsers.length,
@@ -269,7 +271,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
   }
   Widget _buildRow(User data) {
     return SizedBox(
-        width: 70.0,
+        width: 60.0,
         height: 60.0,
         child: Column(
           children: [
@@ -282,25 +284,15 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
                     width: 2
                 ),
               ),
-              child: SizedBox(
-                width: 55,
-                height: 55,
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                  ),
-                  child:IconButton(
-                    color: Colors.grey,
-                    icon: Image.network(data.picture.toString(),
-                        errorBuilder: (context,error,stacktrace){
-                          return Icon(Icons.signal_wifi_bad_sharp);
-                        }),
-                    onPressed: () {
-                      },
-                  ),
+              child: IconButton(
+                icon: CircleAvatar(
+                  radius: 25.0,
+                  backgroundImage:
+                  NetworkImage(data.picture.toString()),
+                  backgroundColor: Colors.transparent,
                 ),
+                onPressed: () {
+                  },
               ),
             ),
             SizedBox(
@@ -308,7 +300,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
               child: Text(
                 data.name.toString(),
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 14),
               ),
             )
           ],

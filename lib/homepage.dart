@@ -83,7 +83,7 @@ class _ListAvatarState extends State<ListAvatar> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        maxHeight: 91.0,
+        maxHeight: 85.0,
       ),
       child: _buildSuggestions(),
     );
@@ -104,7 +104,7 @@ class _ListAvatarState extends State<ListAvatar> {
   }
   Widget _AddingWidget(){
     return SizedBox(
-        width: 70.0,
+        width: 60.0,
         height: 60.0,
         child: Column(
           children: [
@@ -116,22 +116,11 @@ class _ListAvatarState extends State<ListAvatar> {
                     width: 2
                 ),
               ),
-              child: SizedBox(
-                width: 55,
-                height: 55,
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                  ),
-                  child:IconButton(
-                    color: Colors.grey,
-                    icon: const Icon(Icons.add),
-                    onPressed: () {
-                      },
-                  ),
-                ),
+              child: IconButton(
+                color: Colors.grey,
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  },
               ),
             ),
             const Text("You",style: TextStyle(fontSize: 14),)
@@ -141,7 +130,7 @@ class _ListAvatarState extends State<ListAvatar> {
   }
   Widget _buildRow(User data) {
     return SizedBox(
-        width: 70.0,
+        width: 60.0,
         height: 60.0,
         child: Column(
           children: [
@@ -154,25 +143,18 @@ class _ListAvatarState extends State<ListAvatar> {
                     width: 2
                 ),
               ),
-              child: SizedBox(
-                width: 55,
-                height: 55,
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
+              child: IconButton(
+                icon: CircleAvatar(
+                  radius: 25.0,
+                  backgroundImage:
+                  NetworkImage(data.picture.toString()),
+                  backgroundColor: Colors.transparent,
+                  onBackgroundImageError: (exception, stacktrace){
+                    Icon(Icons.signal_wifi_bad_sharp);
+                  },
                   ),
-                  child:IconButton(
-                    color: Colors.grey,
-                    icon: Image.network(data.picture.toString(),
-                        errorBuilder: (context,error,stacktrace){
-                          return Icon(Icons.signal_wifi_bad_sharp);
-                        }),
-                    onPressed: () {
-                      },
-                  ),
-                ),
+                onPressed: () {
+                  },
               ),
             ),
             SizedBox(
@@ -180,7 +162,7 @@ class _ListAvatarState extends State<ListAvatar> {
                 child: Text(
                   data.name.toString(),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14),
                 ),
             )
           ],
@@ -239,10 +221,11 @@ class _ListPostsState extends State<ListPosts> {
                     SizedBox(
                         height: 55,
                         width: 55,
-                        child: Image.network(data.user!.picture.toString(),
-                          errorBuilder: (context,error,stacktrace){
-                            return Icon(Icons.signal_wifi_bad_sharp);
-                          }
+                        child: CircleAvatar(
+                          radius: 30.0,
+                          backgroundImage:
+                          NetworkImage(data.user!.picture.toString()),
+                          backgroundColor: Colors.transparent,
                         ),
                     ),
                     const SizedBox(width: 10,),
