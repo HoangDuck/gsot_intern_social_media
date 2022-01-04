@@ -106,8 +106,8 @@ class LoginPageUI extends StatelessWidget {
               try{
                 UserLogin userLogin=UserLogin();
                 userLogin=loginDataConvert.loginDataConverter;
-                var username=userLogin!.username.toString();
-                var password=userLogin!.password.toString();
+                var username=userLogin.username.toString();
+                var password=userLogin.password.toString();
                 if(username==txtToDoControllerUsername.text
                     && password==txtToDoControllerPassword.text){
                   Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SafeArea(child: PageAfterLogin())));
