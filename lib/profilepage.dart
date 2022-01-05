@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'dto/login_data_converter.dart';
+import 'dto/profile_data_converter.dart';
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Provider<LoginDataConverter>.value(
-      value: LoginDataConverter(),
+    return Provider<ProfileDataConverter>.value(
+      value: ProfileDataConverter(),
       child: InfoProfile(),
     );
   }
@@ -18,8 +19,8 @@ class InfoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginDataConverter loginDataConvert=Provider.of<LoginDataConverter>(context);
-    loginDataConvert.initData();
+    ProfileDataConverter profileDataConvert=Provider.of<ProfileDataConverter>(context);
+    profileDataConvert.initData();
     return Stack(
       children: [
         Positioned(
@@ -27,7 +28,7 @@ class InfoProfile extends StatelessWidget {
               height: MediaQuery.of(context).size.height*0.3,
               color: Colors.black,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(loginDataConvert.loginDataConverter.cover.toString()),
+              child: Image.network(profileDataConvert.profileDataConverter.cover.toString()),
             )
         ),
         Positioned(
@@ -62,7 +63,157 @@ class InfoProfile extends StatelessWidget {
                         color: Colors.black,
                       ),
                       onPressed: () {
-
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: Stack(
+                                  children: <Widget>[
+                                    Positioned(
+                                      right: -40.0,
+                                      top: -40.0,
+                                      child: InkResponse(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(),
+                                      ),
+                                    ),
+                                    Form(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Center(
+                                            child: Text(
+                                              "Options",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              SizedBox(
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        gradient: const LinearGradient(
+                                                          begin: Alignment.topRight,
+                                                          end: Alignment.bottomLeft,
+                                                          colors: [
+                                                            Color(0xff9796F0),
+                                                            Color(0xffFBC7D4),
+                                                          ],
+                                                        ),
+                                                        borderRadius: BorderRadius.circular(25),
+                                                        border: Border.all(
+                                                            color: Colors.white,
+                                                            width: 2
+                                                        ),
+                                                      ),
+                                                      child: SizedBox(
+                                                        width: 65,
+                                                        height: 80,
+                                                        child: Ink(
+                                                          decoration: const ShapeDecoration(
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                            ),
+                                                          ),
+                                                          child:Column(
+                                                            children: [
+                                                              IconButton(
+                                                                color: Colors.white,
+                                                                icon: const Icon(Icons.app_settings_alt_rounded),
+                                                                onPressed: () {
+                                                                },
+                                                              ),
+                                                              const Text(
+                                                                "Settings",
+                                                                style: TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        gradient: const LinearGradient(
+                                                          begin: Alignment.topRight,
+                                                          end: Alignment.bottomLeft,
+                                                          colors: [
+                                                            Color(0xff9796F0),
+                                                            Color(0xffFBC7D4),
+                                                          ],
+                                                        ),
+                                                        borderRadius: BorderRadius.circular(25),
+                                                        border: Border.all(
+                                                            color: Colors.white,
+                                                            width: 2
+                                                        ),
+                                                      ),
+                                                      child: SizedBox(
+                                                        width: 65,
+                                                        height: 80,
+                                                        child: Ink(
+                                                          decoration: const ShapeDecoration(
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                            ),
+                                                          ),
+                                                          child:Column(
+                                                            children: [
+                                                              IconButton(
+                                                                color: Colors.white,
+                                                                icon: const Icon(Icons.logout),
+                                                                onPressed: () {
+                                                                  //close popup
+                                                                  Navigator.pop(context);
+                                                                  //close to logout
+                                                                  Navigator.pop(context);
+                                                                },
+                                                              ),
+                                                              const Text(
+                                                                "Logout",
+                                                                style: TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
                       },
                     ),
                   ),
@@ -94,7 +245,7 @@ class InfoProfile extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.black,
                         image: DecorationImage(
-                          image: NetworkImage(loginDataConvert.loginDataConverter.picture.toString()),
+                          image: NetworkImage(profileDataConvert.profileDataConverter.picture.toString()),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.all( Radius.circular(50.0)),
@@ -134,7 +285,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("100k",style: TextStyle(fontWeight: FontWeight.bold),),
+                                      TextNumber(profileDataConvert.profileDataConverter.posts),
                                       Text("Posts"),
                                     ],
                                   ),
@@ -163,7 +314,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("100k",style: TextStyle(fontWeight: FontWeight.bold),),
+                                      TextNumber(profileDataConvert.profileDataConverter.follower),
                                       Text("Followers"),
                                     ],
                                   ),
@@ -192,7 +343,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("100k",style: TextStyle(fontWeight: FontWeight.bold),),
+                                      TextNumber(profileDataConvert.profileDataConverter.following),
                                       Text("Following"),
                                     ],
                                   ),
@@ -235,56 +386,47 @@ class InfoProfile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(loginDataConvert.loginDataConverter.name.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                    Text(loginDataConvert.loginDataConverter.nickname.toString(), style: const TextStyle(fontSize: 15),)
+                    Text(profileDataConvert.profileDataConverter.name.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                    Text(profileDataConvert.profileDataConverter.nickname.toString(), style: const TextStyle(fontSize: 15),)
                   ],
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height*0.43,
-                  color: Colors.red,
-                  child: ListView(
-                    children: [
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data"),
-                      Text("data100"),
-                    ],
+                  height: MediaQuery.of(context).size.height*0.42,
+                  color: Colors.white,
+                  child: GridView.count(
+                    // Create a grid with 2 columns. If you change the scrollDirection to
+                    // horizontal, this produces 2 rows.
+                    crossAxisCount: 2,
+                    // Generate 100 widgets that display their index in the List.
+                    children: List.generate(profileDataConvert.profileDataConverter.listImage!.length, (index) {
+                      return Container(
+                        padding: EdgeInsets.all(2),
+                        child: Container(
+                          color: Colors.black,
+                          child: Center(
+                            child: Image.network(profileDataConvert.profileDataConverter.listImage![index].toString()),),
+                        ),
+                      );
+                      },
+                    )
                   )
-                )
+                ),
               ],
             ),
           ),
         ),
       ],
     );
+  }
+  Widget TextNumber(int? number){
+    try{
+      if(number!>1000) {
+        return Text((number/1000).toString()+"k",style: TextStyle(fontWeight: FontWeight.bold));
+      }
+    }catch(e){
+      return Text("0",style: TextStyle(fontWeight: FontWeight.bold));
+    }
+    return Text(number.toString(),style: TextStyle(fontWeight: FontWeight.bold));
   }
 }
 
