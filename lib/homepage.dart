@@ -255,6 +255,17 @@ class _ListPostsState extends State<ListPosts> {
                 child: Text(data.content.toString(),style: const TextStyle(fontSize: 20, color: Colors.black54),),
               ),
               Container(
+                padding: const EdgeInsets.all(5),
+                child: Center(
+                  child: Image.network(
+                    data.image.toString(),
+                    errorBuilder: (context,error,stacktrace){
+                      return Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                    },
+                  ),
+                ),
+              ),
+              Container(
                 decoration: const ShapeDecoration(
                   color: Colors.lightBlueAccent,
                   shape: RoundedRectangleBorder(
