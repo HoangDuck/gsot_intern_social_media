@@ -403,7 +403,13 @@ class InfoProfile extends StatelessWidget {
                         child: Container(
                           color: Colors.black,
                           child: Center(
-                            child: Image.network(profileDataConvert.profileDataConverter.listImage![index].toString()),),
+                            child: Image.network(
+                                profileDataConvert.profileDataConverter.listImage![index].toString(),
+                              errorBuilder: (context,error,stacktrace){
+                                  return Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                              },
+                            ),
+                          ),
                         ),
                       );
                       },
