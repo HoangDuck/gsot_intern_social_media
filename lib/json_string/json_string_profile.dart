@@ -10,7 +10,7 @@ const String profile='''
     "following": 20000,
     "album":
     [
-      "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/..png?alt=media&token=9264e0b5-5c0f-4e24-afeb-c8e6c571b20b",
+      "https://i.pinimg.com/736x/9b/58/5c/9b585ce12ccee55b8bcafc643bfa032a.jpg",
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/about-img.png?alt=media&token=04171dde-b0ce-441b-8841-062c7321a264",
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/bamboo_staff.jpg?alt=media&token=ad4d096c-7a6b-4c2d-921d-01699cf2685a",
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/banh-mi-kep-ca-chien-xu-500.jpg?alt=media&token=ea679874-f6b9-4db4-a1cb-948e53e9353f",

@@ -84,7 +84,7 @@ class _ListAvatarState extends State<ListAvatar> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        maxHeight: 85.0,
+        maxHeight: 84.0,
       ),
       child: _buildSuggestions(),
     );
@@ -137,25 +137,24 @@ class _ListAvatarState extends State<ListAvatar> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
+                color: Colors.black,
+                image: DecorationImage(
+                  image: NetworkImage(data.picture.toString()),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all( Radius.circular(50.0)),
                 border: Border.all(
-                    color: Colors.blue,
-                    width: 2
+                  color: Colors.blue,
+                  width: 2.0,
                 ),
               ),
               child: IconButton(
                 icon: CircleAvatar(
                   radius: 25.0,
-                  backgroundImage:
-                  NetworkImage(data.picture.toString()),
                   backgroundColor: Colors.transparent,
-                  onBackgroundImageError: (exception, stacktrace){
-                    Icon(Icons.signal_wifi_bad_sharp);
-                  },
-                  ),
+                ),
                 onPressed: () {
-                  },
+                },
               ),
             ),
             SizedBox(
