@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/chat.dart';
+import 'package:social_media/view/chat.dart';
 import 'package:social_media/dto/data_converter.dart';
 import 'package:social_media/dto/login_data_converter.dart';
 import 'package:social_media/model/user_login.dart';
-import 'package:social_media/notificationpage.dart';
-import 'package:social_media/popupadd.dart';
+import 'package:social_media/view/notificationpage.dart';
+import 'package:social_media/view/popupadd.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:social_media/profilepage.dart';
-import 'homepage.dart';
+import 'package:social_media/view/profilepage.dart';
+import 'view/homepage.dart';
 
 void main() {
   runApp(const MyApp());
