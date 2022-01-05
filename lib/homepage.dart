@@ -260,7 +260,7 @@ class _ListPostsState extends State<ListPosts> {
                   child: Image.network(
                     data.image.toString(),
                     errorBuilder: (context,error,stacktrace){
-                      return Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                      return Container();
                     },
                   ),
                 ),
