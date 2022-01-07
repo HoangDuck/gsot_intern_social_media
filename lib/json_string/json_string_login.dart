@@ -12,6 +12,6 @@ const String login='''
     },
     "username": "duckute",
     "password": "123456789"
-  },
+  }
 ]
 ''';

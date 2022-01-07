@@ -26,6 +26,6 @@ const String profile='''
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/bg_news_1.jpg?alt=media&token=afb742ab-ea36-443b-a87d-0e03e047234d",
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/caKhoTo.jpg?alt=media&token=5614ddbe-80b8-4f62-bc1c-e1a8047aa098"
     ]
-  },
+  }
 ]
 ''';

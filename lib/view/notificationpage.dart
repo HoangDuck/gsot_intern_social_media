@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/model/notifiers.dart';
 
-import '../dto/data_converter.dart';
+import '../converter/data_converter.dart';
 class NotificationPage extends StatelessWidget {
   const NotificationPage({Key? key}) : super(key: key);
 

@@ -3,9 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/view/chat.dart';
-import 'package:social_media/dto/data_converter.dart';
-import 'package:social_media/dto/login_data_converter.dart';
-import 'package:social_media/model/user_login.dart';
+import 'package:social_media/converter/data_converter.dart';
+import 'package:social_media/converter/login_data_converter.dart';
 import 'package:social_media/view/notificationpage.dart';
 import 'package:social_media/view/popupadd.dart';
 import 'package:page_transition/page_transition.dart';
@@ -40,17 +39,46 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<LoginDataConverter>.value(
         value: LoginDataConverter(),
-        child: const Material(child: LoginPageUI()),
+        child: Material(child: LoginPageUI()),
     );
   }
 }
-class LoginPageUI extends StatelessWidget {
+class LoginPageUI extends StatefulWidget {
   const LoginPageUI({Key? key}) : super(key: key);
 
   @override
+  _LoginPageUIState createState() => _LoginPageUIState();
+}
+
+class _LoginPageUIState extends State<LoginPageUI> {
+  String _stateLogin="";
+  late TextEditingController txtToDoControllerUsername;
+  late TextEditingController txtToDoControllerPassword;
+  void _stateLoginPasswordEmpty() {
+    setState(() {
+      _stateLogin="Username or password must not be empty";
+    });
+  }
+  void _stateLoginPasswordWrongPassword() {
+    setState(() {
+      _stateLogin="Wrong password";
+    });
+  }
+  void _stateLoginPasswordNotExist() {
+    setState(() {
+      _stateLogin="This account is not exist";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    txtToDoControllerUsername= TextEditingController();
+    txtToDoControllerPassword= TextEditingController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var txtToDoControllerUsername= TextEditingController();
-    var txtToDoControllerPassword= TextEditingController();
     LoginDataConverter loginDataConvert=Provider.of<LoginDataConverter>(context);
     loginDataConvert.initData();
     return Container(
@@ -58,10 +86,10 @@ class LoginPageUI extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(100),
+            padding: const EdgeInsets.only(top: 100,bottom: 100,),
             child: Text("GSOT",
               style: TextStyle(
-                  fontSize: 45,
+                  fontSize: 100,
                   fontWeight: FontWeight.bold,
                   foreground: Paint()..shader = const LinearGradient(
                     begin: Alignment.topLeft,
@@ -85,16 +113,20 @@ class LoginPageUI extends StatelessWidget {
           ),
           SizedBox(height: 30),
           TextFormField(
-              controller: txtToDoControllerPassword,
-              decoration: const InputDecoration(
-                labelText: "Password",
-                border: OutlineInputBorder( //Outline border type for TextField
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
+            controller: txtToDoControllerPassword,
+            decoration: const InputDecoration(
+              labelText: "Password",
+              border: OutlineInputBorder( //Outline border type for TextField
+                borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
-              obscureText: true,
+            ),
+            obscureText: true,
           ),
-          SizedBox(height: 30),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(5),
+            child: Text(_stateLogin,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+          ),
           ElevatedButton(
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -105,26 +137,45 @@ class LoginPageUI extends StatelessWidget {
                 )
             ),
             onPressed: () {
+              if(txtToDoControllerUsername.text == ""
+                  || txtToDoControllerPassword.text == ""){
+                print(loginDataConvert.listUserLogins.length);
+                _stateLoginPasswordEmpty();
+                return;
+              }
               try{
-                UserLogin userLogin=UserLogin();
-                userLogin=loginDataConvert.loginDataConverter;
-                var username=userLogin.username.toString();
-                var password=userLogin.password.toString();
-                if(username==txtToDoControllerUsername.text
-                    && password==txtToDoControllerPassword.text){
-                  Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SafeArea(child: PageAfterLogin())));
+                for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
+                  var username=loginDataConvert.listUserLogins[i].username.toString();
+                  var password=loginDataConvert.listUserLogins[i].password.toString();
+                  if(username==txtToDoControllerUsername.text
+                      && password==txtToDoControllerPassword.text){
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            child: SafeArea(
+                                child: PageAfterLogin()
+                            )
+                        )
+                    );
+                    return;
+                  }else if(username==txtToDoControllerUsername.text){
+                    _stateLoginPasswordWrongPassword();
+                    return;
+                  }
                 }
+                _stateLoginPasswordNotExist();
               }catch(e){
                 log(e.toString());
               }
             },
             child:
-              Container(
-                color: Colors.blue,
-                child: const Center(
-                  child: Text("Login",style: TextStyle(fontSize: 20,color: Colors.white),),
-                ),
+            Container(
+              color: Colors.blue,
+              child: const Center(
+                child: Text("Login",style: TextStyle(fontSize: 20,color: Colors.white),),
               ),
+            ),
           ),
           SizedBox(height: 10),
           ElevatedButton(
@@ -140,12 +191,12 @@ class LoginPageUI extends StatelessWidget {
 
             },
             child:
-          Container(
-            color: Colors.blue,
-            child: const Center(
-              child: Text("Register",style: TextStyle(fontSize: 20,color: Colors.white),),
+            Container(
+              color: Colors.blue,
+              child: const Center(
+                child: Text("Register",style: TextStyle(fontSize: 20,color: Colors.white),),
+              ),
             ),
-          ),
           ),
         ],
       ),
@@ -177,6 +228,7 @@ class _PagesState extends State<Pages> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     DataConvert dataConvert=Provider.of<DataConvert>(context);
     dataConvert.initData();
   }
