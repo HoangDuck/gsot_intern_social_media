@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/view/chat.dart';
@@ -113,7 +115,7 @@ class LoginPageUI extends StatelessWidget {
                   Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SafeArea(child: PageAfterLogin())));
                 }
               }catch(e){
-                print(e.toString());
+                log(e.toString());
               }
             },
             child:

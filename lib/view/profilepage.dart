@@ -27,7 +27,7 @@ class InfoProfile extends StatelessWidget {
               height: MediaQuery.of(context).size.height*0.3,
               color: Colors.black,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(profileDataConvert.profileDataConverter.cover.toString()),
+              child: Image.network(profileDataConvert.profileDataConverter.user!.cover.toString()),
             )
         ),
         Positioned(
@@ -244,7 +244,7 @@ class InfoProfile extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.black,
                         image: DecorationImage(
-                          image: NetworkImage(profileDataConvert.profileDataConverter.picture.toString()),
+                          image: NetworkImage(profileDataConvert.profileDataConverter.user!.picture.toString()),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.all( Radius.circular(50.0)),
@@ -385,8 +385,8 @@ class InfoProfile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(profileDataConvert.profileDataConverter.name.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                    Text(profileDataConvert.profileDataConverter.nickname.toString(), style: const TextStyle(fontSize: 15),)
+                    Text(profileDataConvert.profileDataConverter.user!.name.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                    Text(profileDataConvert.profileDataConverter.user!.nickname.toString(), style: const TextStyle(fontSize: 15),)
                   ],
                 ),
                 Container(

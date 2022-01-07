@@ -1,21 +1,17 @@
+import 'package:social_media/model/user.dart';
+
 class UserProfile{
   int? id;
-  String? name;
-  String? nickname;
-  String? picture;
-  String? cover;
+  User? user;
   int? posts;
   int? following;
   int? follower;
   List<dynamic>? listImage;
-  UserProfile({this.id,this.name,this.nickname,this.picture,this.cover,this.posts,this.follower,this.following,this.listImage});
+  UserProfile({this.id,this.user,this.posts,this.follower,this.following,this.listImage});
   factory UserProfile.fromJson(map){
     return UserProfile(
         id: map['id'],
-        name: map['name'],
-        nickname: map['nickname'],
-        picture: map['picture'],
-        cover: map['cover'],
+        user: User.fromJson(map['user']),
         posts: map['posts'],
         follower: map['followers'],
         following: map['following'],
@@ -24,10 +20,7 @@ class UserProfile{
   }
   Map<String,dynamic> toJson() => {
     'id':id,
-    'name': name,
-    'nickname': nickname,
-    'picture': picture,
-    'cover': cover,
+    'user': user,
     'posts': posts,
     'followers':follower,
     'following':following,

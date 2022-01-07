@@ -1,10 +1,15 @@
 const String profile='''
-{
-    "id":14,
-    "name":"Huu Duc",
-    "nickname": "@ducute",
-    "picture": "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/images.jpg?alt=media&token=6cd0f066-9d6b-4756-a981-29ef99b6385c",
-    "cover": "https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/12/14/cay-thong-14-1639467420970451858714.jpg",
+[
+  {
+    "id":1,
+    "user":
+    {
+      "id":14,
+      "name":"Hoang Duc",
+      "nickname": "@duckute",
+      "picture": "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/..png?alt=media&token=9264e0b5-5c0f-4e24-afeb-c8e6c571b20b",
+      "cover": "https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/12/14/cay-thong-14-1639467420970451858714.jpg"
+    },
     "posts": 100,
     "followers": 10000,
     "following": 20000,
@@ -21,5 +26,6 @@ const String profile='''
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/bg_news_1.jpg?alt=media&token=afb742ab-ea36-443b-a87d-0e03e047234d",
       "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/caKhoTo.jpg?alt=media&token=5614ddbe-80b8-4f62-bc1c-e1a8047aa098"
     ]
-}
+  },
+]
 ''';
