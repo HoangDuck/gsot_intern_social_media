@@ -10,6 +10,7 @@ import 'package:social_media/view/notificationpage.dart';
 import 'package:social_media/view/popupadd.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:social_media/view/profilepage.dart';
+import 'package:social_media/view/registerpage.dart';
 import 'view/homepage.dart';
 
 void main() {
@@ -199,7 +200,15 @@ class _LoginPageUIState extends State<LoginPageUI> {
                 )
             ),
             onPressed: () {
-
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      child: SafeArea(
+                          child: RegisterProviderUI()
+                      )
+                  )
+              );
             },
             child:
             Container(
@@ -249,6 +258,7 @@ class _PagesState extends State<Pages> {
         },
     );
   }
+  //UI Homepage
   Widget buildHomePage(BuildContext context){
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
