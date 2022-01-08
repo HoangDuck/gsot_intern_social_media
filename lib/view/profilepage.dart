@@ -21,11 +21,13 @@ class InfoProfile extends StatelessWidget {
     return FutureBuilder<bool>(
       future: Provider.of<ProfileDataConverter>(context).initData(),
       builder: (context,snapshot){
-        if(snapshot.hasError){
-          return Container();
-        }
-        if(snapshot.hasData){
-          return buildProfilePage(context);
+        if(snapshot.connectionState==ConnectionState.done){
+          if(snapshot.data==null){
+            return Container();
+          }
+          else if(snapshot.hasData){
+            return buildProfilePage(context);
+          }
         }
         return Container();
       },
