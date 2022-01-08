@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/view/chat.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
 }
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-
+  //tạo 1 provider để lấy thông tin đăng nhập để sẵn
   @override
   Widget build(BuildContext context) {
     return Provider<LoginDataConverter>.value(
@@ -45,13 +46,13 @@ class LoginPage extends StatelessWidget {
 }
 class LoginPageUI extends StatefulWidget {
   const LoginPageUI({Key? key}) : super(key: key);
-
+  // login page là stateful vì còn thực hiện check lỗi login để báo lỗi đến người dùng
   @override
   _LoginPageUIState createState() => _LoginPageUIState();
 }
 
 class _LoginPageUIState extends State<LoginPageUI> {
-  String _stateLogin="";
+  String _stateLogin="";// để chứa thông tin về các trạng thái đăng nhập đúng sai
   late TextEditingController txtToDoControllerUsername;
   late TextEditingController txtToDoControllerPassword;
   void _stateLoginPasswordEmpty() {
@@ -73,6 +74,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
   @override
   void initState() {
     super.initState();
+    //vừa hiện widget là khởi tạo controller để người dùng nhập vào
     txtToDoControllerUsername= TextEditingController();
     txtToDoControllerPassword= TextEditingController();
   }
@@ -80,7 +82,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
   @override
   Widget build(BuildContext context) {
     LoginDataConverter loginDataConvert=Provider.of<LoginDataConverter>(context);
-    loginDataConvert.initData();
+    loginDataConvert.initData();// lấy dữ liệu đăng nhập từ local storage
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -123,6 +125,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
             obscureText: true,
           ),
           Container(
+            //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(5),
             child: Text(_stateLogin,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
@@ -137,18 +140,24 @@ class _LoginPageUIState extends State<LoginPageUI> {
                 )
             ),
             onPressed: () {
+              //check điều kiện người dùng bỏ trống 1 trong 2 username và password
               if(txtToDoControllerUsername.text == ""
                   || txtToDoControllerPassword.text == ""){
-                print(loginDataConvert.listUserLogins.length);
-                _stateLoginPasswordEmpty();
+                _stateLoginPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
                 return;
               }
               try{
+                //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
                 for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
+                  //var idUser=loginDataConvert.listUserLogins[i].id;
                   var username=loginDataConvert.listUserLogins[i].username.toString();
                   var password=loginDataConvert.listUserLogins[i].password.toString();
                   if(username==txtToDoControllerUsername.text
                       && password==txtToDoControllerPassword.text){
+                    // Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                    // _prefs.then((value) async{
+                    //   return await value.setInt('id', idUser!);
+                    // });
                     Navigator.push(
                         context,
                         PageTransition(
@@ -159,11 +168,13 @@ class _LoginPageUIState extends State<LoginPageUI> {
                         )
                     );
                     return;
+                    //check ràng buộc người dùng sai mk
                   }else if(username==txtToDoControllerUsername.text){
                     _stateLoginPasswordWrongPassword();
                     return;
                   }
                 }
+                //không rời vào các trường hợp trên thì báo tk ko tồn tại
                 _stateLoginPasswordNotExist();
               }catch(e){
                 log(e.toString());
@@ -211,7 +222,7 @@ class PageAfterLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<DataConvert>.value(
       value: DataConvert(),
-      child: const Pages(),
+      child: Pages(),
     );
   }
 }
@@ -229,12 +240,22 @@ class _PagesState extends State<Pages> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    DataConvert dataConvert=Provider.of<DataConvert>(context);
-    dataConvert.initData();
+
   }
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+        future: Provider.of<DataConvert>(context).initData(),
+        builder: (context,snapshot){
+          if(snapshot.hasData){
+            return buildHomePage(context);
+          }
+          return Container();
+        },
+    );
+  }
+  Widget buildHomePage(BuildContext context){
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -298,15 +319,15 @@ class _PagesState extends State<Pages> {
         children: <Widget>[
           HomePage(),
           Container(
-              padding: const EdgeInsets.all(10),
-              child: const ChatPage(),
+            padding: const EdgeInsets.all(10),
+            child: ChatPage(),
           ),
           const Center(
             child: Text('Empty Body 2'),
           ),
           Container(
             padding: const EdgeInsets.all(10),
-            child: const NotificationPage(),
+            child: NotificationPage(),
           ),
           ProfilePage()
         ],
