@@ -149,7 +149,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
               try{
                 //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
                 for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
-                  var idUser=loginDataConvert.listUserLogins[i].id;
+                  var idUser=loginDataConvert.listUserLogins[i].user!.id;
                   var username=loginDataConvert.listUserLogins[i].username.toString();
                   var password=loginDataConvert.listUserLogins[i].password.toString();
                   if(username==txtToDoControllerUsername.text

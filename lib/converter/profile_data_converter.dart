@@ -33,7 +33,7 @@ class ProfileDataConverter{
     SharedPreferences prefs = await _prefs;
     idUser=prefs.getInt('id')??0;
     for(int i=0;i<list.length;i++){
-      if(list[i].id==idUser){
+      if(list[i].user!.id==idUser){
         return list[i];
       }
     }
