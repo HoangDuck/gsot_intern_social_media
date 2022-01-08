@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/view/chat.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
@@ -149,15 +149,15 @@ class _LoginPageUIState extends State<LoginPageUI> {
               try{
                 //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
                 for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
-                  //var idUser=loginDataConvert.listUserLogins[i].id;
+                  var idUser=loginDataConvert.listUserLogins[i].id;
                   var username=loginDataConvert.listUserLogins[i].username.toString();
                   var password=loginDataConvert.listUserLogins[i].password.toString();
                   if(username==txtToDoControllerUsername.text
                       && password==txtToDoControllerPassword.text){
-                    // Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                    // _prefs.then((value) async{
-                    //   return await value.setInt('id', idUser!);
-                    // });
+                    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                    _prefs.then((value) async{
+                      return await value.setInt('id', idUser!);
+                    });
                     Navigator.push(
                         context,
                         PageTransition(
@@ -236,12 +236,6 @@ class Pages extends StatefulWidget {
 
 class _PagesState extends State<Pages> {
   final PageController _myPage = PageController(initialPage: 0);
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-  }
 
   @override
   Widget build(BuildContext context) {

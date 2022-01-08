@@ -18,8 +18,21 @@ class InfoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: Provider.of<ProfileDataConverter>(context).initData(),
+      builder: (context,snapshot){
+        if(snapshot.hasError){
+          return Container();
+        }
+        if(snapshot.hasData){
+          return buildProfilePage(context);
+        }
+        return Container();
+      },
+    );
+  }
+  Widget buildProfilePage(BuildContext context){
     ProfileDataConverter profileDataConvert=Provider.of<ProfileDataConverter>(context);
-    profileDataConvert.initData();
     return Stack(
       children: [
         Positioned(
@@ -284,7 +297,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      TextNumber(profileDataConvert.profileDataConverter.posts),
+                                      textNumber(profileDataConvert.profileDataConverter.posts),
                                       Text("Posts"),
                                     ],
                                   ),
@@ -313,7 +326,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      TextNumber(profileDataConvert.profileDataConverter.follower),
+                                      textNumber(profileDataConvert.profileDataConverter.follower),
                                       Text("Followers"),
                                     ],
                                   ),
@@ -342,7 +355,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      TextNumber(profileDataConvert.profileDataConverter.following),
+                                      textNumber(profileDataConvert.profileDataConverter.following),
                                       Text("Following"),
                                     ],
                                   ),
@@ -390,31 +403,31 @@ class InfoProfile extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height*0.42,
-                  color: Colors.white,
-                  child: GridView.count(
-                    // Create a grid with 2 columns. If you change the scrollDirection to
-                    // horizontal, this produces 2 rows.
-                    crossAxisCount: 2,
-                    // Generate 100 widgets that display their index in the List.
-                    children: List.generate(profileDataConvert.profileDataConverter.listImage!.length, (index) {
-                      return Container(
-                        padding: EdgeInsets.all(2),
-                        child: Container(
-                          color: Colors.black,
-                          child: Center(
-                            child: Image.network(
-                                profileDataConvert.profileDataConverter.listImage![index].toString(),
-                              errorBuilder: (context,error,stacktrace){
-                                  return Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
-                              },
+                    height: MediaQuery.of(context).size.height*0.42,
+                    color: Colors.white,
+                    child: GridView.count(
+                      // Create a grid with 2 columns. If you change the scrollDirection to
+                      // horizontal, this produces 2 rows.
+                        crossAxisCount: 2,
+                        // Generate 100 widgets that display their index in the List.
+                        children: List.generate(profileDataConvert.profileDataConverter.listImage!.length, (index) {
+                          return Container(
+                            padding: EdgeInsets.all(2),
+                            child: Container(
+                              color: Colors.black,
+                              child: Center(
+                                child: Image.network(
+                                  profileDataConvert.profileDataConverter.listImage![index].toString(),
+                                  errorBuilder: (context,error,stacktrace){
+                                    return Icon(Icons.signal_wifi_connected_no_internet_4_rounded);
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                      },
+                          );
+                        },
+                        )
                     )
-                  )
                 ),
               ],
             ),
@@ -423,7 +436,7 @@ class InfoProfile extends StatelessWidget {
       ],
     );
   }
-  Widget TextNumber(int? number){
+  Widget textNumber(int? number){
     try{
       if(number!>1000) {
         return Text((number/1000).toString()+"k",style: TextStyle(fontWeight: FontWeight.bold));

@@ -26,18 +26,22 @@ class DataConvert{
     //chuyển Json qua list của Posts
     Iterable l = jsonDecode(listPostsFromJsonString);
     List<Post> posts = List<Post>.from(l.map((model)=> Post.fromJson(model)));
+    listPosts.clear();
     listPosts.addAll(posts);
     //chuyển Json qua list của users
     l = jsonDecode(stringDataUsers);
     List<User> users = List<User>.from(l.map((model)=> User.fromJson(model)));
+    listUsers.clear();
     listUsers.addAll(users);
     //chuyển Json qua list của Messages
     l = jsonDecode(stringDataMessages);
     List<Message> messages = List<Message>.from(l.map((model)=> Message.fromJson(model)));
+    listMessages.clear();
     listMessages.addAll(messages);
     //chuyển Json qua list của Notifiers
     l = jsonDecode(stringDataNotifiers);
     List<Notifier> notifiers = List<Notifier>.from(l.map((model)=> Notifier.fromJson(model)));
+    listNotifiers.clear();
     listNotifiers.addAll(notifiers);
     return true;
   }
