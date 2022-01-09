@@ -55,7 +55,7 @@ class DataConvert{
     stringDataNotifiers = prefs.getString('notifiersData') ?? listNotifiersFromJsonString;
     prefs.setString('notifiersData',stringDataNotifiers);
   }
-  insertDataUserAvatar(String name,String nickname) async {
+  Future<User> insertDataUserAvatar(String name,String nickname) async {
     int id=listUsers.length+1;
     String picture="";
     String cover="";
@@ -67,12 +67,12 @@ class DataConvert{
       "nickname":"${user.nickname}",
       "picture": "${user.picture}",
       "cover": "${user.cover}"
-    }
-    ''';
+    }''';
     SharedPreferences prefs = await _prefs;
     stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
-    stringDataUsers=stringDataUsers.substring(0,stringDataUsers.length-3);
-    stringDataUsers="$stringDataUsers, \n$json]";
+    stringDataUsers=stringDataUsers.replaceAll("\n]", ",\n$json\n]");
+    //stringDataUsers="$stringDataUsers, \n$json\n]";
     prefs.setString('userAvatarData',stringDataUsers);
+    return user;
   }
 }

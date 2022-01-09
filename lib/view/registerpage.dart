@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
 import 'package:social_media/converter/profile_data_converter.dart';
+import 'package:social_media/model/user.dart';
 //import 'package:page_transition/page_transition.dart';
 class RegisterProviderUI extends StatelessWidget {
   const RegisterProviderUI({Key? key}) : super(key: key);
@@ -189,13 +190,7 @@ class _RegisterState extends State<Register> {
               String? nickname=txtToDoControllerNickName.text.toString();
               String username=txtToDoControllerUsername.text;
               String password=txtToDoControllerPassword.text;
-              //chen du lieu avatar vao local storage
-              insertDataUserIntoLocalStorage(dataConvert, name, nickname);
-              //chen du lieu user login vao local storage
-              insertDataUserLoginIntoLocalStorage(loginDataConverter, name, nickname, username, password);
-              //chen du lieu user profile vao local storage
-
-              insertDataUserProfileIntoLocalStorage(profileDataConverter, name, nickname);
+              insertData(dataConvert,loginDataConverter,profileDataConverter,name, nickname, username, password);
             }catch(e){
               log(e.toString());
             }
@@ -217,13 +212,22 @@ class _RegisterState extends State<Register> {
       ],
     );
   }
-  insertDataUserIntoLocalStorage(DataConvert dataConvert,String name, String nickname)async{
-    await dataConvert.insertDataUserAvatar(name, nickname);
+  insertData(DataConvert dataConvert,LoginDataConverter loginDataConverter,ProfileDataConverter profileDataConverter,String name,String nickname,String username,String password)async{
+    //chen du lieu avatar vao local storage
+    User user=await insertDataUserIntoLocalStorage(dataConvert, name, nickname);
+    //chen du lieu user login vao local storage
+    await insertDataUserLoginIntoLocalStorage(loginDataConverter, user, username, password);
+    //chen du lieu user profile vao local storage
+    await insertDataUserProfileIntoLocalStorage(profileDataConverter,user);
   }
-  insertDataUserLoginIntoLocalStorage(LoginDataConverter loginDataConverter,String name,String nickname, String username,String password)async{
-    await loginDataConverter.insertData(name, nickname,username,password);
+  Future<User>insertDataUserIntoLocalStorage(DataConvert dataConvert,String name, String nickname)async{
+    User user=await dataConvert.insertDataUserAvatar(name, nickname);
+    return user;
   }
-  insertDataUserProfileIntoLocalStorage(ProfileDataConverter profileDataConverter,String name,String nickname)async{
-    await profileDataConverter.insertData(name, nickname);
+  insertDataUserLoginIntoLocalStorage(LoginDataConverter loginDataConverter,User user, String username,String password)async{
+    await loginDataConverter.insertData(user,username,password);
+  }
+  insertDataUserProfileIntoLocalStorage(ProfileDataConverter profileDataConverter,User user)async{
+    await profileDataConverter.insertData(user);
   }
 }
