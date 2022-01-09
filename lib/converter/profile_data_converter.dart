@@ -17,7 +17,7 @@ class ProfileDataConverter{
   Future<bool> initData()async{
     await _getStringDataSharedPreferences();
     createListUserProfiles();
-    profileDataConverter= (await getCurrentUserProfile(listUserProfiles))!;
+    profileDataConverter= await getCurrentUserProfile(listUserProfiles);
     return true;
   }
   createListUserProfiles(){
@@ -31,14 +31,15 @@ class ProfileDataConverter{
     stringData = prefs.getString('profileUserData') ?? profileData;
     prefs.setString('profileUserData',stringData);
   }
-  Future<UserProfile?> getCurrentUserProfile(List<UserProfile> list) async{
+  Future<UserProfile> getCurrentUserProfile(List<UserProfile> list) async{
     SharedPreferences prefs = await _prefs;
-    idUser=prefs.getInt('id')??0;
+    idUser=prefs.getInt('id')??1;
     for(int i=0;i<list.length;i++){
       if(list[i].user!.id==idUser){
         return list[i];
       }
     }
+    return UserProfile();
   }
   insertData(User user)async{
     int id=listUserProfiles.length+1;

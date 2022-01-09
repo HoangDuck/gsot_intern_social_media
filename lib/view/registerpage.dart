@@ -77,7 +77,7 @@ class _RegisterState extends State<Register> {
     LoginDataConverter loginDataConverter=Provider.of<LoginDataConverter>(context);
     loginDataConverter.initData();
     ProfileDataConverter profileDataConverter=Provider.of<ProfileDataConverter>(context);
-    profileDataConverter.initData();
+    initDataInProfile(profileDataConverter);
     return Column(
       children: [
         Container(
@@ -185,7 +185,6 @@ class _RegisterState extends State<Register> {
                   return;
                 }
               }
-              print(profileDataConverter.listUserProfiles.length);
               //không rời vào các trường hợp trên thì tk có thể đăng kí được.
               String name=txtToDoControllerName.text;
               String? nickname=txtToDoControllerNickName.text.toString();
@@ -193,7 +192,7 @@ class _RegisterState extends State<Register> {
               String password=txtToDoControllerPassword.text;
               insertData(dataConvert,loginDataConverter,profileDataConverter,name, nickname, username, password);
             }catch(e){
-              log(e.toString());
+              log(e.toString()+"HCMUTE");
             }
           },
           child:
@@ -212,6 +211,9 @@ class _RegisterState extends State<Register> {
         )
       ],
     );
+  }
+  initDataInProfile(ProfileDataConverter profileDataConverter)async{
+    await profileDataConverter.initData();
   }
   insertData(DataConvert dataConvert,LoginDataConverter loginDataConverter,ProfileDataConverter profileDataConverter,String name,String nickname,String username,String password)async{
     //chen du lieu avatar vao local storage
