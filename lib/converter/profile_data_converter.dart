@@ -6,6 +6,7 @@ import 'package:social_media/model/user.dart';
 import 'package:social_media/model/user_profile.dart';
 
 final String profileData=profile;
+
 class ProfileDataConverter{
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   UserProfile profileDataConverter=UserProfile();
@@ -41,6 +42,8 @@ class ProfileDataConverter{
   }
   insertData(User user)async{
     int id=listUserProfiles.length+1;
+    print(listUserProfiles.length);
+    print(id);
     String json='''
   {
     "id":$id,
@@ -57,12 +60,12 @@ class ProfileDataConverter{
     "following": 0,
     "album":
     [
-        
     ]
   }''';
     SharedPreferences prefs = await _prefs;
     stringData = prefs.getString('profileUserData') ?? profileData;
     stringData=stringData.replaceAll("\n]", ",\n$json\n]");
+    print(json.toString());
     prefs.setString('profileUserData',stringData);
   }
 }

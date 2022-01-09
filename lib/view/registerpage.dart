@@ -185,6 +185,7 @@ class _RegisterState extends State<Register> {
                   return;
                 }
               }
+              print(profileDataConverter.listUserProfiles.length);
               //không rời vào các trường hợp trên thì tk có thể đăng kí được.
               String name=txtToDoControllerName.text;
               String? nickname=txtToDoControllerNickName.text.toString();

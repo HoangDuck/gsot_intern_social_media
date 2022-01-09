@@ -57,6 +57,8 @@ class DataConvert{
   }
   Future<User> insertDataUserAvatar(String name,String nickname) async {
     int id=listUsers.length+1;
+    print(listUsers.length);
+    print(id);
     String picture="";
     String cover="";
     User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
@@ -71,6 +73,7 @@ class DataConvert{
     SharedPreferences prefs = await _prefs;
     stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
     stringDataUsers=stringDataUsers.replaceAll("\n]", ",\n$json\n]");
+    print(json.toString());
     prefs.setString('userAvatarData',stringDataUsers);
     return user;
   }
