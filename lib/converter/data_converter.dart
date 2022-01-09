@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:math';
+//import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string.dart';
 import 'package:social_media/model/messages.dart';
@@ -60,11 +60,19 @@ class DataConvert{
     String picture="";
     String cover="";
     User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
-    String json=user.toJson().toString();
+    String json='''
+    {
+      "id":$id,
+      "name":"${user.name}",
+      "nickname":"${user.nickname}",
+      "picture": "${user.picture}",
+      "cover": "${user.cover}"
+    }
+    ''';
     SharedPreferences prefs = await _prefs;
     stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
-    stringDataUsers=stringDataUsers.substring(0,stringDataUsers.length-2);
-    stringDataUsers="$stringDataUsers , \n$json\n]";
+    stringDataUsers=stringDataUsers.substring(0,stringDataUsers.length-3);
+    stringDataUsers="$stringDataUsers, \n$json]";
     prefs.setString('userAvatarData',stringDataUsers);
   }
 }

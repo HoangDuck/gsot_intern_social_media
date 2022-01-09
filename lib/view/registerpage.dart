@@ -184,7 +184,6 @@ class _RegisterState extends State<Register> {
                   return;
                 }
               }
-              print(loginDataConverter.listUserLogins.length);
               //không rời vào các trường hợp trên thì tk có thể đăng kí được.
               String name=txtToDoControllerName.text;
               String? nickname=txtToDoControllerNickName.text.toString();
@@ -221,10 +220,10 @@ class _RegisterState extends State<Register> {
   insertDataUserIntoLocalStorage(DataConvert dataConvert,String name, String nickname)async{
     await dataConvert.insertDataUserAvatar(name, nickname);
   }
-  insertDataUserLoginIntoLocalStorage(LoginDataConverter loginDataConverter,String name,String nickname, String username,String password){
-    loginDataConverter.insertData(name, nickname,username,password);
+  insertDataUserLoginIntoLocalStorage(LoginDataConverter loginDataConverter,String name,String nickname, String username,String password)async{
+    await loginDataConverter.insertData(name, nickname,username,password);
   }
-  insertDataUserProfileIntoLocalStorage(ProfileDataConverter profileDataConverter,String name,String nickname){
-    profileDataConverter.insertData(name, nickname);
+  insertDataUserProfileIntoLocalStorage(ProfileDataConverter profileDataConverter,String name,String nickname)async{
+    await profileDataConverter.insertData(name, nickname);
   }
 }
