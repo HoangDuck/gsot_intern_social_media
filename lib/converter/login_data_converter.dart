@@ -23,4 +23,7 @@ class LoginDataConverter{
     stringData = prefs.getString('loginData') ?? loginData;
     prefs.setString('loginData',stringData);
   }
+  insertData(String name,String nickname, String username,String password){
+
+  }
 }

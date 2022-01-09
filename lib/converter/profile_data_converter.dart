@@ -38,4 +38,7 @@ class ProfileDataConverter{
       }
     }
   }
+  insertData(String name,String nickname){
+
+  }
 }

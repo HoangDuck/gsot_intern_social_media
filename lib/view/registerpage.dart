@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
+import 'package:social_media/converter/profile_data_converter.dart';
 //import 'package:page_transition/page_transition.dart';
 class RegisterProviderUI extends StatelessWidget {
   const RegisterProviderUI({Key? key}) : super(key: key);
@@ -11,8 +13,13 @@ class RegisterProviderUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset:false,
-        body: Provider<LoginDataConverter>.value(
-          value: LoginDataConverter(),
+        body:
+        MultiProvider(
+        providers: [
+          Provider<LoginDataConverter>.value(value: LoginDataConverter()),
+          Provider<DataConvert>.value(value: DataConvert()),
+          Provider<ProfileDataConverter>.value(value: ProfileDataConverter()),
+        ],
           child:Register()
         ));
   }
@@ -64,8 +71,12 @@ class _RegisterState extends State<Register> {
       );
   }
   Widget buildRegisterPage(){
+    DataConvert dataConvert=Provider.of<DataConvert>(context);
+    dataConvert.initData();
     LoginDataConverter loginDataConverter=Provider.of<LoginDataConverter>(context);
     loginDataConverter.initData();
+    ProfileDataConverter profileDataConverter=Provider.of<ProfileDataConverter>(context);
+    profileDataConverter.initData();
     return Column(
       children: [
         Container(
@@ -108,7 +119,6 @@ class _RegisterState extends State<Register> {
               borderRadius: BorderRadius.all(Radius.circular(30)),
             ),
           ),
-          obscureText: true,
         ),
         Container(
           //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
@@ -167,16 +177,26 @@ class _RegisterState extends State<Register> {
               //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
               for(int i=0;i<loginDataConverter.listUserLogins.length;i++){
                 var username=loginDataConverter.listUserLogins[i].username.toString();
-                var password=loginDataConverter.listUserLogins[i].password.toString();
-                if(username==txtToDoControllerUsername.text
-                    && password==txtToDoControllerPassword.text){
+                //var password=loginDataConverter.listUserLogins[i].password.toString();
+                if(username==txtToDoControllerUsername.text){
+                  //kiem tra username va password co su dung chua
                   _stateRegisterAccountExist();
                   return;
-                  //check ràng buộc người dùng sai mk
                 }
               }
-              //không rời vào các trường hợp trên thì báo tk ko tồn tại
+              print(loginDataConverter.listUserLogins.length);
+              //không rời vào các trường hợp trên thì tk có thể đăng kí được.
+              String name=txtToDoControllerName.text;
+              String? nickname=txtToDoControllerNickName.text.toString();
+              String username=txtToDoControllerUsername.text;
+              String password=txtToDoControllerPassword.text;
+              //chen du lieu avatar vao local storage
+              insertDataUserIntoLocalStorage(dataConvert, name, nickname);
+              //chen du lieu user login vao local storage
+              insertDataUserLoginIntoLocalStorage(loginDataConverter, name, nickname, username, password);
+              //chen du lieu user profile vao local storage
 
+              insertDataUserProfileIntoLocalStorage(profileDataConverter, name, nickname);
             }catch(e){
               log(e.toString());
             }
@@ -197,5 +217,14 @@ class _RegisterState extends State<Register> {
         )
       ],
     );
+  }
+  insertDataUserIntoLocalStorage(DataConvert dataConvert,String name, String nickname)async{
+    await dataConvert.insertDataUserAvatar(name, nickname);
+  }
+  insertDataUserLoginIntoLocalStorage(LoginDataConverter loginDataConverter,String name,String nickname, String username,String password){
+    loginDataConverter.insertData(name, nickname,username,password);
+  }
+  insertDataUserProfileIntoLocalStorage(ProfileDataConverter profileDataConverter,String name,String nickname){
+    profileDataConverter.insertData(name, nickname);
   }
 }

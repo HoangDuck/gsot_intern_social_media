@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string.dart';
 import 'package:social_media/model/messages.dart';
@@ -53,5 +54,17 @@ class DataConvert{
     prefs.setString('messagesData',stringDataMessages);
     stringDataNotifiers = prefs.getString('notifiersData') ?? listNotifiersFromJsonString;
     prefs.setString('notifiersData',stringDataNotifiers);
+  }
+  insertDataUserAvatar(String name,String nickname) async {
+    int id=listUsers.length+1;
+    String picture="";
+    String cover="";
+    User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
+    String json=user.toJson().toString();
+    SharedPreferences prefs = await _prefs;
+    stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
+    stringDataUsers=stringDataUsers.substring(0,stringDataUsers.length-2);
+    stringDataUsers="$stringDataUsers , \n$json\n]";
+    prefs.setString('userAvatarData',stringDataUsers);
   }
 }
