@@ -43,10 +43,7 @@ class LoginDataConverter{
   }''';
     SharedPreferences prefs = await _prefs;
     stringData = prefs.getString('loginData') ?? loginData;
-    //stringData=stringData.substring(0,stringData.length-3);
     stringData=stringData.replaceAll("\n]", ",\n$json\n]");
-    //stringData="$stringData, \n$json\n]";
-    print(stringData);
     prefs.setString('loginData',stringData);
   }
 }

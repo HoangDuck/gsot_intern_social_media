@@ -71,7 +71,6 @@ class DataConvert{
     SharedPreferences prefs = await _prefs;
     stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
     stringDataUsers=stringDataUsers.replaceAll("\n]", ",\n$json\n]");
-    //stringDataUsers="$stringDataUsers, \n$json\n]";
     prefs.setString('userAvatarData',stringDataUsers);
     return user;
   }
