@@ -50,6 +50,7 @@ class DataConvert{
   }
   Future<void> _getStringDataSharedPreferences() async {
     SharedPreferences prefs = await _prefs;
+    idCurrentUser=prefs.getInt('id')??-1;
     stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
     prefs.setString('userAvatarData',stringDataUsers);
     stringDataMessages = prefs.getString('messagesData') ?? listMessagesFromJsonString;
@@ -76,8 +77,7 @@ class DataConvert{
     prefs.setString('userAvatarData',stringDataUsers);
     return user;
   }
-  createListUsersAfterLogin()async{
-    await getCurrentIDUser();
+  createListUsersAfterLogin(){
     listUsersAfterLogin.clear();
     if(idCurrentUser==-1){
       listUsersAfterLogin.addAll(listUsers);
@@ -95,9 +95,5 @@ class DataConvert{
       list.removeAt(index);
       listUsersAfterLogin.addAll(list);
     }
-  }
-  getCurrentIDUser()async{
-    SharedPreferences prefs = await _prefs;
-    idCurrentUser=prefs.getInt('id')??-1;
   }
 }
