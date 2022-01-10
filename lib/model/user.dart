@@ -21,4 +21,8 @@ class User{
     'picture': picture,
     'cover': cover
   };
+  static List<User> parseData(map){
+    var list=map['likes'] as List;
+    return list.map((user) => User.fromJson(user)).toList();
+  }
 }

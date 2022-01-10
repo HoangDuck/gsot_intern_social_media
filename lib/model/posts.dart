@@ -1,4 +1,5 @@
-import 'package:social_media/model/User.dart';
+import 'package:social_media/model/comment.dart';
+import 'package:social_media/model/user.dart';
 
 class Post{
   int? id;
@@ -7,9 +8,10 @@ class Post{
   String? image;
   int? numberLikes;
   int? numberComments;
-
+  List<User>? likes;
+  List<Comment>? comments;
   Post({this.id, this.user, this.content, this.image, this.numberLikes,
-      this.numberComments});
+      this.numberComments,this.likes,this.comments});
 
   factory Post.fromJson(map){
     return Post(
@@ -18,7 +20,9 @@ class Post{
         content: map['content'],
         image: map['image'],
       numberLikes:map['numberlikes'],
-      numberComments: map['numbercomments']
+      numberComments: map['numbercomments'],
+      likes: User.parseData(map),
+      comments: Comment.parseData(map)
     );
   }
   Map<String,dynamic> toJson() => {
@@ -27,6 +31,8 @@ class Post{
     'content': content,
     'image': image,
     'numberlikes': numberLikes,
-    'numbercomments': numberComments
+    'numbercomments': numberComments,
+    'likes': likes,
+    'comments': comments
   };
 }

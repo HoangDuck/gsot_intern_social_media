@@ -21,13 +21,13 @@ class DataConvert{
   String stringDataUsers="";
   String stringDataMessages="";
   String stringDataNotifiers="";
-
+  String stringDataPosts="";
   DataConvert();
 
   Future<bool> initData() async{
     await _getStringDataSharedPreferences();
     //chuyển Json qua list của Posts
-    Iterable l = jsonDecode(listPostsFromJsonString);
+    Iterable l = jsonDecode(stringDataPosts);
     List<Post> posts = List<Post>.from(l.map((model)=> Post.fromJson(model)));
     listPosts.clear();
     listPosts.addAll(posts);
@@ -57,6 +57,8 @@ class DataConvert{
     prefs.setString('messagesData',stringDataMessages);
     stringDataNotifiers = prefs.getString('notifiersData') ?? listNotifiersFromJsonString;
     prefs.setString('notifiersData',stringDataNotifiers);
+    stringDataPosts=prefs.getString("postsData")?? listPostsFromJsonString;
+    prefs.setString("postsData", stringDataPosts);
   }
   Future<User> insertDataUserAvatar(String name,String nickname) async {
     int id=listUsers.length+1;

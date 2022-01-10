@@ -114,8 +114,14 @@ const String posts='''
       },
     "content": "Hello this is my first time. I've got to GSOT.",
     "image": "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/bamboo_staff_2.jpg?alt=media&token=45fa8353-a38a-4080-a2c2-72dffcb3c8ac",
-    "numberlikes": 12,
-    "numbercomments": 13
+    "numberlikes": 0,
+    "numbercomments": 0,
+    "likes":
+    [
+    ],
+    "comments":
+    [
+    ]
   },
   {
     "id":2,
@@ -129,8 +135,14 @@ const String posts='''
       },
     "content": "Hello today i go to school.",
     "image": "",
-    "numberlikes": 2,
-    "numbercomments": 0
+    "numberlikes": 0,
+    "numbercomments": 0,
+    "likes":
+    [
+    ],
+    "comments":
+    [
+    ]
   },
   {
     "id":3,
@@ -144,8 +156,14 @@ const String posts='''
       },
     "content": "I met Tim Cook, Bill Gates,...",
     "image": "",
-    "numberlikes": 12000,
-    "numbercomments": 1300
+    "numberlikes": 0,
+    "numbercomments": 0,
+    "likes":
+    [
+    ],
+    "comments":
+    [
+    ]
   },
   {
     "id":4,
@@ -159,8 +177,14 @@ const String posts='''
       },
     "content": "Today. I go to HCMUTE.",
     "image": "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/cach-lam-sua-chua-don-gian-tai-nha.jpg?alt=media&token=65eb2fd3-b952-4ae5-8832-a207ed08e9b9",
-    "numberlikes": 30,
-    "numbercomments": 15
+    "numberlikes": 0,
+    "numbercomments": 0,
+    "likes":
+    [
+    ],
+    "comments":
+    [
+    ]
   },
   {
     "id":5,
@@ -174,8 +198,14 @@ const String posts='''
       },
     "content": "Hello I'm Intership of GSOT.",
     "image": "https://firebasestorage.googleapis.com/v0/b/quickstart-1614695450393.appspot.com/o/hqdefault.jpg?alt=media&token=4bb05076-8a6d-4b8f-9d4c-2dd1d8fb8b70",
-    "numberlikes": 1,
-    "numbercomments": 1
+    "numberlikes": 0,
+    "numbercomments": 0,
+    "likes":
+    [
+    ],
+    "comments":
+    [
+    ]
   }
 ]
 ''';
