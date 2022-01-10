@@ -257,6 +257,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
+    dataConvert.createListUsersAfterLogin();
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxHeight: 84.0,
@@ -265,7 +266,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
         itemCount: dataConvert.listUsers.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context,i) => _buildRow(dataConvert.listUsers[i]),
+        itemBuilder: (context,i) => _buildRow(dataConvert.listUsersAfterLogin[i]),
       ),
     );
   }

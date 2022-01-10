@@ -191,6 +191,9 @@ class _RegisterState extends State<Register> {
               String username=txtToDoControllerUsername.text;
               String password=txtToDoControllerPassword.text;
               insertData(dataConvert,loginDataConverter,profileDataConverter,name, nickname, username, password);
+              setState(() {
+
+              });
             }catch(e){
               log(e.toString()+"HCMUTE");
             }

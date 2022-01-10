@@ -43,14 +43,12 @@ class ProfileDataConverter{
   }
   insertData(User user)async{
     int id=listUserProfiles.length+1;
-    print(listUserProfiles.length);
-    print(id);
     String json='''
   {
     "id":$id,
     "user":
     {
-      "id":"${user.id}",
+      "id":${user.id},
       "name":"${user.name}",
       "nickname": "${user.nickname}",
       "picture": "${user.picture}",
@@ -66,7 +64,6 @@ class ProfileDataConverter{
     SharedPreferences prefs = await _prefs;
     stringData = prefs.getString('profileUserData') ?? profileData;
     stringData=stringData.replaceAll("\n]", ",\n$json\n]");
-    print(json.toString());
-    prefs.setString('profileUserData',stringData);
+    await prefs.setString('profileUserData',stringData);
   }
 }

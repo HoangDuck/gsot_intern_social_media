@@ -26,8 +26,6 @@ class LoginDataConverter{
   }
   insertData(User user,String username, String password)async{
     int id=listUserLogins.length+1;
-    print(listUserLogins.length);
-    print(id);
     UserLogin userLogin=UserLogin(id: id,user: user,username: username,password: password);
     String json='''
   {
@@ -46,7 +44,6 @@ class LoginDataConverter{
     SharedPreferences prefs = await _prefs;
     stringData = prefs.getString('loginData') ?? loginData;
     stringData=stringData.replaceAll("\n]", ",\n$json\n]");
-    print(json.toString());
     prefs.setString('loginData',stringData);
   }
 }

@@ -15,6 +15,8 @@ class DataConvert{
   final List<Message> listMessages=[];
   final List<Post> listPosts=[];
   final List<User> listUsers=[];
+  int idCurrentUser=-1;
+  final List<User> listUsersAfterLogin=[];
   final List<Notifier> listNotifiers=[];
   String stringDataUsers="";
   String stringDataMessages="";
@@ -57,8 +59,6 @@ class DataConvert{
   }
   Future<User> insertDataUserAvatar(String name,String nickname) async {
     int id=listUsers.length+1;
-    print(listUsers.length);
-    print(id);
     String picture="";
     String cover="";
     User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
@@ -73,8 +73,30 @@ class DataConvert{
     SharedPreferences prefs = await _prefs;
     stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
     stringDataUsers=stringDataUsers.replaceAll("\n]", ",\n$json\n]");
-    print(json.toString());
     prefs.setString('userAvatarData',stringDataUsers);
     return user;
+  }
+  createListUsersAfterLogin()async{
+    getCurrentIDUser();
+    if(idCurrentUser==-1){
+      listUsersAfterLogin.addAll(listUsers);
+      return;
+    }
+    else{
+      List<User> list=[];
+      list.addAll(listUsers);
+      int index=-1;
+      for(int i=0;i<list.length;i++){
+        if(list[i].id==idCurrentUser){
+          index=i;
+        }
+      }
+      list.removeAt(index);
+      listUsersAfterLogin.addAll(list);
+    }
+  }
+  getCurrentIDUser()async{
+    SharedPreferences prefs = await _prefs;
+    idCurrentUser=prefs.getInt('id')??-1;
   }
 }

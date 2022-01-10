@@ -91,19 +91,20 @@ class _ListAvatarState extends State<ListAvatar> {
   }
   Widget _buildSuggestions(){
     DataConvert dataConvert=Provider.of<DataConvert>(context);
+    dataConvert.createListUsersAfterLogin();
     return ListView.builder(
-      itemCount: dataConvert.listUsers.length+1,
+      itemCount: dataConvert.listUsersAfterLogin.length+1,
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context,i){
         if(i==0){
-          return _AddingWidget();
+          return _addingWidget();
         }
-        return _buildRow(dataConvert.listUsers[i-1]);
+        return _buildRow(dataConvert.listUsersAfterLogin[i-1]);
       },
     );
   }
-  Widget _AddingWidget(){
+  Widget _addingWidget(){
     return SizedBox(
         width: 60.0,
         height: 60.0,

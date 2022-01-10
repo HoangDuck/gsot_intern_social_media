@@ -42,7 +42,12 @@ class InfoProfile extends StatelessWidget {
               height: MediaQuery.of(context).size.height*0.3,
               color: Colors.black,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(profileDataConvert.profileDataConverter.user!.cover.toString()),
+              child: Image.network(
+                  profileDataConvert.profileDataConverter.user!.cover.toString(),
+                  errorBuilder: (context,error,stacktrace){
+                    return Container();
+                  },
+              ),
             )
         ),
         Positioned(

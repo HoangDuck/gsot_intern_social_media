@@ -159,6 +159,12 @@ class _LoginPageUIState extends State<LoginPageUI> {
                     _prefs.then((value) async{
                       return await value.setInt('id', idUser!);
                     });
+                    //dang nhap thanh cong thi xoa canh bao
+                    setState(() {
+                      txtToDoControllerUsername.text="";
+                      txtToDoControllerPassword.text="";
+                      _stateLogin="";
+                    });
                     Navigator.push(
                         context,
                         PageTransition(
