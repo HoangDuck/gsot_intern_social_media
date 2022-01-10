@@ -77,7 +77,8 @@ class DataConvert{
     return user;
   }
   createListUsersAfterLogin()async{
-    getCurrentIDUser();
+    await getCurrentIDUser();
+    listUsersAfterLogin.clear();
     if(idCurrentUser==-1){
       listUsersAfterLogin.addAll(listUsers);
       return;

@@ -6,6 +6,7 @@ import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
 import 'package:social_media/converter/profile_data_converter.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/view/popupsuccess.dart';
 //import 'package:page_transition/page_transition.dart';
 class RegisterProviderUI extends StatelessWidget {
   const RegisterProviderUI({Key? key}) : super(key: key);
@@ -192,7 +193,10 @@ class _RegisterState extends State<Register> {
               String password=txtToDoControllerPassword.text;
               insertData(dataConvert,loginDataConverter,profileDataConverter,name, nickname, username, password);
               setState(() {
-
+                //set state để không bị thông báo success khi người dùng nhấn 1 lần nữa
+                _stateRegister="";
+                _stateRegisterName="";
+                popupSuccess(context);
               });
             }catch(e){
               log(e.toString()+"HCMUTE");

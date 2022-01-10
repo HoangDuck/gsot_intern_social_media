@@ -263,7 +263,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
         maxHeight: 84.0,
       ),
       child: ListView.builder(
-        itemCount: dataConvert.listUsers.length,
+        itemCount: dataConvert.listUsersAfterLogin.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context,i) => _buildRow(dataConvert.listUsersAfterLogin[i]),
