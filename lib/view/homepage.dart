@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/view/uploadstatus.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -122,6 +124,18 @@ class _ListAvatarState extends State<ListAvatar> {
                 color: Colors.grey,
                 icon: const Icon(Icons.add),
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          child: SafeArea(
+                              child: Provider.value(
+                                  value: Provider.of<DataConvert>(context,listen: false),
+                                  child: UploadStatus()
+                              )
+                          )
+                      )
+                  );
                   },
               ),
             ),

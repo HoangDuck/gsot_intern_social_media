@@ -298,7 +298,7 @@ class _PagesState extends State<Pages> {
                 icon: const Icon(Icons.my_library_add_rounded),
                 onPressed: () {
                   setState(() {
-                    PopupAdd(context);
+                    popupAdd(context);
                   });
                 },
               ),

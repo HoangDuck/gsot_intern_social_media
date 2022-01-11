@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string_profile.dart';
 import 'package:social_media/model/user.dart';
 import 'package:social_media/model/user_profile.dart';
-
+// import 'package:path_provider/path_provider.dart';
+// import 'dart:io';
 final String profileData=profile;
 
 class ProfileDataConverter{
@@ -64,6 +65,12 @@ class ProfileDataConverter{
     SharedPreferences prefs = await _prefs;
     stringData = prefs.getString('profileUserData') ?? profileData;
     stringData=stringData.replaceAll("\n]", ",\n$json\n]");
+    //_write(stringData);
     await prefs.setString('profileUserData',stringData);
   }
+  // _write(String text) async {
+  //   final Directory directory = await getApplicationDocumentsDirectory();
+  //   final File file = File('${directory.path}/my_file.txt');
+  //   await file.writeAsString(text);
+  // }
 }

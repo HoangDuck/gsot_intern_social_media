@@ -16,6 +16,7 @@ class DataConvert{
   final List<Post> listPosts=[];
   final List<User> listUsers=[];
   int idCurrentUser=-1;
+  User currentUser=User();
   final List<User> listUsersAfterLogin=[];
   final List<Notifier> listNotifiers=[];
   String stringDataUsers="";
@@ -92,10 +93,43 @@ class DataConvert{
       for(int i=0;i<list.length;i++){
         if(list[i].id==idCurrentUser){
           index=i;
+          currentUser=list[i];
         }
       }
       list.removeAt(index);
       listUsersAfterLogin.addAll(list);
     }
+  }
+  Future<void> insertDataPost(String content,String image) async {
+    int id=listPosts.length+1;
+    //User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
+    String json='''
+    {
+      "id":$id,
+      "user": 
+      {
+        "id":${currentUser.id},
+        "name":"${currentUser.name}",
+        "nickname": "${currentUser.nickname}",
+        "picture": "${currentUser.picture}",
+        "cover": "${currentUser.cover}"
+      },
+      "content": "$content",
+      "image": "$image",
+      "numberlikes": 0,
+      "numbercomments": 0,
+      "likes":
+      [
+      ],
+      "comments":
+      [
+      ]
+    }''';
+    SharedPreferences prefs = await _prefs;
+    stringDataPosts = prefs.getString('stringDataPosts') ?? listPostsFromJsonString;
+    stringDataPosts=stringDataPosts.replaceAll("\n]", ",\n$json\n]");
+    prefs.setString('stringDataPosts',stringDataPosts);
+    Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
+    listPosts.add(post);
   }
 }

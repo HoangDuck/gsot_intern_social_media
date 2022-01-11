@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:social_media/view/uploadstatus.dart';
 
-PopupAdd(context){
+popupAdd(context){
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -121,6 +123,16 @@ PopupAdd(context){
                                           color: Colors.white,
                                           icon: const Icon(Icons.sms_outlined),
                                           onPressed: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                    type: PageTransitionType.fade,
+                                                    child: SafeArea(
+                                                        child: UploadStatus()
+                                                    )
+                                                )
+                                            );
                                           },
                                         ),
                                         const Text(
