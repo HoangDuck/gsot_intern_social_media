@@ -127,10 +127,11 @@ class DataConvert{
     ]
   }''';
     SharedPreferences prefs = await _prefs;
-    stringDataPosts = prefs.getString('stringDataPosts') ?? listPostsFromJsonString;
+    stringDataPosts = prefs.getString('postsData') ?? listPostsFromJsonString;
     stringDataPosts=stringDataPosts.replaceAll("\n]", ",\n$json\n]");
     // _write(stringDataPosts);
-    prefs.setString('stringDataPosts',stringDataPosts);
+    print(json);
+    prefs.setString('postsData',stringDataPosts);
     Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
     listPosts.add(post);
   }

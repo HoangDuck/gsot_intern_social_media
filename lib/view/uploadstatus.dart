@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:path/path.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -164,7 +165,8 @@ class _UploadStatusState extends State<UploadStatus> {
   }
   Future<String> storeImageAndGetPath(File file) async{
       final Directory directory = await getApplicationDocumentsDirectory();
-      final File newImage = await file.copy('${directory.path}/image.jpg');
+      String fileName=basename(file.path);
+      final File newImage = await file.copy('${directory.path}/$fileName');
       return newImage.path.toString();
   }
   Widget _previewImages() {

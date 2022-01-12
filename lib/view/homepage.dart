@@ -136,6 +136,9 @@ class _ListAvatarState extends State<ListAvatar> {
                           )
                       )
                   );
+                  setState(() {
+
+                  });
                   },
               ),
             ),
