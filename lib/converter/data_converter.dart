@@ -1,5 +1,7 @@
 import 'dart:convert';
+//import 'dart:io';
 //import 'dart:math';
+//import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string.dart';
 import 'package:social_media/model/messages.dart';
@@ -102,34 +104,39 @@ class DataConvert{
   }
   Future<void> insertDataPost(String content,String image) async {
     int id=listPosts.length+1;
-    //User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
     String json='''
+  {
+    "id":$id,
+    "user": 
     {
-      "id":$id,
-      "user": 
-      {
-        "id":${currentUser.id},
-        "name":"${currentUser.name}",
-        "nickname": "${currentUser.nickname}",
-        "picture": "${currentUser.picture}",
-        "cover": "${currentUser.cover}"
-      },
-      "content": "$content",
-      "image": "$image",
-      "numberlikes": 0,
-      "numbercomments": 0,
-      "likes":
-      [
-      ],
-      "comments":
-      [
-      ]
-    }''';
+      "id":${currentUser.id},
+      "name":"${currentUser.name}",
+      "nickname": "${currentUser.nickname}",
+      "picture": "${currentUser.picture}",
+      "cover": "${currentUser.cover}"
+    },
+    "content": "$content",
+    "image": "$image",
+    "numberlikes": 0,
+    "numbercomments": 0,
+    "likes":
+    [
+    ],
+    "comments":
+    [
+    ]
+  }''';
     SharedPreferences prefs = await _prefs;
     stringDataPosts = prefs.getString('stringDataPosts') ?? listPostsFromJsonString;
     stringDataPosts=stringDataPosts.replaceAll("\n]", ",\n$json\n]");
+    // _write(stringDataPosts);
     prefs.setString('stringDataPosts',stringDataPosts);
     Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
     listPosts.add(post);
   }
+  // _write(String text) async {
+  //   final Directory directory = await getApplicationDocumentsDirectory();
+  //   final File file = File('${directory.path}/my_file.txt');
+  //   await file.writeAsString(text);
+  // }
 }

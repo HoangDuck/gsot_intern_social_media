@@ -19,6 +19,11 @@ class _UploadStatusState extends State<UploadStatus> {
   set _imageFile(XFile? value) {
     _imageFilePicker = value;
   }
+  @override
+  void initState() {
+    super.initState();
+    txtToDoControllerContent= TextEditingController();
+  }
   // Pick an image
   @override
   Widget build(BuildContext context) {
@@ -93,7 +98,6 @@ class _UploadStatusState extends State<UploadStatus> {
               ),
               TextFormField(
                 controller: txtToDoControllerContent,
-                initialValue: 'What do you think?',
                 cursorColor: Colors.black,
                 maxLines: 5,
                 decoration: InputDecoration(
@@ -104,7 +108,7 @@ class _UploadStatusState extends State<UploadStatus> {
                     disabledBorder: InputBorder.none,
                     contentPadding:
                     EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: "Tell your thinking here"),
+                    hintText: "What do you think?"),
               ),
               Expanded(
                 child: Container(
@@ -126,10 +130,16 @@ class _UploadStatusState extends State<UploadStatus> {
                       icon: Icon(Icons.image),
                   ),
                   IconButton(
-                    onPressed: (){
-                      File file=_imageFilePicker as File;
-                      String pathImage=storeImageAndGetPath(file).then((value) => "null") as String;
-                      String content=txtToDoControllerContent.text;
+                    onPressed: ()async{
+                      String pathImage,content;
+                      content=txtToDoControllerContent.text;
+                      try{
+                        File file=File(_imageFilePicker!.path);
+                        pathImage=await storeImageAndGetPath(file);
+                      }catch(e){
+                        pathImage="";
+                      }
+
                       dataConvert.insertDataPost(content, pathImage);
                       Navigator.pop(context);
                       MyImageCache imageCache=MyImageCache();
@@ -154,7 +164,7 @@ class _UploadStatusState extends State<UploadStatus> {
   }
   Future<String> storeImageAndGetPath(File file) async{
       final Directory directory = await getApplicationDocumentsDirectory();
-      final File newImage = await file.copy('${directory.toString()}/image1.png');
+      final File newImage = await file.copy('${directory.path}/image.jpg');
       return newImage.path.toString();
   }
   Widget _previewImages() {
@@ -166,21 +176,10 @@ class _UploadStatusState extends State<UploadStatus> {
                     : Image.file(File(_imageFilePicker!.path)),
               );
     } else if (_imageFilePicker == null) {
-      return Text(
-        'Pick image error: $_imageFilePicker',
-        textAlign: TextAlign.center,
-      );
+      return Container();
     } else {
-      return const Text(
-        '',
-        textAlign: TextAlign.center,
-      );
+      return Container();
     }
-  }
-  @override
-  void initState() {
-    super.initState();
-    txtToDoControllerContent= TextEditingController();
   }
 }
 class MyImageCache extends ImageCache {
