@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -278,7 +279,15 @@ class _ListPostsState extends State<ListPosts> {
                   child: Image.network(
                     data.image.toString(),
                     errorBuilder: (context,error,stacktrace){
-                      return Container();
+                      if(data.image.toString()==""){
+                        return Container();
+                      }
+                      return Image.file(
+                          File(data.image.toString()),
+                        errorBuilder: (context,error,stacktrace){
+                            return Container();
+                        },
+                      );
                     },
                   ),
                 ),
