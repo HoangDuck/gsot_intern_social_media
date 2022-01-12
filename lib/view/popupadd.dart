@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/view/uploadstatus.dart';
 
-popupAdd(context){
+popupAdd(BuildContext context,DataConvert dataConvert){
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -129,7 +131,9 @@ popupAdd(context){
                                                 PageTransition(
                                                     type: PageTransitionType.fade,
                                                     child: SafeArea(
-                                                        child: UploadStatus()
+                                                        child: Provider.value(
+                                                          value: dataConvert,
+                                                            child: UploadStatus())
                                                     )
                                                 )
                                             );
