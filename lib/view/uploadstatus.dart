@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/user.dart';
@@ -14,7 +15,7 @@ class UploadStatus extends StatefulWidget {
 class _UploadStatusState extends State<UploadStatus> {
   final ImagePicker _picker = ImagePicker();
   XFile? _imageFilePicker;
-
+  late TextEditingController txtToDoControllerContent;
   set _imageFile(XFile? value) {
     _imageFilePicker = value;
   }
@@ -91,6 +92,7 @@ class _UploadStatusState extends State<UploadStatus> {
                 ),
               ),
               TextFormField(
+                controller: txtToDoControllerContent,
                 initialValue: 'What do you think?',
                 cursorColor: Colors.black,
                 maxLines: 5,
@@ -125,6 +127,13 @@ class _UploadStatusState extends State<UploadStatus> {
                   ),
                   IconButton(
                     onPressed: (){
+                      File file=_imageFilePicker as File;
+                      String pathImage=storeImageAndGetPath(file).then((value) => "null") as String;
+                      String content=txtToDoControllerContent.text;
+                      dataConvert.insertDataPost(content, pathImage);
+                      Navigator.pop(context);
+                      MyImageCache imageCache=MyImageCache();
+                      imageCache.clear();
                     },
                     icon: Icon(Icons.send),
                   ),
@@ -137,11 +146,16 @@ class _UploadStatusState extends State<UploadStatus> {
     );
   }
   void _onImageButtonPressed(ImageSource source, {BuildContext? context}) async {
-    final pickedFile = await _picker.pickImage(source: source,);
+    final pickedFile = await _picker.pickImage(source: source);
     setState(() {
       _imageFile = pickedFile;
       },
     );
+  }
+  Future<String> storeImageAndGetPath(File file) async{
+      final Directory directory = await getApplicationDocumentsDirectory();
+      final File newImage = await file.copy('${directory.toString()}/image1.png');
+      return newImage.path.toString();
   }
   Widget _previewImages() {
     if (_imageFilePicker != null) {
@@ -151,7 +165,7 @@ class _UploadStatusState extends State<UploadStatus> {
                     ? Image.network(_imageFilePicker.toString())
                     : Image.file(File(_imageFilePicker!.path)),
               );
-    } else if (_imageFilePicker != null) {
+    } else if (_imageFilePicker == null) {
       return Text(
         'Pick image error: $_imageFilePicker',
         textAlign: TextAlign.center,
@@ -166,6 +180,8 @@ class _UploadStatusState extends State<UploadStatus> {
   @override
   void initState() {
     super.initState();
-
+    txtToDoControllerContent= TextEditingController();
   }
+}
+class MyImageCache extends ImageCache {
 }
