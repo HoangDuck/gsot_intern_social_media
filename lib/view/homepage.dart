@@ -198,12 +198,13 @@ class _ListPostsState extends State<ListPosts> {
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
+    int length=dataConvert.listPosts.length;
     return Expanded(
       child: ListView.builder(
         itemCount: dataConvert.listPosts.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
-          return _buildRow(dataConvert.listPosts[i]);
+          return _buildRow(dataConvert.listPosts[length-1-i]);
         },
       ),
     );

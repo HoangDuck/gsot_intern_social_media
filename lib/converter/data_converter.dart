@@ -131,7 +131,6 @@ class DataConvert with ChangeNotifier{
     stringDataPosts = prefs.getString('postsData') ?? listPostsFromJsonString;
     stringDataPosts=stringDataPosts.replaceAll("\n]", ",\n$json\n]");
     // _write(stringDataPosts);
-    print(json);
     prefs.setString('postsData',stringDataPosts);
     Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
     listPosts.add(post);
