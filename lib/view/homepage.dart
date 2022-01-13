@@ -199,17 +199,19 @@ class _ListPostsState extends State<ListPosts> {
   Widget build(BuildContext context) {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
     int length=dataConvert.listPosts.length;
+    User user=dataConvert.currentUser;
     return Expanded(
       child: ListView.builder(
         itemCount: dataConvert.listPosts.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
-          return _buildRow(dataConvert.listPosts[length-1-i]);
+          return _buildRow(dataConvert.listPosts[length-1-i],user,dataConvert);
         },
       ),
     );
   }
-  Widget _buildRow(Post data) {
+  Widget _buildRow(Post data,User user,DataConvert dataConvert) {
+    bool colorIcon=dataConvert.isUserLikeThePost(data, user);
     return Container(
         padding: const EdgeInsets.all(10),
         child: Container(
@@ -302,10 +304,20 @@ class _ListPostsState extends State<ListPosts> {
                   child: Row(
                     children: [
                       const SizedBox(width: 15,),
-                      const Icon(Icons.chat_bubble_outlined),
+                      IconButton(icon: Icon(Icons.chat_bubble_outlined),onPressed: (){
+
+                      },),
                       Text(data.numberComments.toString(),style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                       const SizedBox(width: 15,),
-                      const Icon(Icons.favorite),
+                      IconButton(
+                          icon: colorIcon
+                              ? Icon(Icons.favorite,color: Colors.red,)
+                              : Icon(Icons.favorite,),
+                        onPressed: (){
+                        setState(() {
+                          dataConvert.onLikeButtonPress(data, user);
+                        });
+                      },),
                       Text(data.numberLikes.toString(),style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                       Expanded(
                         child: Container(

@@ -141,4 +141,25 @@ class DataConvert with ChangeNotifier{
   //   final File file = File('${directory.path}/my_file.txt');
   //   await file.writeAsString(text);
   // }
+  onLikeButtonPress(Post post,User user){
+    if(isUserLikeThePost(post, user)){
+      post.likes!.remove(user);
+      if(post.numberLikes!=null){
+        post.numberLikes=post.numberLikes!-1;
+      }
+    }else{
+      post.likes!.add(user);
+      if(post.numberLikes!=null){
+        post.numberLikes=post.numberLikes!+1;
+      }
+    }
+  }
+  bool isUserLikeThePost(Post post,User user){
+    for(int i=0;i<post.likes!.length;i++){
+      if(post.likes![i].id==user.id){
+        return true;
+      }
+    }
+    return false;
+  }
 }
