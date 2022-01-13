@@ -50,7 +50,19 @@ class DataConvert with ChangeNotifier{
     List<Notifier> notifiers = List<Notifier>.from(l.map((model)=> Notifier.fromJson(model)));
     listNotifiers.clear();
     listNotifiers.addAll(notifiers);
+    encodeJson(listUsers,listMessages,listNotifiers,listPosts);
     return true;
+  }
+  Future<void> encodeJson(List<User> listUsers,List<Message> listMessages,List<Notifier> listNotifiers,List<Post> listPosts,) async {
+    SharedPreferences prefs = await _prefs;
+    var jsonUsers=jsonEncode(listUsers);
+    prefs.setString('userAvatarData',jsonUsers);
+    var jsonMessages=jsonEncode(listMessages);
+    prefs.setString('messagesData',jsonMessages);
+    var jsonNotifiers=jsonEncode(listNotifiers);
+    prefs.setString('notifiersData',jsonNotifiers);
+    var jsonPosts=jsonEncode(listPosts);
+    prefs.setString("postsData", jsonPosts);
   }
   Future<void> _getStringDataSharedPreferences() async {
     SharedPreferences prefs = await _prefs;
@@ -153,6 +165,9 @@ class DataConvert with ChangeNotifier{
         post.numberLikes=post.numberLikes!+1;
       }
     }
+    var json=jsonEncode(listPosts);
+    stringDataPosts=json;
+    updateDataPost(stringDataPosts);
   }
   bool isUserLikeThePost(Post post,User user){
     for(int i=0;i<post.likes!.length;i++){
@@ -161,5 +176,9 @@ class DataConvert with ChangeNotifier{
       }
     }
     return false;
+  }
+  Future<void> updateDataPost(String stringData) async {
+    SharedPreferences prefs = await _prefs;
+    prefs.setString('postsData',stringData);
   }
 }
