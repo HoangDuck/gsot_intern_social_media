@@ -131,7 +131,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                                                 PageTransition(
                                                     type: PageTransitionType.fade,
                                                     child: SafeArea(
-                                                        child: Provider.value(
+                                                        child: ChangeNotifierProvider<DataConvert>.value(
                                                           value: dataConvert,
                                                             child: UploadStatus())
                                                     )

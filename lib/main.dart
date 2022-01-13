@@ -235,7 +235,7 @@ class PageAfterLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<DataConvert>.value(
+    return ChangeNotifierProvider<DataConvert>.value(
       value: DataConvert(),
       child: Pages(),
     );
@@ -266,9 +266,10 @@ class _PagesState extends State<Pages> {
   }
   //UI Homepage
   Widget buildHomePage(BuildContext context){
-    return Consumer<DataConvert>(
-      builder: (context,dataConvert,child) =>
-      Scaffold(
+    DataConvert dataConvert=Provider.of<DataConvert>(context);
+    return ChangeNotifierProvider<DataConvert>.value(
+      value: dataConvert,
+      child: Scaffold(
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: SizedBox(

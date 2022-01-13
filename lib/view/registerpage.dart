@@ -19,7 +19,7 @@ class RegisterProviderUI extends StatelessWidget {
         MultiProvider(
         providers: [
           Provider<LoginDataConverter>.value(value: LoginDataConverter()),
-          Provider<DataConvert>.value(value: DataConvert()),
+          ChangeNotifierProvider<DataConvert>.value(value: DataConvert()),
           Provider<ProfileDataConverter>.value(value: ProfileDataConverter()),
         ],
           child:Register()

@@ -66,10 +66,10 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 10),
-          const ListAvatar(),
-          const SizedBox(height: 10),
-          const ListPosts(),
+          SizedBox(height: 10),
+          ListAvatar(),
+          SizedBox(height: 10),
+          ListPosts(),
         ],
       ),
     );
@@ -130,16 +130,13 @@ class _ListAvatarState extends State<ListAvatar> {
                       PageTransition(
                           type: PageTransitionType.fade,
                           child: SafeArea(
-                              child: Provider.value(
+                              child: ChangeNotifierProvider.value(
                                   value: Provider.of<DataConvert>(context,listen: false),
                                   child: UploadStatus()
                               )
                           )
                       )
                   );
-                  setState(() {
-
-                  });
                   },
               ),
             ),

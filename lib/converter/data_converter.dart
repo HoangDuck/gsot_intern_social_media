@@ -2,6 +2,7 @@ import 'dart:convert';
 //import 'dart:io';
 //import 'dart:math';
 //import 'package:path_provider/path_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string.dart';
 import 'package:social_media/model/messages.dart';
@@ -12,7 +13,7 @@ final String listPostsFromJsonString=posts;
 final String listMessagesFromJsonString=messages;
 final String listUsersFromJsonString=users;
 final String listNotifiersFromJsonString=notifiers;
-class DataConvert{
+class DataConvert with ChangeNotifier{
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final List<Message> listMessages=[];
   final List<Post> listPosts=[];
@@ -130,9 +131,11 @@ class DataConvert{
     stringDataPosts = prefs.getString('postsData') ?? listPostsFromJsonString;
     stringDataPosts=stringDataPosts.replaceAll("\n]", ",\n$json\n]");
     // _write(stringDataPosts);
+    print(json);
     prefs.setString('postsData',stringDataPosts);
     Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
     listPosts.add(post);
+    notifyListeners();
   }
   // _write(String text) async {
   //   final Directory directory = await getApplicationDocumentsDirectory();
