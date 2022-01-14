@@ -1,5 +1,6 @@
 import 'dart:convert';
 //import 'dart:io';
+//import 'dart:io';
 //import 'dart:math';
 //import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -81,18 +82,10 @@ class DataConvert with ChangeNotifier{
     String picture="";
     String cover="";
     User user=User(id: id,name: name,nickname: nickname,picture: picture,cover: cover);
-    String json='''
-    {
-      "id":$id,
-      "name":"${user.name}",
-      "nickname":"${user.nickname}",
-      "picture": "${user.picture}",
-      "cover": "${user.cover}"
-    }''';
+    listUsers.add(user);
+    var jsonUsers=jsonEncode(listUsers);
     SharedPreferences prefs = await _prefs;
-    stringDataUsers = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
-    stringDataUsers=stringDataUsers.replaceAll("\n]", ",\n$json\n]");
-    prefs.setString('userAvatarData',stringDataUsers);
+    prefs.setString('userAvatarData',jsonUsers);
     return user;
   }
   createListUsersAfterLogin(){
@@ -117,35 +110,12 @@ class DataConvert with ChangeNotifier{
   }
   Future<void> insertDataPost(String content,String image) async {
     int id=listPosts.length+1;
-    String json='''
-  {
-    "id":$id,
-    "user": 
-    {
-      "id":${currentUser.id},
-      "name":"${currentUser.name}",
-      "nickname": "${currentUser.nickname}",
-      "picture": "${currentUser.picture}",
-      "cover": "${currentUser.cover}"
-    },
-    "content": "$content",
-    "image": "$image",
-    "numberlikes": 0,
-    "numbercomments": 0,
-    "likes":
-    [
-    ],
-    "comments":
-    [
-    ]
-  }''';
-    SharedPreferences prefs = await _prefs;
-    stringDataPosts = prefs.getString('postsData') ?? listPostsFromJsonString;
-    stringDataPosts=stringDataPosts.replaceAll("\n]", ",\n$json\n]");
-    // _write(stringDataPosts);
-    prefs.setString('postsData',stringDataPosts);
     Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
+    SharedPreferences prefs = await _prefs;
+    // _write(stringDataPosts);
     listPosts.add(post);
+    var jsonPosts=jsonEncode(listPosts);
+    prefs.setString('postsData',jsonPosts);
     notifyListeners();
   }
   // _write(String text) async {
@@ -153,21 +123,25 @@ class DataConvert with ChangeNotifier{
   //   final File file = File('${directory.path}/my_file.txt');
   //   await file.writeAsString(text);
   // }
-  onLikeButtonPress(Post post,User user){
+  bool onLikeButtonPress(Post post,User user,List<Post> listPosts){
+    bool value=false;
     if(isUserLikeThePost(post, user)){
-      post.likes!.remove(user);
+      post.likes!.removeWhere((item) => item.id == user.id);
       if(post.numberLikes!=null){
         post.numberLikes=post.numberLikes!-1;
+        value=false;
       }
     }else{
       post.likes!.add(user);
       if(post.numberLikes!=null){
         post.numberLikes=post.numberLikes!+1;
+        value=true;
       }
     }
     var json=jsonEncode(listPosts);
     stringDataPosts=json;
     updateDataPost(stringDataPosts);
+    return value;
   }
   bool isUserLikeThePost(Post post,User user){
     for(int i=0;i<post.likes!.length;i++){

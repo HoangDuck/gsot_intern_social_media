@@ -18,6 +18,12 @@ class LoginDataConverter{
     List<UserLogin> userLogins = List<UserLogin>.from(l.map((model)=> UserLogin.fromJson(model)));
     listUserLogins.clear();
     listUserLogins.addAll(userLogins);
+    encodeJson(listUserLogins);
+  }
+  Future<void> encodeJson(List<UserLogin> listUserLogins) async {
+    SharedPreferences prefs = await _prefs;
+    var jsonUserLogins=jsonEncode(listUserLogins);
+    prefs.setString('loginData',jsonUserLogins);
   }
   Future<void> _getStringDataSharedPreferences() async {
     SharedPreferences prefs = await _prefs;
@@ -27,23 +33,7 @@ class LoginDataConverter{
   insertData(User user,String username, String password)async{
     int id=listUserLogins.length+1;
     UserLogin userLogin=UserLogin(id: id,user: user,username: username,password: password);
-    String json='''
-  {
-    "id":$id,
-    "user":
-    {
-      "id":${user.id},
-      "name":"${user.name}",
-      "nickname":"${user.nickname}",
-      "picture": "${user.picture}",
-      "cover": "${user.cover}"
-    },
-    "username": "${userLogin.username}",
-    "password": "${userLogin.password}"
-  }''';
-    SharedPreferences prefs = await _prefs;
-    stringData = prefs.getString('loginData') ?? loginData;
-    stringData=stringData.replaceAll("\n]", ",\n$json\n]");
-    prefs.setString('loginData',stringData);
+    listUserLogins.add(userLogin);
+    encodeJson(listUserLogins);
   }
 }

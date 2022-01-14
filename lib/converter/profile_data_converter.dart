@@ -26,6 +26,12 @@ class ProfileDataConverter{
     List<UserProfile> userProfiles = List<UserProfile>.from(l.map((model)=> UserProfile.fromJson(model)));
     listUserProfiles.clear();
     listUserProfiles.addAll(userProfiles);
+    encodeJson(listUserProfiles);
+  }
+  Future<void> encodeJson(List<UserProfile> listUserProfiles) async {
+    SharedPreferences prefs = await _prefs;
+    var jsonUserProfiles=jsonEncode(listUserProfiles);
+    prefs.setString('profileUserData',jsonUserProfiles);
   }
   Future<void> _getStringDataSharedPreferences() async {
     SharedPreferences prefs = await _prefs;
@@ -44,29 +50,9 @@ class ProfileDataConverter{
   }
   insertData(User user)async{
     int id=listUserProfiles.length+1;
-    String json='''
-  {
-    "id":$id,
-    "user":
-    {
-      "id":${user.id},
-      "name":"${user.name}",
-      "nickname": "${user.nickname}",
-      "picture": "${user.picture}",
-      "cover": "${user.cover}"
-    },
-    "posts": 0,
-    "followers": 0,
-    "following": 0,
-    "album":
-    [
-    ]
-  }''';
-    SharedPreferences prefs = await _prefs;
-    stringData = prefs.getString('profileUserData') ?? profileData;
-    stringData=stringData.replaceAll("\n]", ",\n$json\n]");
-    //_write(stringData);
-    await prefs.setString('profileUserData',stringData);
+    var userProfile=UserProfile(id: id,user: user,posts: 0,follower: 0,following: 0,listImage: []);
+    listUserProfiles.add(userProfile);
+    encodeJson(listUserProfiles);
   }
   // _write(String text) async {
   //   final Directory directory = await getApplicationDocumentsDirectory();

@@ -312,10 +312,10 @@ class _ListPostsState extends State<ListPosts> {
                       IconButton(
                           icon: colorIcon
                               ? Icon(Icons.favorite,color: Colors.red,)
-                              : Icon(Icons.favorite,),
+                              : Icon(Icons.favorite,color: Colors.black,),
                         onPressed: (){
                         setState(() {
-                          dataConvert.onLikeButtonPress(data, user);
+                          colorIcon=dataConvert.onLikeButtonPress(data, user,dataConvert.listPosts);
                         });
                       },),
                       Text(data.numberLikes.toString(),style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
