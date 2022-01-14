@@ -8,6 +8,8 @@ import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
 import 'package:social_media/view/uploadstatus.dart';
 
+import 'commentpage.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -305,8 +307,33 @@ class _ListPostsState extends State<ListPosts> {
                     children: [
                       const SizedBox(width: 15,),
                       IconButton(icon: Icon(Icons.chat_bubble_outlined),onPressed: (){
-
-                      },),
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.bottomToTop,
+                                child: SafeArea(
+                                    child: Container(
+                                      padding: EdgeInsets.all(20),
+                                      decoration: const ShapeDecoration(
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(55),topRight: Radius.circular(55)),
+                                        ),
+                                          shadows: [
+                                            BoxShadow(
+                                              color: Colors.black12,
+                                              spreadRadius: 5.0,
+                                              blurRadius: 5,
+                                            ),
+                                          ]
+                                      ),
+                                      child: CommentPage(post: data,dataConvert: dataConvert,),
+                                    ),
+                                )
+                            )
+                          );
+                        },
+                      ),
                       Text(data.numberComments.toString(),style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                       const SizedBox(width: 15,),
                       IconButton(
