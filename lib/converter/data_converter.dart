@@ -110,7 +110,7 @@ class DataConvert with ChangeNotifier{
   }
   Future<void> insertDataPost(String content,String image) async {
     int id=listPosts.length+1;
-    Post post=Post(id: id,user: currentUser,content: content,image: image,likes: [],comments: []);
+    Post post=Post(id: id,user: currentUser,content: content,image: image,numberLikes: 0,numberComments: 0,likes: [],comments: []);
     SharedPreferences prefs = await _prefs;
     // _write(stringDataPosts);
     listPosts.add(post);
