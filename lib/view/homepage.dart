@@ -327,7 +327,11 @@ class _ListPostsState extends State<ListPosts> {
                                             ),
                                           ]
                                       ),
-                                      child: CommentPage(post: data,dataConvert: dataConvert,),
+                                      child:
+                                      ChangeNotifierProvider.value(
+                                        value: dataConvert,
+                                          child: CommentPage(idPost: data.id,),
+                                      ),
                                     ),
                                 )
                             )

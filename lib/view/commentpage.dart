@@ -4,14 +4,14 @@ import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/comment.dart';
 import 'package:social_media/model/posts.dart';
-import 'package:social_media/view/uploadstatus.dart';
+//import 'package:social_media/view/uploadstatus.dart';
 class CommentPage extends StatefulWidget {
-  final Post post;
-  final DataConvert dataConvert;
-  const CommentPage({Key? key,required this.post,required this.dataConvert}) : super(key: key);
+  final int? idPost;
+  const CommentPage({Key? key,this.idPost}) : super(key: key);
 
   @override
   _CommentPageState createState() => _CommentPageState();
@@ -24,14 +24,17 @@ class _CommentPageState extends State<CommentPage> {
   set _imageFile(XFile? value) {
     _imageFilePicker = value;
   }
+
   @override
   Widget build(BuildContext context) {
+    DataConvert dataConvert=Provider.of<DataConvert>(context);
+    Post post=findPost(widget.idPost!, dataConvert);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Material(
         child: Column(
           children: [
-            Expanded(child: _buildListComments()),
+            Expanded(child: _buildListComments(post)),
             Container(
               alignment: Alignment.topLeft,
                 child: _previewImages()
@@ -67,12 +70,16 @@ class _CommentPageState extends State<CommentPage> {
                     }catch(e){
                       pathImage="";
                     }
-                    await widget.dataConvert.insertDataComment(content,pathImage,widget.dataConvert.currentUser,widget.post);
-                    setState(() {
-
-                    });
-                    MyImageCache imageCache=MyImageCache();
-                    imageCache.clear();
+                    if(pathImage==""&&content==""){
+                      return;
+                    }else{
+                      await dataConvert.insertDataComment(content,pathImage,dataConvert.currentUser,widget.idPost!);
+                      XFile? file;
+                      _imageFilePicker=file;
+                      txtToDoControllerComment=TextEditingController();
+                      setState(() {
+                      });
+                    }
                     },
                 )
               ],
@@ -82,13 +89,21 @@ class _CommentPageState extends State<CommentPage> {
       ),
     );
   }
-  Widget _buildListComments(){
+  Post findPost(int idPost,DataConvert dataConvert){
+    for(int i=0;i<dataConvert.listPosts.length;i++){
+      if(dataConvert.listPosts[i].id==idPost){
+        return dataConvert.listPosts[i];
+      }
+    }
+    return Post();
+  }
+  Widget _buildListComments(Post post){
     return ListView.builder(
-        itemCount: widget.post.comments!.length,
+        itemCount: post.comments!.length,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
-          return _buildRow(widget.post.comments![i]);
+          return _buildRow(post.comments![i]);
         },
     );
   }

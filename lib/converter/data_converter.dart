@@ -156,11 +156,19 @@ class DataConvert with ChangeNotifier{
     SharedPreferences prefs = await _prefs;
     prefs.setString('postsData',stringData);
   }
-  Future<void> insertDataComment(String content,String image,User? user,Post post) async {
-    int id=post.comments!.length+1;
+  Future<void> insertDataComment(String content,String image,User? user,int idPost) async {
+    int numberComments=0;
+    int indexCurrentPost=0;
+    for(int i=0;i<listPosts.length;i++){
+      if(listPosts[i].id==idPost){
+        numberComments=listPosts[i].comments!.length;
+        indexCurrentPost=i;
+      }
+    }
+    int id=numberComments+1;
     Comment comment=Comment(id: id,user: user,content: content,image: image);
-    post.numberComments=post.numberComments!+1;
-    post.comments!.add(comment);
+    listPosts[indexCurrentPost].numberComments=listPosts[indexCurrentPost].numberComments!+1;
+    listPosts[indexCurrentPost].comments!.add(comment);
     SharedPreferences prefs = await _prefs;
     // _write(stringDataPosts);
     var jsonPosts=jsonEncode(listPosts);
