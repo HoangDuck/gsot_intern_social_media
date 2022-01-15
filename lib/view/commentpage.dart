@@ -31,7 +31,7 @@ class _CommentPageState extends State<CommentPage> {
       body: Material(
         child: Column(
           children: [
-            _buildListComments(),
+            Expanded(child: _buildListComments()),
             Container(
               alignment: Alignment.topLeft,
                 child: _previewImages()
@@ -83,15 +83,13 @@ class _CommentPageState extends State<CommentPage> {
     );
   }
   Widget _buildListComments(){
-    return Expanded(
-      child: ListView.builder(
+    return ListView.builder(
         itemCount: widget.post.comments!.length,
         shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
           return _buildRow(widget.post.comments![i]);
         },
-      ),
     );
   }
   Widget _buildRow(Comment comment){
@@ -127,25 +125,23 @@ class _CommentPageState extends State<CommentPage> {
                     ),
                   ]
               ),
-              child: Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(comment.user!.name.toString(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                      SizedBox(height: 5,),
-                      Text(comment.content.toString(), style: TextStyle(fontSize: 15),),
-                      SizedBox(height: 5,),
-                      Image.file(
-                        File(comment.image.toString()),
-                        errorBuilder: (context,error,stacktrace){
-                          return Container();
-                        },
-                      )
-                    ],
-                  ),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(comment.user!.name.toString(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                    SizedBox(height: 5,),
+                    Text(comment.content.toString(), style: TextStyle(fontSize: 15),),
+                    SizedBox(height: 5,),
+                    Image.file(
+                      File(comment.image.toString()),
+                      errorBuilder: (context,error,stacktrace){
+                        return Container();
+                      },
+                    )
+                  ],
                 ),
               ),
             ),
@@ -213,17 +209,3 @@ class _CommentPageState extends State<CommentPage> {
     }
   }
 }
-class BuildListComments extends StatefulWidget {
-  const BuildListComments({Key? key}) : super(key: key);
-
-  @override
-  _BuildListCommentsState createState() => _BuildListCommentsState();
-}
-
-class _BuildListCommentsState extends State<BuildListComments> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
