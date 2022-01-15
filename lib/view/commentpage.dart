@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/comment.dart';
 import 'package:social_media/model/posts.dart';
+import 'package:social_media/view/uploadstatus.dart';
 class CommentPage extends StatefulWidget {
   final Post post;
   final DataConvert dataConvert;
@@ -25,48 +26,72 @@ class _CommentPageState extends State<CommentPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: Material(
         child: Column(
           children: [
-            Expanded(child: _buildListComments()),
+            _buildListComments(),
+            Container(
+              alignment: Alignment.topLeft,
+                child: _previewImages()
+            ),
             Row(
               children: [
                 Expanded(
                   child:
-                    TextField(
+                  TextField(
                       controller: txtToDoControllerComment,
                       decoration: InputDecoration(
-                      labelText: "Comment...",
-                      border: OutlineInputBorder( //Outline border type for TextField
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                    )
+                        labelText: "Comment...",
+                        border: OutlineInputBorder( //Outline border type for TextField
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      )
+                    ),
                   ),
-                ),
                 IconButton(
                   icon: Icon(Icons.image),
                   onPressed: (){
                     _onImageButtonPressed(ImageSource.gallery, context: context);
-                  },),
+                    },
+                ),
                 IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: (){
+                  onPressed: () async {
+                    String pathImage,content;
+                    content=txtToDoControllerComment.text;
+                    try{
+                      File file=File(_imageFilePicker!.path);
+                      pathImage=await storeImageAndGetPath(file);
+                    }catch(e){
+                      pathImage="";
+                    }
+                    await widget.dataConvert.insertDataComment(content,pathImage,widget.dataConvert.currentUser,widget.post);
+                    setState(() {
 
-                },)
+                    });
+                    MyImageCache imageCache=MyImageCache();
+                    imageCache.clear();
+                    },
+                )
               ],
             ),
           ],
         ),
+      ),
     );
   }
   Widget _buildListComments(){
-    return ListView.builder(
-      itemCount: widget.post.comments!.length,
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context,i){
-        return _buildRow(widget.post.comments![i]);
-      },
+    return Expanded(
+      child: ListView.builder(
+        itemCount: widget.post.comments!.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context,i){
+          return _buildRow(widget.post.comments![i]);
+        },
+      ),
     );
   }
   Widget _buildRow(Comment comment){
@@ -109,9 +134,16 @@ class _CommentPageState extends State<CommentPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(comment.user!.name.toString(), style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+                      Text(comment.user!.name.toString(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                       SizedBox(height: 5,),
-                      Text(comment.content.toString(), style: TextStyle(fontSize: 15),)
+                      Text(comment.content.toString(), style: TextStyle(fontSize: 15),),
+                      SizedBox(height: 5,),
+                      Image.file(
+                        File(comment.image.toString()),
+                        errorBuilder: (context,error,stacktrace){
+                          return Container();
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -131,7 +163,7 @@ class _CommentPageState extends State<CommentPage> {
     final pickedFile = await _picker.pickImage(source: source);
     setState(() {
       _imageFile = pickedFile;
-    },
+      },
     );
   }
   Future<String> storeImageAndGetPath(File file) async{
@@ -144,9 +176,35 @@ class _CommentPageState extends State<CommentPage> {
     if (_imageFilePicker != null) {
       return Semantics(
         label: "image_picker_example_picked_image",
-        child: kIsWeb
-            ? Image.network(_imageFilePicker.toString())
-            : Image.file(File(_imageFilePicker!.path)),
+        child: Container(
+          padding: EdgeInsets.all(5),
+          child: Stack(
+            children: [
+              SizedBox(
+                height: 75,
+                width: 55,
+                child: kIsWeb
+                    ? Image.network(_imageFilePicker.toString())
+                    : Image.file(File(_imageFilePicker!.path)),
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: (){
+                    XFile? file;
+                    _imageFilePicker=file;
+                    setState((){
+                    });
+                  },
+                  child: Icon(
+                    Icons.delete_forever,
+                  ),
+                ),
+              ),
+            ]
+          ),
+        ),
       );
     } else if (_imageFilePicker == null) {
       return Container();
@@ -155,3 +213,17 @@ class _CommentPageState extends State<CommentPage> {
     }
   }
 }
+class BuildListComments extends StatefulWidget {
+  const BuildListComments({Key? key}) : super(key: key);
+
+  @override
+  _BuildListCommentsState createState() => _BuildListCommentsState();
+}
+
+class _BuildListCommentsState extends State<BuildListComments> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+

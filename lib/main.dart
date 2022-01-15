@@ -86,145 +86,148 @@ class _LoginPageUIState extends State<LoginPageUI> {
     loginDataConvert.initData();// lấy dữ liệu đăng nhập từ local storage
     return Container(
       padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 100,bottom: 100,),
-            child: Text("GSOT",
-              style: TextStyle(
-                  fontSize: 100,
-                  fontWeight: FontWeight.bold,
-                  foreground: Paint()..shader = const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.topRight,
-                    colors: <Color>[
-                      Color(0xff002fff),
-                      Color(0xff00f4ff),
-                    ],
-                  ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 100,bottom: 100,),
+              child: Text("GSOT",
+                style: TextStyle(
+                    fontSize: 100,
+                    fontWeight: FontWeight.bold,
+                    foreground: Paint()..shader = const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                      colors: <Color>[
+                        Color(0xff002fff),
+                        Color(0xff00f4ff),
+                      ],
+                    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
+                ),
               ),
             ),
-          ),
-          TextFormField(
-              controller: txtToDoControllerUsername,
+            TextFormField(
+                controller: txtToDoControllerUsername,
+                decoration: const InputDecoration(
+                  labelText: "Username",
+                  border: OutlineInputBorder( //Outline border type for TextField
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                )
+            ),
+            SizedBox(height: 30),
+            TextFormField(
+              controller: txtToDoControllerPassword,
               decoration: const InputDecoration(
-                labelText: "Username",
+                labelText: "Password",
                 border: OutlineInputBorder( //Outline border type for TextField
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
-              )
-          ),
-          SizedBox(height: 30),
-          TextFormField(
-            controller: txtToDoControllerPassword,
-            decoration: const InputDecoration(
-              labelText: "Password",
-              border: OutlineInputBorder( //Outline border type for TextField
-                borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
+              obscureText: true,
             ),
-            obscureText: true,
-          ),
-          Container(
-            //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(5),
-            child: Text(_stateLogin,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        side: const BorderSide(color: Colors.blue)
-                    )
-                )
-            ),
-            onPressed: () {
-              //check điều kiện người dùng bỏ trống 1 trong 2 username và password
-              if(txtToDoControllerUsername.text == ""
-                  || txtToDoControllerPassword.text == ""){
-                _stateLoginPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
-                return;
-              }
-              try{
-                //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
-                for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
-                  var idUser=loginDataConvert.listUserLogins[i].user!.id;
-                  var username=loginDataConvert.listUserLogins[i].username.toString();
-                  var password=loginDataConvert.listUserLogins[i].password.toString();
-                  if(username==txtToDoControllerUsername.text
-                      && password==txtToDoControllerPassword.text){
-                    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                    _prefs.then((value) async{
-                      return await value.setInt('id', idUser!);
-                    });
-                    //dang nhap thanh cong thi xoa canh bao
-                    setState(() {
-                      txtToDoControllerUsername.text="";
-                      txtToDoControllerPassword.text="";
-                      _stateLogin="";
-                    });
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: SafeArea(
-                                child: PageAfterLogin()
-                            )
-                        )
-                    );
-                    return;
-                    //check ràng buộc người dùng sai mk
-                  }else if(username==txtToDoControllerUsername.text){
-                    _stateLoginPasswordWrongPassword();
-                    return;
-                  }
-                }
-                //không rời vào các trường hợp trên thì báo tk ko tồn tại
-                _stateLoginPasswordNotExist();
-              }catch(e){
-                log(e.toString());
-              }
-            },
-            child:
             Container(
-              color: Colors.blue,
-              child: const Center(
-                child: Text("Login",style: TextStyle(fontSize: 20,color: Colors.white),),
-              ),
+              //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(5),
+              child: Text(_stateLogin,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
             ),
-          ),
-          SizedBox(height: 10),
-          ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        side: BorderSide(color: Colors.blue)
-                    )
-                )
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.fade,
-                      child: SafeArea(
-                          child: RegisterProviderUI()
+            ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: const BorderSide(color: Colors.blue)
                       )
                   )
-              );
-            },
-            child:
-            Container(
-              color: Colors.blue,
-              child: const Center(
-                child: Text("Register",style: TextStyle(fontSize: 20,color: Colors.white),),
+              ),
+              onPressed: () {
+                //check điều kiện người dùng bỏ trống 1 trong 2 username và password
+                if(txtToDoControllerUsername.text == ""
+                    || txtToDoControllerPassword.text == ""){
+                  _stateLoginPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
+                  return;
+                }
+                try{
+                  //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
+                  for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
+                    var idUser=loginDataConvert.listUserLogins[i].user!.id;
+                    var username=loginDataConvert.listUserLogins[i].username.toString();
+                    var password=loginDataConvert.listUserLogins[i].password.toString();
+                    if(username==txtToDoControllerUsername.text
+                        && password==txtToDoControllerPassword.text){
+                      Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                      _prefs.then((value) async{
+                        return await value.setInt('id', idUser!);
+                      });
+                      //dang nhap thanh cong thi xoa canh bao
+                      setState(() {
+                        txtToDoControllerUsername.text="";
+                        txtToDoControllerPassword.text="";
+                        _stateLogin="";
+                      });
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: SafeArea(
+                                  child: PageAfterLogin()
+                              )
+                          )
+                      );
+                      return;
+                      //check ràng buộc người dùng sai mk
+                    }else if(username==txtToDoControllerUsername.text){
+                      _stateLoginPasswordWrongPassword();
+                      return;
+                    }
+                  }
+                  //không rời vào các trường hợp trên thì báo tk ko tồn tại
+                  _stateLoginPasswordNotExist();
+                }catch(e){
+                  log(e.toString());
+                }
+              },
+              child:
+              Container(
+                color: Colors.blue,
+                child: const Center(
+                  child: Text("Login",style: TextStyle(fontSize: 20,color: Colors.white),),
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 10),
+            ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(color: Colors.blue)
+                      )
+                  )
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SafeArea(
+                            child: RegisterProviderUI()
+                        )
+                    )
+                );
+              },
+              child:
+              Container(
+                color: Colors.blue,
+                child: const Center(
+                  child: Text("Register",style: TextStyle(fontSize: 20,color: Colors.white),),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

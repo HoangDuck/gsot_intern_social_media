@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string.dart';
+import 'package:social_media/model/comment.dart';
 import 'package:social_media/model/messages.dart';
 import 'package:social_media/model/notifiers.dart';
 import 'package:social_media/model/posts.dart';
@@ -154,5 +155,16 @@ class DataConvert with ChangeNotifier{
   Future<void> updateDataPost(String stringData) async {
     SharedPreferences prefs = await _prefs;
     prefs.setString('postsData',stringData);
+  }
+  Future<void> insertDataComment(String content,String image,User? user,Post post) async {
+    int id=post.comments!.length+1;
+    Comment comment=Comment(id: id,user: user,content: content,image: image);
+    post.numberComments=post.numberComments!+1;
+    post.comments!.add(comment);
+    SharedPreferences prefs = await _prefs;
+    // _write(stringDataPosts);
+    var jsonPosts=jsonEncode(listPosts);
+    prefs.setString('postsData',jsonPosts);
+    notifyListeners();
   }
 }
