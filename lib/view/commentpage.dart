@@ -25,6 +25,7 @@ class _CommentPageState extends State<CommentPage> {
     _imageFilePicker = value;
   }
 
+  var _tapPosition;
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
@@ -97,17 +98,20 @@ class _CommentPageState extends State<CommentPage> {
     }
     return Post();
   }
+  void _storePosition(TapDownDetails details) {
+    _tapPosition = details.globalPosition;
+  }
   Widget _buildListComments(Post post){
     return ListView.builder(
         itemCount: post.comments!.length,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
-          return _buildRow(post.comments![i]);
+          return _buildRow(context,post.comments![i]);
         },
     );
   }
-  Widget _buildRow(Comment comment){
+  Widget _buildRow(BuildContext context,Comment comment){
     return Container(
       padding: const EdgeInsets.all(5),
       child: Row(
@@ -126,41 +130,71 @@ class _CommentPageState extends State<CommentPage> {
           ),
           SizedBox(width: 5,),
           Expanded(
-            child: Container(
-              decoration: const ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      spreadRadius: -9,
-                      blurRadius: 15,
+            child: GestureDetector(
+              onLongPress: (){
+                final RenderBox? overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
+                showMenu(
+                    context: context,
+                    position: RelativeRect.fromRect(
+                        _tapPosition & const Size(40, 40), // smaller rect, the touch area
+                        Offset.zero & overlay!.size   // Bigger rect, the entire screen
                     ),
-                  ]
-              ),
+                    items: [
+                      PopupMenuItem(
+                          onTap: (){
+                            print("1");
+                          },
+                          child: Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              Text("Delete comment")
+                            ],
+                          )
+                      )
+                    ]);
+              },
+              onTapDown: _storePosition,
               child: Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(comment.user!.name.toString(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                    SizedBox(height: 5,),
-                    Text(comment.content.toString(), style: TextStyle(fontSize: 15),),
-                    SizedBox(height: 5,),
-                    Image.file(
-                      File(comment.image.toString()),
-                      errorBuilder: (context,error,stacktrace){
-                        return Container();
-                      },
-                    )
-                  ],
+                decoration: const ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: -9,
+                        blurRadius: 15,
+                      ),
+                    ]
                 ),
-              ),
+                child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(comment.user!.name.toString(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                        SizedBox(height: 5,),
+                        Text(comment.content.toString(), style: TextStyle(fontSize: 15),),
+                        SizedBox(height: 5,),
+                        Image.file(
+                          File(comment.image.toString()),
+                          errorBuilder: (context,error,stacktrace){
+                            return Container();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                ),
             ),
-          ),
+            ),
         ],
       ),
     );
