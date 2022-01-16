@@ -107,11 +107,12 @@ class _CommentPageState extends State<CommentPage> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
-          return _buildRow(context,post.comments![i]);
+          return _buildRow(context,post.comments![i],post.id);
         },
     );
   }
-  Widget _buildRow(BuildContext context,Comment comment){
+  Widget _buildRow(BuildContext context,Comment comment, int? idPost){
+    DataConvert dataConvert=Provider.of<DataConvert>(context);
     return Container(
       padding: const EdgeInsets.all(5),
       child: Row(
@@ -142,7 +143,8 @@ class _CommentPageState extends State<CommentPage> {
                     items: [
                       PopupMenuItem(
                           onTap: (){
-                            print("1");
+                            int? idComment=comment.id;
+                            dataConvert.deleteDataComment(idPost!, idComment!);
                           },
                           child: Row(
                             children: [
@@ -150,6 +152,8 @@ class _CommentPageState extends State<CommentPage> {
                                 icon: Icon(Icons.delete),
                                 onPressed: (){
                                   Navigator.pop(context);
+                                  int? idComment=comment.id;
+                                  dataConvert.deleteDataComment(idPost!, idComment!);
                                 },
                               ),
                               Text("Delete comment")

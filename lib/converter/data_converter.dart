@@ -175,4 +175,19 @@ class DataConvert with ChangeNotifier{
     prefs.setString('postsData',jsonPosts);
     notifyListeners();
   }
+  Future<void> deleteDataComment(int idPost,int idComment) async{
+    int indexPost=0;
+    for(int i=0;i<listPosts.length;i++){
+      if(listPosts[i].id==idPost){
+        indexPost=i;
+        break;
+      }
+    }
+    listPosts[indexPost].numberComments=listPosts[indexPost].numberComments!-1;
+    listPosts[indexPost].comments!.removeWhere((item) => item.id == idComment);
+    var json=jsonEncode(listPosts);
+    stringDataPosts=json;
+    updateDataPost(stringDataPosts);
+    notifyListeners();
+  }
 }
