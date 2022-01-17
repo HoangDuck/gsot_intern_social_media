@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media/converter/data_converter.dart';
 
 import '../converter/profile_data_converter.dart';
 class ProfilePage extends StatelessWidget {
@@ -35,6 +36,7 @@ class InfoProfile extends StatelessWidget {
   }
   Widget buildProfilePage(BuildContext context){
     ProfileDataConverter profileDataConvert=Provider.of<ProfileDataConverter>(context);
+    DataConvert dataConvert=Provider.of<DataConvert>(context);
     return Stack(
       children: [
         Positioned(
@@ -304,7 +306,7 @@ class InfoProfile extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      textNumber(profileDataConvert.profileDataConverter.posts),
+                                      textNumber(dataConvert.statisticPostNumber()),
                                       Text("Posts"),
                                     ],
                                   ),

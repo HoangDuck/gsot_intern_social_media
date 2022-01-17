@@ -190,4 +190,13 @@ class DataConvert with ChangeNotifier{
     updateDataPost(stringDataPosts);
     notifyListeners();
   }
+  int statisticPostNumber(){
+    int nPost=0;
+    for(int i=0;i<listPosts.length;i++){
+      if(listPosts[i].user!.id==idCurrentUser){
+        nPost++;
+      }
+    }
+    return nPost;
+  }
 }

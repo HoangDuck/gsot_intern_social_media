@@ -25,7 +25,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                      const Center(
+                    const Center(
                       child: Text(
                       "Upload",
                         style: TextStyle(
