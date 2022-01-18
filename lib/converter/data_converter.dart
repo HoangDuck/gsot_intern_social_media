@@ -11,6 +11,7 @@ import 'package:social_media/model/messages.dart';
 import 'package:social_media/model/notifiers.dart';
 import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
+//import 'package:social_media/model/user_profile.dart';
 final String listPostsFromJsonString=posts;
 final String listMessagesFromJsonString=messages;
 final String listUsersFromJsonString=users;
@@ -118,6 +119,27 @@ class DataConvert with ChangeNotifier{
     var jsonPosts=jsonEncode(listPosts);
     prefs.setString('postsData',jsonPosts);
     notifyListeners();
+    // //insert new data to profile user: Posts number, image,...
+    // //decode profile user
+    // String stringDataUsersProfile="";
+    // stringDataUsersProfile = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
+    // Iterable l = jsonDecode(stringDataUsersProfile);
+    // List<UserProfile> listUserProfile= List<UserProfile>.from(l.map((model)=> UserProfile.fromJson(model)));
+    // //get number of new posts when insert a new post
+    // int nPostCurrentUser=0,index=0;
+    // nPostCurrentUser=statisticPostNumber();
+    // for(int i=0;i<listUserProfile.length;i++){
+    //   if(listUserProfile[i].user!.id==idCurrentUser){
+    //     listUserProfile[i].posts=nPostCurrentUser;
+    //     index=i;
+    //   }
+    // }
+    // //get new image when insert new post
+    // if(image.toString()!=""){
+    //   listUserProfile[index].listImage!.add(image);
+    // }
+    // var jsonUserProfile=jsonEncode(listUserProfile);
+    // prefs.setString('profileUserData',jsonUserProfile);
   }
   // _write(String text) async {
   //   final Directory directory = await getApplicationDocumentsDirectory();
