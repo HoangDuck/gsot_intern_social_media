@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
-import 'package:social_media/view/uploadstatus.dart';
+import 'package:social_media/ui/view/homepage/uploadstatus.dart';
 
 popupAdd(BuildContext context,DataConvert dataConvert){
   showDialog(

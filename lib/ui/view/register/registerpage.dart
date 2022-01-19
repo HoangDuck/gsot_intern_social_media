@@ -6,7 +6,7 @@ import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
 import 'package:social_media/converter/profile_data_converter.dart';
 import 'package:social_media/model/user.dart';
-import 'package:social_media/view/popupsuccess.dart';
+import 'package:social_media/ui/view/notifier/popupsuccess.dart';
 //import 'package:page_transition/page_transition.dart';
 class RegisterProviderUI extends StatelessWidget {
   const RegisterProviderUI({Key? key}) : super(key: key);

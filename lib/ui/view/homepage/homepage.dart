@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
-import 'package:social_media/view/uploadstatus.dart';
+import 'package:social_media/ui/view/homepage/uploadstatus.dart';
 
 import 'commentpage.dart';
 
