@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/ui/constant/text_styles.dart';
 
 import '../../../converter/data_converter.dart';
 import '../../../model/messages.dart';
@@ -25,12 +26,7 @@ class _ChatPageState extends State<ChatPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Chats",
-                style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                ),
-              ),
+              const Text("Chats", style: textSize35Bold),
               SizedBox(
                 width: 35,
                 height: 35,
@@ -91,11 +87,7 @@ class _MessagesState extends State<Messages> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
-        Text("Messages",
-          style: TextStyle(fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87),
-        ),
+        Text("Messages", style: textSize20BoldBack87),
         SizedBox(height: 10),
         ListMessages(),
       ],
@@ -233,13 +225,7 @@ class _QuickChatState extends State<QuickChat> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
-        Text("Quick Chat",
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-          ),
-        ),
+        Text("Quick Chat", style: textSize20BoldBack87),
         SizedBox(height: 10),
         ListAvatarOnline(),
       ],
@@ -303,7 +289,7 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
               child: Text(
                 data.name.toString(),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14),
+                style: textSize14,
               ),
             )
           ],

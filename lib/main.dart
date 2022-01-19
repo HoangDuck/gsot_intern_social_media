@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/converter/login_data_converter.dart';
+import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/pageafterlogin.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:social_media/ui/view/register/registerpage.dart';
@@ -15,7 +16,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -87,19 +87,9 @@ class _LoginPageUIState extends State<LoginPageUI> {
           children: [
             Container(
               padding: const EdgeInsets.only(top: 100,bottom: 100,),
-              child: Text("GSOT",
-                style: TextStyle(
-                    fontSize: 100,
-                    fontWeight: FontWeight.bold,
-                    foreground: Paint()..shader = const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
-                      colors: <Color>[
-                        Color(0xff002fff),
-                        Color(0xff00f4ff),
-                      ],
-                    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
-                ),
+              child: Text(
+                "GSOT",
+                style: titleAppGsotLoginPage
               ),
             ),
             TextFormField(
@@ -188,7 +178,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
               Container(
                 color: Colors.blue,
                 child: const Center(
-                  child: Text("Login",style: TextStyle(fontSize: 20,color: Colors.white),),
+                  child: Text("Login",style: textWhite20),
                 ),
               ),
             ),
@@ -217,7 +207,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
               Container(
                 color: Colors.blue,
                 child: const Center(
-                  child: Text("Register",style: TextStyle(fontSize: 20,color: Colors.white),),
+                  child: Text("Register",style: textWhite20),
                 ),
               ),
             ),

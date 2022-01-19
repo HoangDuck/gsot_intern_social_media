@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/homepage/uploadstatus.dart';
 
 import 'commentpage.dart';
@@ -26,20 +27,7 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("GSOT",
-                  style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      foreground: Paint()..shader = const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: <Color>[
-                          Color(0xff002fff),
-                          Color(0xff00f4ff),
-                        ],
-                      ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
-                  ),
-                ),
+                Text("GSOT", style: titleAppGsotHomePage),
                 SizedBox(
                   width: 35,
                   height: 35,
@@ -142,7 +130,7 @@ class _ListAvatarState extends State<ListAvatar> {
                   },
               ),
             ),
-            const Text("You",style: TextStyle(fontSize: 14),)
+            const Text("You",style: textSize14)
           ],
         ),
     );
@@ -180,7 +168,7 @@ class _ListAvatarState extends State<ListAvatar> {
                 child: Text(
                   data.name.toString(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14),
+                  style: textSize14
                 ),
             )
           ],
@@ -338,7 +326,7 @@ class _ListPostsState extends State<ListPosts> {
                           );
                         },
                       ),
-                      Text(data.numberComments.toString(),style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                      Text(data.numberComments.toString(),style: textSize18Bold),
                       const SizedBox(width: 15,),
                       IconButton(
                           icon: colorIcon
@@ -349,7 +337,7 @@ class _ListPostsState extends State<ListPosts> {
                           colorIcon=dataConvert.onLikeButtonPress(data, user,dataConvert.listPosts);
                         });
                       },),
-                      Text(data.numberLikes.toString(),style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                      Text(data.numberLikes.toString(),style: textSize18Bold),
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
+import 'package:social_media/ui/constant/text_styles.dart';
 
 import '../../../converter/profile_data_converter.dart';
 class ProfilePage extends StatelessWidget {
@@ -105,14 +107,7 @@ class InfoProfile extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           const Center(
-                                            child: Text(
-                                              "Options",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                              ),
-                                            ),
+                                            child: Text("Options", style: textSize20),
                                           ),
                                           const SizedBox(height: 20,),
                                           Row(
@@ -123,14 +118,7 @@ class InfoProfile extends StatelessWidget {
                                                   children: [
                                                     Container(
                                                       decoration: BoxDecoration(
-                                                        gradient: const LinearGradient(
-                                                          begin: Alignment.topRight,
-                                                          end: Alignment.bottomLeft,
-                                                          colors: [
-                                                            Color(0xff9796F0),
-                                                            Color(0xffFBC7D4),
-                                                          ],
-                                                        ),
+                                                        gradient: colorPopupWidget,
                                                         borderRadius: BorderRadius.circular(25),
                                                         border: Border.all(
                                                             color: Colors.white,
@@ -154,14 +142,7 @@ class InfoProfile extends StatelessWidget {
                                                                 onPressed: () {
                                                                 },
                                                               ),
-                                                              const Text(
-                                                                "Settings",
-                                                                style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Colors.white,
-                                                                ),
-                                                              ),
+                                                              const Text("Settings", style: textSize15White),
                                                             ],
                                                           ),
                                                         ),
@@ -175,14 +156,7 @@ class InfoProfile extends StatelessWidget {
                                                   children: [
                                                     Container(
                                                       decoration: BoxDecoration(
-                                                        gradient: const LinearGradient(
-                                                          begin: Alignment.topRight,
-                                                          end: Alignment.bottomLeft,
-                                                          colors: [
-                                                            Color(0xff9796F0),
-                                                            Color(0xffFBC7D4),
-                                                          ],
-                                                        ),
+                                                        gradient: colorPopupWidget,
                                                         borderRadius: BorderRadius.circular(25),
                                                         border: Border.all(
                                                             color: Colors.white,
@@ -210,14 +184,7 @@ class InfoProfile extends StatelessWidget {
                                                                   Navigator.pop(context);
                                                                 },
                                                               ),
-                                                              const Text(
-                                                                "Logout",
-                                                                style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Colors.white,
-                                                                ),
-                                                              ),
+                                                              const Text("Logout", style: textSize15White),
                                                             ],
                                                           ),
                                                         ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
+import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/homepage/uploadstatus.dart';
 
 popupAdd(BuildContext context,DataConvert dataConvert){
@@ -26,14 +28,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Center(
-                      child: Text(
-                      "Upload",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                      ),
+                      child: Text("Upload", style: textSize20),
                     ),
                     const SizedBox(height: 20,),
                     Row(
@@ -44,14 +39,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color(0xff9796F0),
-                                      Color(0xffFBC7D4),
-                                    ],
-                                  ),
+                                  gradient: colorPopupWidget,
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                       color: Colors.white,
@@ -75,14 +63,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                                           onPressed: () {
                                           },
                                         ),
-                                        const Text(
-                                          "Photo",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                          ),
-                                        ),
+                                        const Text("Photo", style: textSize15White),
                                       ],
                                     ),
                                   ),
@@ -96,14 +77,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color(0xff9796F0),
-                                      Color(0xffFBC7D4),
-                                    ],
-                                  ),
+                                  gradient: colorPopupWidget,
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                       color: Colors.white,
@@ -139,14 +113,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                                             );
                                           },
                                         ),
-                                        const Text(
-                                          "Status",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        const Text("Status", style: textSize15White),
                                       ],
                                     ),
                                   ),
@@ -160,14 +127,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color(0xff9796F0),
-                                      Color(0xffFBC7D4),
-                                    ],
-                                  ),
+                                  gradient: colorPopupWidget,
                                   borderRadius: BorderRadius.circular(25),
                                   border: Border.all(
                                       color: Colors.white,
@@ -191,14 +151,7 @@ popupAdd(BuildContext context,DataConvert dataConvert){
                                           onPressed: () {
                                           },
                                         ),
-                                        const Text(
-                                          "Video",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                        const Text("Video", style: textSize15White),
                                       ],
                                     ),
                                   ),

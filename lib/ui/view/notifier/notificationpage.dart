@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/model/notifiers.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
 
 import '../../../converter/data_converter.dart';
 class NotificationPage extends StatelessWidget {
@@ -189,7 +190,7 @@ class _ListNotificationsState extends State<ListNotifications> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black54,
+            color: colorFilterNotifier,
           ),
         ),
         SizedBox(height: 15,),
@@ -207,7 +208,7 @@ class _ListNotificationsState extends State<ListNotifications> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black54,
+            color: colorFilterNotifier,
           ),
         ),
         SizedBox(height: 15,),
