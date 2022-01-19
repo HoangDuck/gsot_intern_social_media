@@ -8,8 +8,9 @@ import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/pageafterlogin.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:social_media/ui/view/register/registerpage.dart';
-
-void main() {
+import 'package:get_storage/get_storage.dart';
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -32,8 +33,20 @@ class MyApp extends StatelessWidget {
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   //tạo 1 provider để lấy thông tin đăng nhập để sẵn
+
   @override
   Widget build(BuildContext context) {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+    GetStorage box = GetStorage();
+    if(box.read('idUser')!=null){
+      String idUser="";
+      idUser=box.read('idUser').toString();
+      _prefs.then((value) async{
+         return await value.setInt('id', int.parse(idUser));
+       });
+      return PageAfterLogin();
+    }
     return Provider<LoginDataConverter>.value(
         value: LoginDataConverter(),
         child: Material(child: LoginPageUI()),
@@ -152,6 +165,10 @@ class _LoginPageUIState extends State<LoginPageUI> {
                         txtToDoControllerPassword.text="";
                         _stateLogin="";
                       });
+                      //save session login
+                      GetStorage box = GetStorage();
+                      box.write('idUser',idUser);
+                      //go to page after login
                       Navigator.push(
                           context,
                           PageTransition(

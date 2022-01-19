@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
@@ -180,6 +181,9 @@ class InfoProfile extends StatelessWidget {
                                                                 onPressed: () {
                                                                   //close popup
                                                                   Navigator.pop(context);
+                                                                  //remove id to delete session
+                                                                  GetStorage box = GetStorage();
+                                                                  box.remove('idUser');
                                                                   //close to logout
                                                                   Navigator.pop(context);
                                                                 },
