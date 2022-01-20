@@ -180,10 +180,10 @@ class InfoProfile extends StatelessWidget {
                                                                 onPressed: () async {
                                                                   //close popup
                                                                   Navigator.pop(context);
-                                                                  //remove id to delete session
-                                                                  await profileDataConvert.deleteIdUser();
                                                                   //close to logout
                                                                   Navigator.pop(context);
+                                                                  //remove id to delete session
+                                                                  await profileDataConvert.deleteIdUser();
                                                                 },
                                                               ),
                                                               const Text("Logout", style: textSize15White),

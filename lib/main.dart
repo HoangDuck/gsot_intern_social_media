@@ -43,7 +43,14 @@ class LoginPage extends StatelessWidget {
       builder: (context,snapshot)
       {
         if(snapshot.hasError){
-          return Container();
+          return Material(
+            child: Container(
+              color: Colors.white,
+              child: Center(
+                child: Text("GSOT", style: titleAppGsotLoginPage),
+              ),
+            ),
+          );
         }
         if(snapshot.hasData){
           if(snapshot.data!=-1){
@@ -54,13 +61,16 @@ class LoginPage extends StatelessWidget {
               child: Material(child: LoginPageUI()),
           );
         }
-        return Container();
+        return Material(
+          child: Container(
+            color: Colors.white,
+            child: Center(
+              child: Text("GSOT", style: titleAppGsotLoginPage),
+            ),
+          ),
+        );
       },
     );
-    // return Provider<LoginDataConverter>.value(
-    //     value: LoginDataConverter(),
-    //     child: Material(child: LoginPageUI()),
-    // );
   }
   Future<int>_getIdUser()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -115,10 +125,7 @@ class _LoginPageUIState extends State<LoginPageUI> {
         children: [
           Container(
             padding: const EdgeInsets.only(top: 100,bottom: 100,),
-            child: Text(
-              "GSOT",
-              style: titleAppGsotLoginPage
-            ),
+            child: Text("GSOT", style: titleAppGsotLoginPage),
           ),
           textFormFieldLoginRegisterPage(txtToDoControllerUsername,"Username",false),
           SizedBox(height: 30),
