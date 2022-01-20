@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/model/posts.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/homepage/uploadstatus.dart';
 
@@ -32,19 +33,7 @@ class HomePage extends StatelessWidget {
                   width: 35,
                   height: 35,
                   child: Ink(
-                    decoration: const ShapeDecoration(
-                      color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        shadows: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 0.0,
-                            blurRadius: 20,
-                          ),
-                        ]
-                    ),
+                    decoration: shapeDecorationShadow(10),
                     child: IconButton(
                       color: Colors.black,
                       icon: const Icon(Icons.search),
@@ -117,8 +106,7 @@ class _ListAvatarState extends State<ListAvatar> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
+                      PageTransition(type: PageTransitionType.fade,
                           child: SafeArea(
                               child: ChangeNotifierProvider.value(
                                   value: Provider.of<DataConvert>(context,listen: false),
@@ -126,11 +114,11 @@ class _ListAvatarState extends State<ListAvatar> {
                               )
                           )
                       )
-                  );
+                    );
                   },
               ),
             ),
-            const Text("You",style: textSize14)
+            Text("You",style: textSize14)
           ],
         ),
     );
@@ -205,19 +193,7 @@ class _ListPostsState extends State<ListPosts> {
     return Container(
         padding: const EdgeInsets.all(10),
         child: Container(
-          decoration: const ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Colors.black12,
-                  spreadRadius: 0.0,
-                  blurRadius: 20,
-                ),
-              ]
-          ),
+          decoration: shapeDecorationShadow(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,7 +220,7 @@ class _ListPostsState extends State<ListPosts> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data.user!.name.toString(), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                          Text(data.user!.name.toString(), style: textSize20),
                           Text(data.user!.nickname.toString(), style: const TextStyle(fontSize: 15),)
                         ],
                       ),

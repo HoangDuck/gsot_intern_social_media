@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 
 import '../../../converter/data_converter.dart';
@@ -26,24 +27,12 @@ class _ChatPageState extends State<ChatPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Chats", style: textSize35Bold),
+              Text("Chats", style: textSize35Bold),
               SizedBox(
                 width: 35,
                 height: 35,
                 child: Ink(
-                  decoration: const ShapeDecoration(
-                    color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          spreadRadius: 0.0,
-                          blurRadius: 20,
-                        ),
-                      ]
-                  ),
+                  decoration:shapeDecorationShadow(10),
                   child: IconButton(
                     color: Colors.black,
                     icon: const Icon(Icons.search),
@@ -54,8 +43,8 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const TextField(
+          SizedBox(height: 10),
+          TextField(
               //controller: username,
               decoration: InputDecoration(
                 labelText: "Search chat here..",
@@ -65,9 +54,9 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               )
           ),
-          const SizedBox(height: 10),
-          const QuickChat(),
-          const Expanded(child: Messages()),
+          SizedBox(height: 10),
+          QuickChat(),
+          Expanded(child: Messages()),
         ],
       ),
     );

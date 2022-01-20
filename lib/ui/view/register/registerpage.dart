@@ -6,8 +6,11 @@ import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
 import 'package:social_media/converter/profile_data_converter.dart';
 import 'package:social_media/model/user.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/view/notifier/popupsuccess.dart';
-//import 'package:page_transition/page_transition.dart';
+import 'package:social_media/ui/widget/containertext20white.dart';
+import 'package:social_media/ui/widget/stateloginregistername.dart';
+import 'package:social_media/ui/widget/textformfieldlogin.dart';
 class RegisterProviderUI extends StatelessWidget {
   const RegisterProviderUI({Key? key}) : super(key: key);
 
@@ -87,76 +90,18 @@ class _RegisterState extends State<Register> {
             style: TextStyle(
                 fontSize: 60,
                 fontWeight: FontWeight.bold,
-                foreground: Paint()..shader = const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.topRight,
-                  colors: <Color>[
-                    Color(0xff002fff),
-                    Color(0xff00f4ff),
-                  ],
-                ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
+                foreground: Paint()..shader = colorTitleApp.createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))
             ),
           ),
         ),
-        TextFormField(
-          controller: txtToDoControllerName,
-            decoration: const InputDecoration(
-              labelText: "Full-name(*)",
-              border: OutlineInputBorder( //Outline border type for TextField
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-              ),
-            )
-        ),
-        Container(
-          //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(2.5),
-          child: Text(_stateRegisterName,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
-        ),
-        TextFormField(
-          controller: txtToDoControllerNickName,
-          decoration: const InputDecoration(
-            labelText: "Nickname",
-            border: OutlineInputBorder( //Outline border type for TextField
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-          ),
-        ),
-        Container(
-          //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(10),
-        ),
-        TextFormField(
-          controller: txtToDoControllerUsername,
-            decoration: const InputDecoration(
-              labelText: "Username(*)",
-              border: OutlineInputBorder( //Outline border type for TextField
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-              ),
-            )
-        ),
-        Container(
-          //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(10),
-        ),
-        TextFormField(
-          controller: txtToDoControllerPassword,
-          decoration: const InputDecoration(
-            labelText: "Password(*)",
-            border: OutlineInputBorder( //Outline border type for TextField
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-          ),
-          obscureText: true,
-        ),
-        Container(
-          //container để hiện statelogin nếu người dùng đăng nhập có vấn đề như sai mk hoặc username
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(2.5),
-          child: Text(_stateRegister,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
-        ),
+        textFormFieldLoginRegisterPage(txtToDoControllerName,"Full-name(*)",false),
+        stateLoginRegisterName(context, _stateRegisterName),
+        textFormFieldLoginRegisterPage(txtToDoControllerNickName,"Nickname",false),
+        containerPadding10(context),
+        textFormFieldLoginRegisterPage(txtToDoControllerUsername, "Username(*)", false),
+        containerPadding10(context),
+        textFormFieldLoginRegisterPage(txtToDoControllerPassword, "Password(*)", true),
+        stateLoginRegisterName(context,_stateRegister),
         ElevatedButton(
           style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -202,13 +147,7 @@ class _RegisterState extends State<Register> {
               log(e.toString()+"HCMUTE");
             }
           },
-          child:
-          Container(
-            color: Colors.blue,
-            child: const Center(
-              child: Text("Create account",style: TextStyle(fontSize: 20,color: Colors.white),),
-            ),
-          ),
+          child: containerTextWhiteLoginRegister("Create account")
         ),
         Expanded(
           child: Container(

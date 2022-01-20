@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/model/notifiers.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
+import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 
 import '../../../converter/data_converter.dart';
 class NotificationPage extends StatelessWidget {
@@ -28,19 +29,7 @@ class NotificationPage extends StatelessWidget {
                 width: 35,
                 height: 35,
                 child: Ink(
-                  decoration: const ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          spreadRadius: 0.0,
-                          blurRadius: 20,
-                        ),
-                      ]
-                  ),
+                  decoration: shapeDecorationShadow(10),
                   child: IconButton(
                     color: Colors.black,
                     icon: const Icon(Icons.search),
@@ -180,31 +169,19 @@ class _ListNotificationsState extends State<ListNotifications> {
     );
   }
   Widget _buildTitleNew(){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        SizedBox(height: 15,),
-        Text(
-          "New",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: colorFilterNotifier,
-          ),
-        ),
-        SizedBox(height: 15,),
-      ],
-    );
+    return columnFilter("New");
   }
   Widget _buildTitleEarlier(){
+    return columnFilter("Earlier");
+  }
+  Widget columnFilter(String text){
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         SizedBox(height: 15,),
         Text(
-          "Earlier",
+          text,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

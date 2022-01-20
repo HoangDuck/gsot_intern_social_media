@@ -260,19 +260,7 @@ class InfoProfile extends StatelessWidget {
                               child: Container(
                                 height: 60,
                                 width: 80,
-                                decoration: const ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    shadows: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        spreadRadius: -5.0,
-                                        blurRadius: 20,
-                                      ),
-                                    ]
-                                ),
+                                decoration: statisticWidget(),
                                 child: Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -289,19 +277,7 @@ class InfoProfile extends StatelessWidget {
                               child: Container(
                                 height: 60,
                                 width: 80,
-                                decoration: const ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    shadows: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        spreadRadius: -5.0,
-                                        blurRadius: 20,
-                                      ),
-                                    ]
-                                ),
+                                decoration: statisticWidget(),
                                 child: Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -318,19 +294,7 @@ class InfoProfile extends StatelessWidget {
                               child: Container(
                                 height: 60,
                                 width: 80,
-                                decoration: const ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    shadows: [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        spreadRadius: -5.0,
-                                        blurRadius: 20,
-                                      ),
-                                    ]
-                                ),
+                                decoration: statisticWidget(),
                                 child: Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -414,6 +378,21 @@ class InfoProfile extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+  ShapeDecoration statisticWidget(){
+    return const ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        shadows: [
+          BoxShadow(
+            color: Colors.black12,
+            spreadRadius: -5.0,
+            blurRadius: 20,
+          ),
+        ]
     );
   }
   Widget textNumber(int? number){

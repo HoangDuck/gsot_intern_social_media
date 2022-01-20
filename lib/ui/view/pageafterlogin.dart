@@ -55,24 +55,8 @@ class _PagesState extends State<Pages> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                IconButton(
-                  iconSize: 30.0,
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    setState(() {
-                      _myPage.jumpToPage(0);
-                    });
-                  },
-                ),
-                IconButton(
-                  iconSize: 30.0,
-                  icon: const Icon(Icons.chat),
-                  onPressed: () {
-                    setState(() {
-                      _myPage.jumpToPage(1);
-                    });
-                  },
-                ),
+                iconButton(Icon(Icons.home),0),
+                iconButton(Icon(Icons.chat),1),
                 IconButton(
                   iconSize: 30.0,
                   icon: const Icon(Icons.my_library_add_rounded),
@@ -82,24 +66,8 @@ class _PagesState extends State<Pages> {
                     });
                   },
                 ),
-                IconButton(
-                    iconSize: 30.0,
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {
-                      setState(() {
-                        _myPage.jumpToPage(3);
-                      });
-                    }
-                ),
-                IconButton(
-                  iconSize: 30.0,
-                  icon: const Icon(Icons.account_circle_outlined),
-                  onPressed: () {
-                    setState(() {
-                      _myPage.jumpToPage(4);
-                    });
-                  },
-                )
+                iconButton(Icon(Icons.notifications),3),
+                iconButton(Icon(Icons.account_circle_outlined),4)
               ],
             ),
           ),
@@ -112,9 +80,7 @@ class _PagesState extends State<Pages> {
               padding: const EdgeInsets.all(10),
               child: ChatPage(),
             ),
-            const Center(
-              child: Text('Empty Body 2'),
-            ),
+            Container(),//widget trống vì bottom appbar là popup widget
             Container(
               padding: const EdgeInsets.all(10),
               child: NotificationPage(),
@@ -124,6 +90,17 @@ class _PagesState extends State<Pages> {
           physics: const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
         ),
       ),
+    );
+  }
+  Widget iconButton(Icon icon,int indexPage){
+    return IconButton(
+      iconSize: 30.0,
+      icon: icon,
+      onPressed: () {
+        setState(() {
+          _myPage.jumpToPage(indexPage);
+        });
+      },
     );
   }
 }
