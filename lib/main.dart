@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:social_media/converter/login_data_converter.dart';
+import 'package:social_media/core/converter/login_data_converter.dart';
 import 'package:social_media/ui/constant/button_styles.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/pageafterlogin.dart';

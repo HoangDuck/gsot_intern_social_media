@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/converter/data_converter.dart';
+import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';

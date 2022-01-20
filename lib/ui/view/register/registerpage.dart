@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/converter/data_converter.dart';
-import 'package:social_media/converter/login_data_converter.dart';
-import 'package:social_media/converter/profile_data_converter.dart';
+import 'package:social_media/core/converter/data_converter.dart';
+import 'package:social_media/core/converter/login_data_converter.dart';
+import 'package:social_media/core/converter/profile_data_converter.dart';
 import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/view/notifier/popupsuccess.dart';

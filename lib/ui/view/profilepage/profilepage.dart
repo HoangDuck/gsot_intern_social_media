@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/converter/data_converter.dart';
+import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 
-import '../../../converter/profile_data_converter.dart';
+import '../../../core/converter/profile_data_converter.dart';
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 

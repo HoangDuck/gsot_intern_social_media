@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/converter/data_converter.dart';
+import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/ui/view/chat/chat.dart';
 import 'package:social_media/ui/view/homepage/homepage.dart';
 import 'package:social_media/ui/view/notifier/notificationpage.dart';
