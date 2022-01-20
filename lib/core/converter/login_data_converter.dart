@@ -30,6 +30,10 @@ class LoginDataConverter{
     stringData = prefs.getString('loginData') ?? loginData;
     prefs.setString('loginData',stringData);
   }
+  Future<void> setIdUser(int id) async {
+    SharedPreferences prefs = await _prefs;
+    await prefs.setInt('id',id);
+  }
   insertData(User user,String username, String password)async{
     int id=listUserLogins.length+1;
     UserLogin userLogin=UserLogin(id: id,user: user,username: username,password: password);

@@ -1,4 +1,4 @@
-import '../../model/User.dart';
+import '../../core/model/User.dart';
 
 class Message {
   int? id;

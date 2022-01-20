@@ -54,6 +54,10 @@ class ProfileDataConverter{
     listUserProfiles.add(userProfile);
     encodeJson(listUserProfiles);
   }
+  Future<void> deleteIdUser() async {
+    SharedPreferences prefs = await _prefs;
+    prefs.setInt('id',-1);
+  }
   // _write(String text) async {
   //   final Directory directory = await getApplicationDocumentsDirectory();
   //   final File file = File('${directory.path}/my_file.txt');

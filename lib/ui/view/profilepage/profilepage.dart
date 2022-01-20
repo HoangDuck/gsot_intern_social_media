@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
@@ -178,12 +177,11 @@ class InfoProfile extends StatelessWidget {
                                                               IconButton(
                                                                 color: Colors.white,
                                                                 icon: const Icon(Icons.logout),
-                                                                onPressed: () {
+                                                                onPressed: () async {
                                                                   //close popup
                                                                   Navigator.pop(context);
                                                                   //remove id to delete session
-                                                                  GetStorage box = GetStorage();
-                                                                  box.remove('idUser');
+                                                                  await profileDataConvert.deleteIdUser();
                                                                   //close to logout
                                                                   Navigator.pop(context);
                                                                 },

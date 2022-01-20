@@ -1,3 +1,4 @@
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -9,12 +10,10 @@ import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/pageafterlogin.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:social_media/ui/view/register/registerpage.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:social_media/ui/widget/containertext20white.dart';
 import 'package:social_media/ui/widget/stateloginregistername.dart';
 import 'package:social_media/ui/widget/textformfieldlogin.dart';
-void main() async {
-  await GetStorage.init();
+void main() {
   runApp(const MyApp());
 }
 
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SafeArea(
+      home: SafeArea(
           child: LoginPage(),
       )
     );
@@ -37,24 +36,37 @@ class MyApp extends StatelessWidget {
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
   //tạo 1 provider để lấy thông tin đăng nhập để sẵn
-
   @override
-  Widget build(BuildContext context) {
-    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-    GetStorage box = GetStorage();
-    if(box.read('idUser')!=null){
-      String idUser="";
-      idUser=box.read('idUser').toString();
-      _prefs.then((value) async{
-         return await value.setInt('id', int.parse(idUser));
-       });
-      return PageAfterLogin();
-    }
-    return Provider<LoginDataConverter>.value(
-        value: LoginDataConverter(),
-        child: Material(child: LoginPageUI()),
+  Widget build(BuildContext context){
+    return FutureBuilder<int>(
+      future: _getIdUser(),
+      builder: (context,snapshot)
+      {
+        if(snapshot.hasError){
+          return Container();
+        }
+        if(snapshot.hasData){
+          if(snapshot.data!=-1){
+            return PageAfterLogin();
+          }
+          return Provider<LoginDataConverter>.value(
+              value: LoginDataConverter(),
+              child: Material(child: LoginPageUI()),
+          );
+        }
+        return Container();
+      },
     );
+    // return Provider<LoginDataConverter>.value(
+    //     value: LoginDataConverter(),
+    //     child: Material(child: LoginPageUI()),
+    // );
+  }
+  Future<int>_getIdUser()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id=-1;
+    id= prefs.getInt('id') ?? -1;
+    return id;
   }
 }
 class LoginPageUI extends StatefulWidget {
@@ -129,19 +141,18 @@ class _LoginPageUIState extends State<LoginPageUI> {
                   var password=loginDataConvert.listUserLogins[i].password.toString();
                   if(username==txtToDoControllerUsername.text
                       && password==txtToDoControllerPassword.text){
-                    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                    _prefs.then((value) async{
-                      return await value.setInt('id', idUser!);
-                    });
+                    //save session
+                    // Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                    // _prefs.then((value) async{
+                    //   return await value.setInt('id', idUser!);
+                    // });
+                    loginDataConvert.setIdUser(idUser!);
                     //dang nhap thanh cong thi xoa canh bao
                     setState(() {
                       txtToDoControllerUsername.text="";
                       txtToDoControllerPassword.text="";
                       _stateLogin="";
                     });
-                    //save session login
-                    GetStorage box = GetStorage();
-                    box.write('idUser',idUser);
                     //go to page after login
                     Navigator.push(
                         context,
