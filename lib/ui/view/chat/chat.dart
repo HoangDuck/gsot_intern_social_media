@@ -2,12 +2,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/model/user.dart';
+import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 
 import '../../../converter/data_converter.dart';
-import '../../../model/messages.dart';
+import '../../../core/model/messages.dart';
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 

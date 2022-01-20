@@ -1,20 +1,21 @@
-import 'User.dart';
+import 'package:social_media/core/model/user.dart';
 
-class Message {
+class Notifier{
   int? id;
   User? user;
   String? content;
   String? time;
-  int? numberNew;
+  String? read;
 
-  Message({this.id, this.user, this.content, this.time, this.numberNew});
-  factory Message.fromJson(map){
-    return Message(
+  Notifier({this.id, this.user, this.content, this.time, this.read});
+
+  factory Notifier.fromJson(map){
+    return Notifier(
         id: map['id'],
         user: User.fromJson(map['user']),
         content: map['content'],
         time: map['time'],
-        numberNew:map['numbernew']
+        read: map['read']
     );
   }
   Map<String,dynamic> toJson() => {
@@ -22,6 +23,6 @@ class Message {
     'user': user,
     'content': content,
     'time': time,
-    'numbernew': numberNew
+    'read': read
   };
 }

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
 import 'package:social_media/converter/login_data_converter.dart';
 import 'package:social_media/converter/profile_data_converter.dart';
-import 'package:social_media/model/user.dart';
+import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/view/notifier/popupsuccess.dart';
 import 'package:social_media/ui/widget/containertext20white.dart';

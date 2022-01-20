@@ -1,4 +1,4 @@
-import 'package:social_media/model/user.dart';
+import 'package:social_media/core/model/user.dart';
 
 class UserLogin{
   int? id;

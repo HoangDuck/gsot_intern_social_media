@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
-import 'package:social_media/model/comment.dart';
-import 'package:social_media/model/posts.dart';
+import 'package:social_media/core/model/comment.dart';
+import 'package:social_media/core/model/posts.dart';
 //import 'package:social_media/view/uploadstatus.dart';
 class CommentPage extends StatefulWidget {
   final int? idPost;

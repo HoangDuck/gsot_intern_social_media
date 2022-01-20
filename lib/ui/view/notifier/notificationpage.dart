@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media/model/notifiers.dart';
+import 'package:social_media/core/model/notifiers.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 

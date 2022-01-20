@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string_profile.dart';
-import 'package:social_media/model/user.dart';
-import 'package:social_media/model/user_profile.dart';
+import 'package:social_media/core/model/user.dart';
+import 'package:social_media/core/model/user_profile.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'dart:io';
 final String profileData=profile;

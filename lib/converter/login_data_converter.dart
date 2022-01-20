@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string_login.dart';
-import 'package:social_media/model/user.dart';
-import 'package:social_media/model/user_login.dart';
+import 'package:social_media/core/model/user.dart';
+import 'package:social_media/core/model/user_login.dart';
 
 String loginData=login;
 class LoginDataConverter{

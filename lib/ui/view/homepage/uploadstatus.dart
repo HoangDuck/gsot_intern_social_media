@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/converter/data_converter.dart';
-import 'package:social_media/model/user.dart';
+import 'package:social_media/core/model/user.dart';
 import 'package:image_picker/image_picker.dart';
 class UploadStatus extends StatefulWidget {
   const UploadStatus({Key? key}) : super(key: key);
