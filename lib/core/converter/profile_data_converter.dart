@@ -56,7 +56,7 @@ class ProfileDataConverter{
   }
   Future<void> deleteIdUser() async {
     SharedPreferences prefs = await _prefs;
-    prefs.setInt('id',-1);
+    await prefs.setInt('id',-1);
   }
   // _write(String text) async {
   //   final Directory directory = await getApplicationDocumentsDirectory();
