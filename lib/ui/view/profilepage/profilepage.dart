@@ -240,7 +240,7 @@ class InfoProfile extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.all( Radius.circular(50.0)),
                         border: Border.all(
-                          color: Colors.blue,
+                          color: Colors.deepPurpleAccent,
                           width: 3.0,
                         ),
                       ),

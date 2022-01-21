@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/core/model/user.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 
@@ -43,19 +44,6 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ],
           ),
-          SizedBox(height: 10),
-          TextField(
-              //controller: username,
-              decoration: InputDecoration(
-                labelText: "Search chat here..",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder( //Outline border type for TextField
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              )
-          ),
-          SizedBox(height: 10),
-          QuickChat(),
           Expanded(child: Messages()),
         ],
       ),
@@ -76,8 +64,6 @@ class _MessagesState extends State<Messages> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: const [
-        Text("Messages", style: textSize20BoldBack87),
-        SizedBox(height: 10),
         ListMessages(),
       ],
     );
@@ -96,9 +82,38 @@ class _ListMessagesState extends State<ListMessages> {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
     return Expanded(
       child: ListView.builder(
-        itemCount: dataConvert.listMessages.length,
+        itemCount: dataConvert.listMessages.length+1,
         scrollDirection: Axis.vertical,
-        itemBuilder: (context,i) => _buildRow(dataConvert.listMessages[i]),
+        itemBuilder: (context,i){
+          if(i==0){
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                SizedBox(height: 10),
+                TextField(
+                  //controller: username,
+                    decoration: InputDecoration(
+                      labelText: "Search chat here..",
+                      filled: true,
+                      fillColor: Colors.white,
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                    )
+                ),
+                SizedBox(height: 10),
+                QuickChat(),
+                Text("Messages", style: textSize20BoldBack87),
+                SizedBox(height: 10),
+              ],
+            );
+          }
+          int index=i-1;
+          return _buildRow(dataConvert.listMessages[index]);
+        },
       ),
     );
   }
@@ -253,14 +268,14 @@ class _ListAvatarOnlineState extends State<ListAvatarOnline> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Colors.black,
+                gradient: colorPopupWidget,
                 image: DecorationImage(
                   image: NetworkImage(data.picture.toString()),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all( Radius.circular(50.0)),
                 border: Border.all(
-                  color: Colors.blue,
+                  color: Colors.transparent,
                   width: 2.0,
                 ),
               ),

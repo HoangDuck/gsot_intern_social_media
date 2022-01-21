@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/homepage/uploadstatus.dart';
@@ -128,14 +129,14 @@ class _ListAvatarState extends State<ListAvatar> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Colors.black,
+                gradient: colorPopupWidget,
                 image: DecorationImage(
                   image: NetworkImage(data.picture.toString()),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all( Radius.circular(50.0)),
                 border: Border.all(
-                  color: Colors.blue,
+                  color: Colors.transparent,
                   width: 2.0,
                 ),
               ),
@@ -182,7 +183,7 @@ class _ListPostsState extends State<ListPosts> {
         itemBuilder: (context,i){
           if(i==0){
             return Column(
-              children:const[
+              children:const [
                 SizedBox(height: 10,),
                 ListAvatar(),
               ],
@@ -266,7 +267,7 @@ class _ListPostsState extends State<ListPosts> {
               ),
               Container(
                 decoration: const ShapeDecoration(
-                  color: Colors.lightBlueAccent,
+                  gradient: colorPopupWidget,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
                   ),
