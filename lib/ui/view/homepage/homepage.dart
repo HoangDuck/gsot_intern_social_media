@@ -45,9 +45,6 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
-          ListAvatar(),
-          SizedBox(height: 10),
           ListPosts(),
         ],
       ),
@@ -180,10 +177,19 @@ class _ListPostsState extends State<ListPosts> {
     User user=dataConvert.currentUser;
     return Expanded(
       child: ListView.builder(
-        itemCount: dataConvert.listPosts.length,
+        itemCount: dataConvert.listPosts.length+1,
         scrollDirection: Axis.vertical,
         itemBuilder: (context,i){
-          return _buildRow(dataConvert.listPosts[length-1-i],user,dataConvert);
+          if(i==0){
+            return Column(
+              children:const[
+                SizedBox(height: 10,),
+                ListAvatar(),
+              ],
+            );
+          }
+          int index=i-1;
+          return _buildRow(dataConvert.listPosts[length-1-index],user,dataConvert);
         },
       ),
     );
