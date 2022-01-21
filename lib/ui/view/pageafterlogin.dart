@@ -55,19 +55,19 @@ class _PagesState extends State<Pages> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                iconButton(Icon(Icons.home),0),
-                iconButton(Icon(Icons.chat),1),
+                iconButton(Icon(Icons.home_filled,color: Color(0xff4a0072),),0),
+                iconButton(Icon(Icons.chat_bubble_rounded,color: Color(0xff4a0072),),1),
                 IconButton(
                   iconSize: 30.0,
-                  icon: const Icon(Icons.my_library_add_rounded),
+                  icon: const Icon(Icons.add_box_rounded,color: Color(0xff4a0072),),
                   onPressed: () {
                     setState(() {
                       popupAdd(context,dataConvert);
                     });
                   },
                 ),
-                iconButton(Icon(Icons.notifications),3),
-                iconButton(Icon(Icons.account_circle_outlined),4)
+                iconButton(Icon(Icons.notifications_rounded,color: Color(0xff4a0072),),3),
+                iconButton(Icon(Icons.account_circle_sharp,color: Color(0xff4a0072),),4)
               ],
             ),
           ),

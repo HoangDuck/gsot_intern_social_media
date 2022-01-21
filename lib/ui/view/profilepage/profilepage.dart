@@ -89,119 +89,127 @@ class InfoProfile extends StatelessWidget {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                content: Stack(
-                                  children: <Widget>[
-                                    Positioned(
-                                      right: -40.0,
-                                      top: -40.0,
-                                      child: InkResponse(
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Container(),
-                                      ),
-                                    ),
-                                    Form(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Center(
-                                            child: Text("Options", style: textSize20),
+                              return Column(
+                                children: [
+                                  AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25)),
+                                    content: Stack(
+                                      children: <Widget>[
+                                        Positioned(
+                                          right: -40.0,
+                                          top: -40.0,
+                                          child: InkResponse(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Container(),
                                           ),
-                                          const SizedBox(height: 20,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                              SizedBox(
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        gradient: colorPopupWidget,
-                                                        borderRadius: BorderRadius.circular(25),
-                                                        border: Border.all(
-                                                            color: Colors.white,
-                                                            width: 2
-                                                        ),
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 65,
-                                                        height: 80,
-                                                        child: Ink(
-                                                          decoration: const ShapeDecoration(
-                                                            shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                                                            ),
-                                                          ),
-                                                          child:Column(
-                                                            children: [
-                                                              IconButton(
-                                                                color: Colors.white,
-                                                                icon: const Icon(Icons.app_settings_alt_rounded),
-                                                                onPressed: () {
-                                                                },
-                                                              ),
-                                                              const Text("Settings", style: textSize15White),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                        ),
+                                        Form(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Center(
+                                                child: Text("Options", style: textSize20),
                                               ),
-                                              SizedBox(
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        gradient: colorPopupWidget,
-                                                        borderRadius: BorderRadius.circular(25),
-                                                        border: Border.all(
-                                                            color: Colors.white,
-                                                            width: 2
-                                                        ),
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 65,
-                                                        height: 80,
-                                                        child: Ink(
-                                                          decoration: const ShapeDecoration(
-                                                            shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.all(Radius.circular(20)),
+                                              const SizedBox(height: 20,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                            gradient: colorPopupWidget,
+                                                            borderRadius: BorderRadius.circular(25),
+                                                            border: Border.all(
+                                                                color: Colors.white,
+                                                                width: 2
                                                             ),
                                                           ),
-                                                          child:Column(
-                                                            children: [
-                                                              IconButton(
-                                                                color: Colors.white,
-                                                                icon: const Icon(Icons.logout),
-                                                                onPressed: () async {
-                                                                  //close popup
-                                                                  Navigator.pop(context);
-                                                                  //close to logout
-                                                                  Navigator.pop(context);
-                                                                  //remove id to delete session
-                                                                  await profileDataConvert.deleteIdUser();
-                                                                },
+                                                          child: SizedBox(
+                                                            width: 65,
+                                                            height: 80,
+                                                            child: Ink(
+                                                              decoration: const ShapeDecoration(
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                                ),
                                                               ),
-                                                              const Text("Logout", style: textSize15White),
-                                                            ],
+                                                              child:Column(
+                                                                children: [
+                                                                  IconButton(
+                                                                    color: Colors.white,
+                                                                    icon: const Icon(Icons.app_settings_alt_rounded),
+                                                                    onPressed: () {
+                                                                    },
+                                                                  ),
+                                                                  const Text("Settings", style: textSize15White),
+                                                                ],
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  SizedBox(
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          decoration: BoxDecoration(
+                                                            gradient: colorPopupWidget,
+                                                            borderRadius: BorderRadius.circular(25),
+                                                            border: Border.all(
+                                                                color: Colors.white,
+                                                                width: 2
+                                                            ),
+                                                          ),
+                                                          child: SizedBox(
+                                                            width: 65,
+                                                            height: 80,
+                                                            child: Ink(
+                                                              decoration: const ShapeDecoration(
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                                                ),
+                                                              ),
+                                                              child:Column(
+                                                                children: [
+                                                                  IconButton(
+                                                                    color: Colors.white,
+                                                                    icon: const Icon(Icons.logout),
+                                                                    onPressed: () async {
+                                                                      //close popup
+                                                                      Navigator.pop(context);
+                                                                      //remove id to delete session
+                                                                      await profileDataConvert.deleteIdUser();
+                                                                      //close to logout
+                                                                      //Navigator.pushandpoputil(context);
+                                                                      
+                                                                    },
+                                                                  ),
+                                                                  const Text("Logout", style: textSize15White),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Expanded(child: Container()),
+                                ],
                               );
                             });
                       },

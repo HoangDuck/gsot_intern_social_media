@@ -24,7 +24,7 @@ const textSize20=TextStyle(
 );
 const textSize20BoldBack87=TextStyle(fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Colors.black87);
+    color: Colors.black54);
 const textSize35Bold=TextStyle(
   fontSize: 35,
   fontWeight: FontWeight.bold,
