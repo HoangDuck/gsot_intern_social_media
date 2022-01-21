@@ -9,11 +9,11 @@ const LinearGradient colorPopupWidget = LinearGradient(
   ],
 );
 const LinearGradient colorTitleApp = LinearGradient(
-  begin: Alignment.topLeft,
-  end: Alignment.bottomRight,
+  begin: Alignment.bottomLeft,
+  end: Alignment.topRight,
   colors: <Color>[
-    Color(0xff002fff),
-    Color(0xff00f4ff),
+    Color(0xff8b00e2),
+    Color(0xff5aa7ff),
   ],
 );
 const Color colorBottomPost=Colors.lightBlueAccent;

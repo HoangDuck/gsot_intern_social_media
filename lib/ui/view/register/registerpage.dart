@@ -7,6 +7,7 @@ import 'package:social_media/core/converter/login_data_converter.dart';
 import 'package:social_media/core/converter/profile_data_converter.dart';
 import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
+import 'package:social_media/ui/constant/button_styles.dart';
 import 'package:social_media/ui/view/notifier/popupsuccess.dart';
 import 'package:social_media/ui/widget/containertext20white.dart';
 import 'package:social_media/ui/widget/stateloginregistername.dart';
@@ -94,65 +95,67 @@ class _RegisterState extends State<Register> {
             ),
           ),
         ),
-        textFormFieldLoginRegisterPage(txtToDoControllerName,"Full-name(*)",false),
-        stateLoginRegisterName(context, _stateRegisterName),
-        textFormFieldLoginRegisterPage(txtToDoControllerNickName,"Nickname",false),
-        containerPadding10(context),
-        textFormFieldLoginRegisterPage(txtToDoControllerUsername, "Username(*)", false),
-        containerPadding10(context),
-        textFormFieldLoginRegisterPage(txtToDoControllerPassword, "Password(*)", true),
-        stateLoginRegisterName(context,_stateRegister),
-        ElevatedButton(
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: const BorderSide(color: Colors.blue)
-                  )
-              )
-          ),
-          onPressed: () {
-            if(txtToDoControllerUsername.text == ""
-                || txtToDoControllerPassword.text == ""){
-              _stateRegisterPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
-            }
-            if(txtToDoControllerName.text==""){
-              _stateRegisterNameEmpty();
-              return;
-            }
-            try{
-              //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
-              for(int i=0;i<loginDataConverter.listUserLogins.length;i++){
-                var username=loginDataConverter.listUserLogins[i].username.toString();
-                //var password=loginDataConverter.listUserLogins[i].password.toString();
-                if(username==txtToDoControllerUsername.text){
-                  //kiem tra username va password co su dung chua
-                  _stateRegisterAccountExist();
-                  return;
-                }
-              }
-              //không rời vào các trường hợp trên thì tk có thể đăng kí được.
-              String name=txtToDoControllerName.text;
-              String? nickname=txtToDoControllerNickName.text.toString();
-              String username=txtToDoControllerUsername.text;
-              String password=txtToDoControllerPassword.text;
-              insertData(dataConvert,loginDataConverter,profileDataConverter,name, nickname, username, password);
-              setState(() {
-                //set state để không bị thông báo success khi người dùng nhấn 1 lần nữa
-                _stateRegister="";
-                _stateRegisterName="";
-                popupSuccess(context);
-              });
-            }catch(e){
-              log(e.toString()+"HCMUTE");
-            }
-          },
-          child: containerTextWhiteLoginRegister("Create account")
+        SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: textFormFieldLoginRegisterPage(txtToDoControllerName,"Full-name",false,Icons.account_circle)
         ),
-        Expanded(
-          child: Container(
-            alignment: Alignment.bottomLeft,
-            child: Text("*: infomation must not be empty",style: TextStyle(color: Colors.red),),
+        stateLoginRegisterName(context, _stateRegisterName),
+        SizedBox(
+          width: MediaQuery.of(context).size.width*0.8,
+            child: textFormFieldLoginRegisterPage(txtToDoControllerNickName,"Nickname",false,Icons.account_circle),
+        ),
+        containerPadding10(context),
+        SizedBox(
+          width: MediaQuery.of(context).size.width*0.8,
+            child: textFormFieldLoginRegisterPage(txtToDoControllerUsername, "Username", false,Icons.account_circle),
+        ),
+        containerPadding10(context),
+        SizedBox(
+          width: MediaQuery.of(context).size.width*0.8,
+            child: textFormFieldLoginRegisterPage(txtToDoControllerPassword, "Password", true,Icons.lock),
+        ),
+        stateLoginRegisterName(context,_stateRegister),
+        SizedBox(
+          width: MediaQuery.of(context).size.width*0.8,
+          child: ElevatedButton(
+            style: buttonStyleLogin,
+            onPressed: () {
+              if(txtToDoControllerUsername.text == ""
+                  || txtToDoControllerPassword.text == ""){
+                _stateRegisterPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
+              }
+              if(txtToDoControllerName.text==""){
+                _stateRegisterNameEmpty();
+                return;
+              }
+              try{
+                //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
+                for(int i=0;i<loginDataConverter.listUserLogins.length;i++){
+                  var username=loginDataConverter.listUserLogins[i].username.toString();
+                  //var password=loginDataConverter.listUserLogins[i].password.toString();
+                  if(username==txtToDoControllerUsername.text){
+                    //kiem tra username va password co su dung chua
+                    _stateRegisterAccountExist();
+                    return;
+                  }
+                }
+                //không rời vào các trường hợp trên thì tk có thể đăng kí được.
+                String name=txtToDoControllerName.text;
+                String? nickname=txtToDoControllerNickName.text.toString();
+                String username=txtToDoControllerUsername.text;
+                String password=txtToDoControllerPassword.text;
+                insertData(dataConvert,loginDataConverter,profileDataConverter,name, nickname, username, password);
+                setState(() {
+                  //set state để không bị thông báo success khi người dùng nhấn 1 lần nữa
+                  _stateRegister="";
+                  _stateRegisterName="";
+                  popupSuccess(context);
+                });
+              }catch(e){
+                log(e.toString()+"HCMUTE");
+              }
+            },
+            child: Text("Create account",style: TextStyle(fontWeight: FontWeight.bold),)
           ),
         )
       ],

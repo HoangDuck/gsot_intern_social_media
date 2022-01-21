@@ -25,7 +25,7 @@ class _CommentPageState extends State<CommentPage> {
     _imageFilePicker = value;
   }
 
-  var _tapPosition;
+  Offset? _tapPosition;
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
@@ -137,7 +137,7 @@ class _CommentPageState extends State<CommentPage> {
                 showMenu(
                     context: context,
                     position: RelativeRect.fromRect(
-                        _tapPosition & const Size(40, 40), // smaller rect, the touch area
+                        _tapPosition! & const Size(40, 40), // smaller rect, the touch area
                         Offset.zero & overlay!.size   // Bigger rect, the entire screen
                     ),
                     items: [

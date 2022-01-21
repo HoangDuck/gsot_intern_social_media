@@ -10,7 +10,6 @@ import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/view/pageafterlogin.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:social_media/ui/view/register/registerpage.dart';
-import 'package:social_media/ui/widget/containertext20white.dart';
 import 'package:social_media/ui/widget/stateloginregistername.dart';
 import 'package:social_media/ui/widget/textformfieldlogin.dart';
 void main() {
@@ -127,71 +126,79 @@ class _LoginPageUIState extends State<LoginPageUI> {
             padding: const EdgeInsets.only(top: 100,bottom: 100,),
             child: Text("GSOT", style: titleAppGsotLoginPage),
           ),
-          textFormFieldLoginRegisterPage(txtToDoControllerUsername,"Username",false),
+          SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+              child: textFormFieldLoginRegisterPage(txtToDoControllerUsername,"Username",false,Icons.account_circle),
+          ),
           SizedBox(height: 30),
-          textFormFieldLoginRegisterPage(txtToDoControllerPassword, "Password", true),
+          SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+              child: textFormFieldLoginRegisterPage(txtToDoControllerPassword, "Password", true,Icons.lock),
+          ),
           stateLoginRegisterName(context,_stateLogin),
-          ElevatedButton(
-            style: buttonStyleLogin,
-            onPressed: () {
-              //check điều kiện người dùng bỏ trống 1 trong 2 username và password
-              if(txtToDoControllerUsername.text == ""
-                  || txtToDoControllerPassword.text == ""){
-                _stateLoginPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
-                return;
-              }
-              try{
-                //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
-                for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
-                  var idUser=loginDataConvert.listUserLogins[i].user!.id;
-                  var username=loginDataConvert.listUserLogins[i].username.toString();
-                  var password=loginDataConvert.listUserLogins[i].password.toString();
-                  if(username==txtToDoControllerUsername.text
-                      && password==txtToDoControllerPassword.text){
-                    //save session
-                    // Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                    // _prefs.then((value) async{
-                    //   return await value.setInt('id', idUser!);
-                    // });
-                    loginDataConvert.setIdUser(idUser!);
-                    //dang nhap thanh cong thi xoa canh bao
-                    setState(() {
-                      txtToDoControllerUsername.text="";
-                      txtToDoControllerPassword.text="";
-                      _stateLogin="";
-                    });
-                    //go to page after login
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: SafeArea(
-                                child: PageAfterLogin()
-                            )
-                        )
-                    );
-                    return;
-                    //check ràng buộc người dùng sai mk
-                  }else if(username==txtToDoControllerUsername.text){
-                    _stateLoginPasswordWrongPassword();
-                    return;
-                  }
+          SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: ElevatedButton(
+              style: buttonStyleLogin,
+              onPressed: () {
+                //check điều kiện người dùng bỏ trống 1 trong 2 username và password
+                if(txtToDoControllerUsername.text == ""
+                    || txtToDoControllerPassword.text == ""){
+                  _stateLoginPasswordEmpty();//gọi hàm setstate trong hàm này và xuất ra message
+                  return;
                 }
-                //không rời vào các trường hợp trên thì báo tk ko tồn tại
-                _stateLoginPasswordNotExist();
-              }catch(e){
-                log(e.toString());
-              }
-            },
-            child:containerTextWhiteLoginRegister("Login"),
+                try{
+                  //vì thiết bị có thể có nhìu hơn 1 tk đăng nhập nên chỗ này phải có for
+                  for(int i=0;i<loginDataConvert.listUserLogins.length;i++){
+                    var idUser=loginDataConvert.listUserLogins[i].user!.id;
+                    var username=loginDataConvert.listUserLogins[i].username.toString();
+                    var password=loginDataConvert.listUserLogins[i].password.toString();
+                    if(username==txtToDoControllerUsername.text
+                        && password==txtToDoControllerPassword.text){
+                      //save session
+                      loginDataConvert.setIdUser(idUser!);
+                      //dang nhap thanh cong thi xoa canh bao
+                      setState(() {
+                        txtToDoControllerUsername.text="";
+                        txtToDoControllerPassword.text="";
+                        _stateLogin="";
+                      });
+                      //go to page after login
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: SafeArea(
+                                  child: PageAfterLogin()
+                              )
+                          )
+                      );
+                      return;
+                      //check ràng buộc người dùng sai mk
+                    }else if(username==txtToDoControllerUsername.text){
+                      _stateLoginPasswordWrongPassword();
+                      return;
+                    }
+                  }
+                  //không rời vào các trường hợp trên thì báo tk ko tồn tại
+                  _stateLoginPasswordNotExist();
+                }catch(e){
+                  log(e.toString());
+                }
+              },
+              child:Text("Sign in",style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
           ),
           SizedBox(height: 10),
-          ElevatedButton(
-            style: buttonStyleLogin,
-            onPressed: () {
-              onPressButtonRegister();
-            },
-            child:containerTextWhiteLoginRegister("Register"),
+          SizedBox(
+            width: MediaQuery.of(context).size.width*0.8,
+            child: ElevatedButton(
+              style: buttonStyleLogin,
+              onPressed: () {
+                onPressButtonRegister();
+              },
+              child:Text("Sign up",style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
           ),
         ],
       ),
