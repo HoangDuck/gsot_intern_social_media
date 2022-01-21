@@ -33,6 +33,7 @@ class _CommentPageState extends State<CommentPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Material(
+        color: Colors.white,
         child: Column(
           children: [
             Expanded(child: _buildListComments(post)),
@@ -47,21 +48,26 @@ class _CommentPageState extends State<CommentPage> {
                   TextField(
                       controller: txtToDoControllerComment,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xfff3f3f3),
                         labelText: "Comment...",
-                        border: OutlineInputBorder( //Outline border type for TextField
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,// e border type for TextField
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
                         ),
                       )
                     ),
                   ),
                 IconButton(
                   icon: Icon(Icons.image),
+                  color: Color(0xff4a0072),
                   onPressed: (){
                     _onImageButtonPressed(ImageSource.gallery, context: context);
                     },
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
+                  color: Color(0xff4a0072),
                   onPressed: () async {
                     String pathImage,content;
                     content=txtToDoControllerComment.text;
@@ -172,7 +178,7 @@ class _CommentPageState extends State<CommentPage> {
                     shadows: [
                       BoxShadow(
                         color: Colors.black12,
-                        spreadRadius: -9,
+                        spreadRadius: -5,
                         blurRadius: 15,
                       ),
                     ]

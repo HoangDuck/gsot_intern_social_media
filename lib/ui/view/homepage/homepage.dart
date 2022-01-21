@@ -277,7 +277,7 @@ class _ListPostsState extends State<ListPosts> {
                   child: Row(
                     children: [
                       const SizedBox(width: 15,),
-                      IconButton(icon: Icon(Icons.chat_bubble_outlined),onPressed: (){
+                      IconButton(icon: Icon(Icons.chat_bubble_outlined,color: Color(0xff4a0072),),onPressed: (){
                         Navigator.push(
                             context,
                             PageTransition(
@@ -314,7 +314,7 @@ class _ListPostsState extends State<ListPosts> {
                       IconButton(
                           icon: colorIcon
                               ? Icon(Icons.favorite,color: Colors.red,)
-                              : Icon(Icons.favorite,color: Colors.black,),
+                              : Icon(Icons.favorite,color: Color(0xff4a0072),),
                         onPressed: (){
                         setState(() {
                           colorIcon=dataConvert.onLikeButtonPress(data, user,dataConvert.listPosts);
@@ -324,7 +324,7 @@ class _ListPostsState extends State<ListPosts> {
                       Expanded(
                         child: Container(
                           alignment: Alignment.centerRight,
-                          child: const Icon(Icons.bookmark),
+                          child: const Icon(Icons.bookmark,color: Color(0xff4a0072),),
                         ),
                       ),
                       const SizedBox(width: 10,)
