@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
+import 'package:social_media/main.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 
@@ -188,7 +189,10 @@ class InfoProfile extends StatelessWidget {
                                                                       await profileDataConvert.deleteIdUser();
                                                                       //close to logout
                                                                       //Navigator.pushandpoputil(context);
-                                                                      
+                                                                      Navigator.pushAndRemoveUntil(
+                                                                          context,
+                                                                          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+                                                                              (route) => false);
                                                                     },
                                                                   ),
                                                                   const Text("Logout", style: textSize15White),
