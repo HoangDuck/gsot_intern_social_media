@@ -1,7 +1,9 @@
 
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/core/converter/login_data_converter.dart';
@@ -41,28 +43,30 @@ class LoginPage extends StatelessWidget {
       future: _getIdUser(),
       builder: (context,snapshot)
       {
+        // khi có lỗi thì sẽ treo chữ GSOT
         if(snapshot.hasError){
           return Material(
-            child: Container(
-              color: Colors.white,
+            child: Container(color: Colors.white,
               child: Center(
                 child: Text("GSOT", style: titleAppGsotLoginPage),
               ),
             ),
           );
         }
+        //khi có dữ liệu là check trong pref có data user (bằng getIdUser) nếu -1
+        // thì trang login ngược lại thì vô page của user
         if(snapshot.hasData){
           if(snapshot.data!=-1){
             return PageAfterLogin();
           }
           return Provider<LoginDataConverter>.value(
               value: LoginDataConverter(),
-              child: Material(child: LoginPageUI()),
+              child: Material(child: loginAndRegisterUI(context)),
           );
         }
+        // mặc định là trạng thái không kết nối thì sẽ treo chữ GSOT
         return Material(
-          child: Container(
-            color: Colors.white,
+          child: Container(color: Colors.white,
             child: Center(
               child: Text("GSOT", style: titleAppGsotLoginPage),
             ),
@@ -71,13 +75,391 @@ class LoginPage extends StatelessWidget {
       },
     );
   }
+  Widget loginAndRegisterUI(BuildContext context){
+    return Column(
+      children: [
+        Expanded(child: Container(
+          color: Colors.white,
+          child: Stack(
+            children: [
+              Image(
+                image: AssetImage('assets/images/login-bg2.jpg'),
+                height: double.infinity,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+              Container(
+                alignment: Alignment.topCenter,
+                color: Colors.black54,
+                child: Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height*0.05,
+                    ),
+                    Image(
+                      image: AssetImage('assets/images/logo.png')
+                    ),
+                    FormField(),
+                  ],
+                ),
+              )
+            ],
+          )
+        )),
+        Container(
+          color: Colors.white,
+          padding: EdgeInsets.only(
+              top:MediaQuery.of(context).size.width*0.15,
+              bottom: MediaQuery.of(context).size.width*0.15,
+          ),
+          child: Center(
+            child: Column(
+              children: [
+                Text("Or",
+                  style: TextStyle(
+                      fontSize: 38,
+                      color: Color(0xff6d6a6d),
+                      fontWeight: FontWeight.w300)
+                  ,),
+                Text("Login with",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xff4b4a4a),
+                      fontWeight: FontWeight.w300)
+                  ,),
+                Container(
+                  padding: EdgeInsets.only(top: 40),
+                  child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Color(0xff1245bd),
+                      child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(LineIcons.facebookF),
+                          onPressed: (){
+                          }
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.red,
+                      child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(LineIcons.googleLogo),
+                          onPressed: (){
+                          }
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.blue,
+                      child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(LineIcons.twitter),
+                          onPressed: (){
+                          }
+                      ),
+                    ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
   Future<int>_getIdUser()async{
+    // hàm để check ID user có lưu trong pref không
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int id=-1;
     id= prefs.getInt('id') ?? -1;
     return id;
   }
 }
+class FormField extends StatefulWidget {
+  const FormField({Key? key}) : super(key: key);
+
+  @override
+  _FormFieldState createState() => _FormFieldState();
+}
+
+class _FormFieldState extends State<FormField> {
+  @override
+  Widget build(BuildContext context) {
+    return signInForm(context);
+  }
+  Widget signUpForm(BuildContext context){
+    return Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(height: MediaQuery.of(context).size.height*0.05,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Proceed With Your Registration",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w300),)),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: const [
+                      Icon(LineIcons.key,color: Colors.white,size: 35,),
+                      Text("Signup",style: TextStyle(fontSize: 34,color: Colors.white,fontWeight: FontWeight.w500),),
+                    ],
+                  )),
+            ),
+            Container(height: MediaQuery.of(context).size.height*0.05,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: TextFormField(
+                style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    LineIcons.user,
+                    color: Colors.white54,
+                  ),
+                  hintText: "Username",
+                  hintStyle: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 5,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: TextFormField(
+                style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    LineIcons.lock,
+                    color: Colors.white54,
+                  ),
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                obscureText: true,
+              ),
+            ),
+            SizedBox(height: 5,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: TextFormField(
+                style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    LineIcons.lock,
+                    color: Colors.white54,
+                  ),
+                  hintText: "Retype Password",
+                  hintStyle: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                obscureText: true,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03,),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width*0.8,
+                height: 45,
+                child: ElevatedButton(
+                  style: buttonStyleLogin,
+                  onPressed: () {
+                    //onPressButtonRegister();
+                  },
+                  child:Text("Signup",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.015,),
+              alignment: Alignment.center,
+              child: Text("Already Have An Account",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w300),),
+            )
+          ],
+        )
+    );
+  }
+  Widget signInForm(BuildContext context){
+    return Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(height: MediaQuery.of(context).size.height*0.05,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Proceed With Your Login",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w300),)),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: const [
+                      Icon(LineIcons.key,color: Colors.white,size: 35,),
+                      Text("Login",style: TextStyle(fontSize: 34,color: Colors.white,fontWeight: FontWeight.w500),),
+                    ],
+                  )),
+            ),
+            Container(height: MediaQuery.of(context).size.height*0.05,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: TextFormField(
+                style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    LineIcons.user,
+                    color: Colors.white54,
+                  ),
+                  hintText: "Username",
+                  hintStyle: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 5,),
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.8,
+              child: TextFormField(
+                style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    LineIcons.lock,
+                    color: Colors.white54,
+                  ),
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w300),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      width:0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                obscureText: true,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03,),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width*0.8,
+                height: 45,
+                child: ElevatedButton(
+                  style: buttonStyleLogin,
+                  onPressed: () {
+                    //onPressButtonRegister();
+                  },
+                  child:Text("Login",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.04,),
+              alignment: Alignment.center,
+              child: Text("Forgot your password?",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w300),),
+            )
+          ],
+        )
+    );
+  }
+}
+
 class LoginPageUI extends StatefulWidget {
   const LoginPageUI({Key? key}) : super(key: key);
   // login page là stateful vì còn thực hiện check lỗi login để báo lỗi đến người dùng
