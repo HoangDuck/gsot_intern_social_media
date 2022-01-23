@@ -76,104 +76,132 @@ class LoginPage extends StatelessWidget {
     );
   }
   Widget loginAndRegisterUI(BuildContext context){
-    return Column(
-      children: [
-        Expanded(child: Container(
-          color: Colors.white,
-          child: Stack(
-            children: [
-              Image(
-                image: AssetImage('assets/images/login-bg2.jpg'),
-                height: double.infinity,
-                width: double.infinity,
-                fit: BoxFit.fill,
+    return Stack(
+      children:[
+        Column(
+          children: [
+            Expanded(child: Container(
+                color: Colors.white,
+                child: Stack(
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/login-bg2.jpg'),
+                      height: double.infinity,
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      color: Colors.black54,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height*0.05,
+                          ),
+                          Image(
+                              image: AssetImage('assets/images/logo.png')
+                          ),
+                          FormField(),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+            )),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.only(
+                top:MediaQuery.of(context).size.width*0.15,
+                bottom: MediaQuery.of(context).size.width*0.15,
               ),
-              Container(
-                alignment: Alignment.topCenter,
-                color: Colors.black54,
+              child: Center(
                 child: Column(
                   children: [
+                    Text("Or",
+                      style: TextStyle(
+                          fontSize: 38,
+                          color: Color(0xff6d6a6d),
+                          fontWeight: FontWeight.w300)
+                      ,),
+                    Text("Login with",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xff4b4a4a),
+                          fontWeight: FontWeight.w300)
+                      ,),
                     Container(
-                      height: MediaQuery.of(context).size.height*0.05,
-                    ),
-                    Image(
-                      image: AssetImage('assets/images/logo.png')
-                    ),
-                    FormField(),
+                      padding: EdgeInsets.only(top: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Color(0xff1245bd),
+                            child: IconButton(
+                                color: Colors.white,
+                                icon: Icon(LineIcons.facebookF),
+                                onPressed: (){
+                                }
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.red,
+                            child: IconButton(
+                                color: Colors.white,
+                                icon: Icon(LineIcons.googleLogo),
+                                onPressed: (){
+                                }
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.blue,
+                            child: IconButton(
+                                color: Colors.white,
+                                icon: Icon(LineIcons.twitter),
+                                onPressed: (){
+                                }
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
-          )
-        )),
-        Container(
-          color: Colors.white,
-          padding: EdgeInsets.only(
-              top:MediaQuery.of(context).size.width*0.15,
-              bottom: MediaQuery.of(context).size.width*0.15,
+              ),
+            )
+          ],
+        ),
+        Positioned(
+          bottom: MediaQuery.of(context).size.width*0.58,
+          right: MediaQuery.of(context).size.width/2+10,
+          child:  FloatingActionButton.extended(
+            onPressed: () {
+              // Add your onPressed code here!
+            },
+            label: Text('Sign in'),
+            icon: Icon(LineIcons.key),
+            backgroundColor: Color(0xffff008c),
           ),
-          child: Center(
-            child: Column(
-              children: [
-                Text("Or",
-                  style: TextStyle(
-                      fontSize: 38,
-                      color: Color(0xff6d6a6d),
-                      fontWeight: FontWeight.w300)
-                  ,),
-                Text("Login with",
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xff4b4a4a),
-                      fontWeight: FontWeight.w300)
-                  ,),
-                Container(
-                  padding: EdgeInsets.only(top: 40),
-                  child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Color(0xff1245bd),
-                      child: IconButton(
-                          color: Colors.white,
-                          icon: Icon(LineIcons.facebookF),
-                          onPressed: (){
-                          }
-                      ),
-                    ),
-                    SizedBox(width: 15,),
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.red,
-                      child: IconButton(
-                          color: Colors.white,
-                          icon: Icon(LineIcons.googleLogo),
-                          onPressed: (){
-                          }
-                      ),
-                    ),
-                    SizedBox(width: 15,),
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.blue,
-                      child: IconButton(
-                          color: Colors.white,
-                          icon: Icon(LineIcons.twitter),
-                          onPressed: (){
-                          }
-                      ),
-                    ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+        ),
+        Positioned(
+          bottom: MediaQuery.of(context).size.width*0.58,
+          left: MediaQuery.of(context).size.width/2+10,
+          child:  FloatingActionButton.extended(
+            onPressed: () {
+              // Add your onPressed code here!
+            },
+            label: Text('Signup',style: TextStyle(color: Colors.black87),),
+            icon: Icon(LineIcons.alternatePencil,color: Colors.black87,),
+            backgroundColor: Color(0xffe3e3e3),
           ),
-        )
-      ],
+        ),
+      ]
     );
   }
   Future<int>_getIdUser()async{
