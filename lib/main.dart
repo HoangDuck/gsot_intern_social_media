@@ -88,7 +88,7 @@ class LoginPage extends StatelessWidget {
                       image: AssetImage('assets/images/login-bg2.jpg'),
                       height: double.infinity,
                       width: double.infinity,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                     Container(
                       alignment: Alignment.topCenter,
