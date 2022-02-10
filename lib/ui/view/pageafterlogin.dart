@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/ui/view/chat/chat.dart';
@@ -47,27 +48,71 @@ class _PagesState extends State<Pages> {
     return ChangeNotifierProvider<DataConvert>.value(
       value: dataConvert,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xffff2C55),
+          onPressed: (){
+            setState(() {
+              popupAdd(context,dataConvert);
+            });
+          },
+          child: Icon(Icons.close),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+        appBar: AppBar(
+          backgroundColor: Color(0xfff1f2f6),
+          actions: [
+            Expanded(child: IconButton(
+                color: Color(0xff202020),
+                icon: Icon(LineIcons.angleDoubleLeft),
+                onPressed: () {}
+                ),flex: 1,),
+            Expanded(child: IconButton(
+                color: Color(0xff202020),
+                icon: Icon(LineIcons.search),
+                onPressed: () {}
+                ),flex: 1,),
+            Expanded(child: FlatButton(
+              onPressed: (){},
+              child: Image(
+                  image: AssetImage('assets/images/logo.png')
+              ),
+            ),flex: 3,),
+            Expanded(child: FlatButton(
+              onPressed: (){},
+              child: Image(
+                  image: AssetImage('assets/images/create-new.png')
+              ),
+            ),flex: 1,),
+            Expanded(child: IconButton(
+                color: Color(0xff202020),
+                icon: Icon(LineIcons.list),
+                onPressed: () {}
+                ),flex: 1,),
+          ],
+        ),
         bottomNavigationBar: BottomAppBar(
+          color: Color(0xffffe9ed),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
-            height: 75,
+            height: 60,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                iconButton(Icon(Icons.home_filled,color: Color(0xff4a0072),),0),
-                iconButton(Icon(Icons.chat_bubble_rounded,color: Color(0xff4a0072),),1),
-                IconButton(
-                  iconSize: 30.0,
-                  icon: const Icon(Icons.add_box_rounded,color: Color(0xff4a0072),),
-                  onPressed: () {
-                    setState(() {
-                      popupAdd(context,dataConvert);
-                    });
-                  },
-                ),
-                iconButton(Icon(Icons.notifications_rounded,color: Color(0xff4a0072),),3),
-                iconButton(Icon(Icons.account_circle_sharp,color: Color(0xff4a0072),),4)
+                iconButton(Icon(LineIcons.home,color: Color(0xffff2f64),),0),
+                iconButton(Icon(LineIcons.bell,color: Color(0xffff2f64),),1),
+                // IconButton(
+                //   iconSize: 30.0,
+                //   icon: const Icon(Icons.add_box_rounded,color: Color(0xff4a0072),),
+                //   onPressed: () {
+                //     setState(() {
+                //       popupAdd(context,dataConvert);
+                //     });
+                //   },
+                // ),
+                SizedBox(width: MediaQuery.of(context).size.width*0.2,),
+                iconButton(Icon(LineIcons.commentDots,color: Color(0xffff2f64),),3),
+                iconButton(Icon(LineIcons.user,color: Color(0xffff2f64),),4)
               ],
             ),
           ),
@@ -78,12 +123,12 @@ class _PagesState extends State<Pages> {
             HomePage(),
             Container(
               padding: const EdgeInsets.all(10),
-              child: ChatPage(),
+              child: NotificationPage(),
             ),
             Container(),//widget trống vì bottom appbar là popup widget
             Container(
               padding: const EdgeInsets.all(10),
-              child: NotificationPage(),
+              child: ChatPage(),
             ),
             ProfilePage()
           ],

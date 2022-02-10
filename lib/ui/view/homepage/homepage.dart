@@ -18,38 +18,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(7),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("GSOT", style: titleAppGsotHomePage),
-                SizedBox(
-                  width: 35,
-                  height: 35,
-                  child: Ink(
-                    decoration: shapeDecorationShadow(10),
-                    child: IconButton(
-                      color: Colors.black,
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ListPosts(),
-        ],
-      ),
-    );
+    return ListPosts();
+    // child: Column(
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     Container(
+    //       padding: const EdgeInsets.all(10),
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         children: [
+    //           Text("Stories", style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.black)),
+    //           Expanded(child: Container(),)
+    //         ],
+    //       ),
+    //     ),
+    //     ListPosts(),
+    //   ],
+    // ),
   }
 }
 class ListAvatar extends StatefulWidget {
@@ -73,54 +59,54 @@ class _ListAvatarState extends State<ListAvatar> {
     DataConvert dataConvert=Provider.of<DataConvert>(context);
     dataConvert.createListUsersAfterLogin();
     return ListView.builder(
-      itemCount: dataConvert.listUsersAfterLogin.length+1,
+      itemCount: dataConvert.listUsersAfterLogin.length/*+1*/,
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context,i){
-        if(i==0){
-          return _addingWidget();
-        }
-        return _buildRow(dataConvert.listUsersAfterLogin[i-1]);
+        // if(i==0){
+        //   return _addingWidget();
+        // }
+        return _buildRow(dataConvert.listUsersAfterLogin[i/*-1*/]);
       },
     );
   }
-  Widget _addingWidget(){
-    return SizedBox(
-        width: 60.0,
-        height: 60.0,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                    color: Colors.grey,
-                    width: 2
-                ),
-              ),
-              child: IconButton(
-                color: Colors.grey,
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(type: PageTransitionType.fade,
-                          child: SafeArea(
-                              child: ChangeNotifierProvider.value(
-                                  value: Provider.of<DataConvert>(context,listen: false),
-                                  child: UploadStatus()
-                              )
-                          )
-                      )
-                    );
-                  },
-              ),
-            ),
-            Text("You",style: textSize14)
-          ],
-        ),
-    );
-  }
+  // Widget _addingWidget(){
+  //   return SizedBox(
+  //       width: 60.0,
+  //       height: 60.0,
+  //       child: Column(
+  //         children: [
+  //           Container(
+  //             decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.circular(25),
+  //               border: Border.all(
+  //                   color: Colors.grey,
+  //                   width: 2
+  //               ),
+  //             ),
+  //             child: IconButton(
+  //               color: Colors.grey,
+  //               icon: const Icon(Icons.add),
+  //               onPressed: () {
+  //                 Navigator.push(
+  //                     context,
+  //                     PageTransition(type: PageTransitionType.fade,
+  //                         child: SafeArea(
+  //                             child: ChangeNotifierProvider.value(
+  //                                 value: Provider.of<DataConvert>(context,listen: false),
+  //                                 child: UploadStatus()
+  //                             )
+  //                         )
+  //                     )
+  //                   );
+  //                 },
+  //             ),
+  //           ),
+  //           Text("You",style: textSize14)
+  //         ],
+  //       ),
+  //   );
+  // }
   Widget _buildRow(User data) {
     return SizedBox(
         width: 60.0,
@@ -183,7 +169,54 @@ class _ListPostsState extends State<ListPosts> {
         itemBuilder: (context,i){
           if(i==0){
             return Column(
-              children:const [
+              children:[
+                SizedBox(height: 30,),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(color: Colors.yellow,width: 3)
+                    ),
+                    color: Color(0xfff5f4f9)
+                  ),
+                  padding:EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex:3,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text("Good Afternoon, Geogre Floyd",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Color(0xff4d4d59)),),
+                            Text("May this afternoon belight, blesses, productive and happy for you",style: TextStyle(color: Color(0xff9f92B5)),),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Image(
+                            image: AssetImage('assets/images/good-noon.png')
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 35,),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        color: Color(0xffff2f64),
+                        child: Text(" ",style: TextStyle(fontSize: 22)),
+                      ),
+                      Container(width: 5,),
+                      Text("Stories", style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500,color: Colors.black)),
+                      Expanded(child: Container(),)
+                    ],
+                  ),
+                ),
                 SizedBox(height: 10,),
                 ListAvatar(),
               ],

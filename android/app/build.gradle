@@ -49,7 +49,6 @@ android {
         }
     }
 }
-
 flutter {
     source '../..'
 }
