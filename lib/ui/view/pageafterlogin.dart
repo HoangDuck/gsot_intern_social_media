@@ -34,60 +34,82 @@ class _PagesState extends State<Pages> {
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
       future: Provider.of<DataConvert>(context).initData(),
-      builder: (context,snapshot){
-        if(snapshot.hasData){
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
           return buildHomePage(context);
         }
         return Container();
       },
     );
   }
+
   //UI Homepage
-  Widget buildHomePage(BuildContext context){
-    DataConvert dataConvert=Provider.of<DataConvert>(context);
+  Widget buildHomePage(BuildContext context) {
+    DataConvert dataConvert = Provider.of<DataConvert>(context);
     return ChangeNotifierProvider<DataConvert>.value(
       value: dataConvert,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xffff2C55),
-          onPressed: (){
-            setState(() {
-              popupAdd(context,dataConvert);
-            });
-          },
-          child: Icon(Icons.close),
+        floatingActionButton: SizedBox(
+          height: 75.0,
+          width: 75.0,
+          child: FittedBox(
+            child: FloatingActionButton(
+              backgroundColor: Color(0xffff2C55),
+              child: Icon(Icons.close),
+              onPressed: () {
+                setState(() {
+                  popupAdd(context, dataConvert);
+                });
+              },
+            ),
+          ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterDocked,
         appBar: AppBar(
+          bottom: PreferredSize(
+              child: Container(
+                color: Color(0xffff2f64),
+                height: 3.0,
+              ),
+              preferredSize: Size.fromHeight(4.0)),
           backgroundColor: Color(0xfff1f2f6),
           actions: [
-            Expanded(child: IconButton(
-                color: Color(0xff202020),
-                icon: Icon(LineIcons.angleDoubleLeft),
-                onPressed: () {}
-                ),flex: 1,),
-            Expanded(child: IconButton(
-                color: Color(0xff202020),
-                icon: Icon(LineIcons.search),
-                onPressed: () {}
-                ),flex: 1,),
-            Expanded(child: FlatButton(
-              onPressed: (){},
-              child: Image(
-                  image: AssetImage('assets/images/logo.png')
+            Expanded(
+              child: IconButton(
+                  color: Color(0xff202020),
+                  icon: Icon(LineIcons.angleDoubleLeft),
+                  onPressed: () {}),
+              flex: 1,
+            ),
+            Expanded(
+              child: IconButton(
+                  color: Color(0xff202020),
+                  icon: Icon(LineIcons.search),
+                  onPressed: () {}),
+              flex: 1,
+            ),
+            Expanded(
+              child: FlatButton(
+                onPressed: () {},
+                child: Image(image: AssetImage('assets/images/logo.png')),
               ),
-            ),flex: 3,),
-            Expanded(child: FlatButton(
-              onPressed: (){},
-              child: Image(
-                  image: AssetImage('assets/images/create-new.png')
+              flex: 3,
+            ),
+            Expanded(
+              child: FlatButton(
+                onPressed: () {},
+                child: Image(image: AssetImage('assets/images/create-new.png')),
               ),
-            ),flex: 1,),
-            Expanded(child: IconButton(
-                color: Color(0xff202020),
-                icon: Icon(LineIcons.list),
-                onPressed: () {}
-                ),flex: 1,),
+              flex: 1,
+            ),
+            Expanded(
+              child: IconButton(
+                  color: Color(0xff202020),
+                  icon: Icon(LineIcons.list),
+                  onPressed: () {}),
+              flex: 1,
+            ),
           ],
         ),
         bottomNavigationBar: BottomAppBar(
@@ -99,20 +121,37 @@ class _PagesState extends State<Pages> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                iconButton(Icon(LineIcons.home,color: Color(0xffff2f64),),0),
-                iconButton(Icon(LineIcons.bell,color: Color(0xffff2f64),),1),
-                // IconButton(
-                //   iconSize: 30.0,
-                //   icon: const Icon(Icons.add_box_rounded,color: Color(0xff4a0072),),
-                //   onPressed: () {
-                //     setState(() {
-                //       popupAdd(context,dataConvert);
-                //     });
-                //   },
-                // ),
-                SizedBox(width: MediaQuery.of(context).size.width*0.2,),
-                iconButton(Icon(LineIcons.commentDots,color: Color(0xffff2f64),),3),
-                iconButton(Icon(LineIcons.user,color: Color(0xffff2f64),),4)
+                iconButton(
+                  Icon(
+                    LineIcons.home,
+                    color: Color(0xffff2f64),
+                  ),
+                  0,
+                ),
+                iconButton(
+                  Icon(
+                    LineIcons.bell,
+                    color: Color(0xffff2f64),
+                  ),
+                  1,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                ),
+                iconButton(
+                  Icon(
+                    LineIcons.commentDots,
+                    color: Color(0xffff2f64),
+                  ),
+                  3,
+                ),
+                iconButton(
+                  Icon(
+                    LineIcons.user,
+                    color: Color(0xffff2f64),
+                  ),
+                  4,
+                )
               ],
             ),
           ),
@@ -125,19 +164,21 @@ class _PagesState extends State<Pages> {
               padding: const EdgeInsets.all(10),
               child: NotificationPage(),
             ),
-            Container(),//widget trống vì bottom appbar là popup widget
+            Container(), //widget trống vì bottom appbar là popup widget
             Container(
               padding: const EdgeInsets.all(10),
               child: ChatPage(),
             ),
             ProfilePage()
           ],
-          physics: const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+          physics:
+              const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
         ),
       ),
     );
   }
-  Widget iconButton(Icon icon,int indexPage){
+
+  Widget iconButton(Icon icon, int indexPage) {
     return IconButton(
       iconSize: 30.0,
       icon: icon,

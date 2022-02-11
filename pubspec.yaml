@@ -41,6 +41,7 @@ dependencies:
   image_picker: ^0.8.4+4
   font_awesome_flutter: ^9.2.0
   line_icons: ^2.0.1
+  fdottedline_nullsafety: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,11 @@ flutter:
     - assets/images/logo.png
     - assets/images/create-new.png
     - assets/images/good-noon.png
+    - assets/images/animate-bg.png
+    - assets/images/thumb.png
+    - assets/images/heart.png
+    - assets/images/smile.png
+    - assets/images/weep.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
