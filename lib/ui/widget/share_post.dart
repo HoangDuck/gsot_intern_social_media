@@ -81,14 +81,15 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                       children: [
                         SizedBox(
                           height: 35,
+                          width: 90,
                           child: TextButton(
                             onPressed: () {},
                             child: Container(
                               alignment: Alignment.center,
-                              padding: EdgeInsets.only(left: 10),
                               child: Text(
                                 "Your timeline",
                                 style: TextStyle(
+                                  fontSize: 10,
                                   color: Color(0xffadb2d0),
                                 ),
                               ),
@@ -97,10 +98,11 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Color(0xfff5f4f9)),
                               shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              )),
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -111,10 +113,10 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                             onPressed: () {},
                             child: Container(
                               alignment: Alignment.center,
-                              padding: EdgeInsets.only(left: 10),
                               child: Text(
                                 "To friends",
                                 style: TextStyle(
+                                  fontSize: 10,
                                   color: Color(0xffadb2d0),
                                 ),
                               ),
@@ -123,10 +125,11 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Color(0xfff5f4f9)),
                               shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              )),
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -137,10 +140,10 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                             onPressed: () {},
                             child: Container(
                               alignment: Alignment.center,
-                              padding: EdgeInsets.only(left: 10),
                               child: Text(
                                 "Social Media",
                                 style: TextStyle(
+                                  fontSize: 10,
                                   color: Color(0xffadb2d0),
                                 ),
                               ),
@@ -149,10 +152,11 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Color(0xfff5f4f9)),
                               shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              )),
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
                             ),
                           ),
                         )

@@ -15,7 +15,8 @@ import 'package:social_media/ui/constant/text_styles.dart';
 
 //import 'package:social_media/ui/view/homepage/uploadstatus.dart';
 import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
-import 'package:social_media/ui/view/popupadd/popupadd.dart';
+
+//import 'package:social_media/ui/view/popupadd/popupadd.dart';
 import 'package:social_media/ui/widget/comment.dart';
 import 'package:social_media/ui/widget/share_post.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
@@ -118,6 +119,12 @@ class ListPosts extends StatefulWidget {
 }
 
 class _ListPostsState extends State<ListPosts> {
+  Offset? _tapPosition;
+
+  void _storePosition(TapDownDetails details) {
+    _tapPosition = details.globalPosition;
+  }
+
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert = Provider.of<DataConvert>(context);
@@ -319,11 +326,105 @@ class _ListPostsState extends State<ListPosts> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.centerRight,
-                    child: IconButton(
-                      onPressed: (){
-
+                    child: GestureDetector(
+                      onTap: () {
+                        final RenderBox? overlay = Overlay.of(context)!
+                            .context
+                            .findRenderObject() as RenderBox;
+                        showMenu(
+                          color: Color(0xfff6f6f6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          context: context,
+                          position: RelativeRect.fromRect(
+                              _tapPosition! & const Size(30, 30),
+                              // smaller rect, the touch area
+                              Offset.zero &
+                                  overlay!
+                                      .size // Bigger rect, the entire screen
+                              ),
+                          items: [
+                            PopupMenuItem(
+                              onTap: () {
+                                // int? idComment = comment.id;
+                                // dataConvert.deleteDataComment(idPost!, idComment!);
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    LineIcons.trash,
+                                    color: Color(0xff92929A),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Delete post",
+                                        style: TextStyle(
+                                          color: Color(0xff92929A),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                // int? idComment = comment.id;
+                                // dataConvert.deleteDataComment(idPost!, idComment!);
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    LineIcons.ban,
+                                    color: Color(0xff92929A),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Hide post",
+                                        style: TextStyle(
+                                          color: Color(0xff92929A),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                // int? idComment = comment.id;
+                                // dataConvert.deleteDataComment(idPost!, idComment!);
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    LineIcons.alternatePencil,
+                                    color: Color(0xff92929A),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Edit post",
+                                        style: TextStyle(
+                                          color: Color(0xff92929A),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
                       },
-                      icon: const Icon(Icons.more_horiz),
+                      onTapDown: _storePosition,
+                      child: Icon(Icons.more_horiz),
                     ),
                   ),
                 ),
@@ -597,8 +698,8 @@ class _ListPostsState extends State<ListPosts> {
                   height: 35,
                   width: 90,
                   child: TextButton(
-                    onPressed: (){
-                      popUpSharePost(context,dataConvert);
+                    onPressed: () {
+                      popUpSharePost(context, dataConvert);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
