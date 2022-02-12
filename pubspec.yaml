@@ -42,6 +42,7 @@ dependencies:
   font_awesome_flutter: ^9.2.0
   line_icons: ^2.0.1
   fdottedline_nullsafety: ^2.0.0
+  audioplayers: ^0.20.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,19 @@ flutter:
     - assets/images/smile.png
     - assets/images/weep.png
     - assets/images/giphy.webp
+    - assets/images/angry.gif
+    - assets/images/angry2.gif
+    - assets/images/haha.gif
+    - assets/images/haha2.png
+    - assets/images/ic_like.png
+    - assets/images/ic_like_fill.png
+    - assets/images/like.gif
+    - assets/images/love.gif
+    - assets/images/love2.png
+    - assets/images/sad.gif
+    - assets/images/sad2.png
+    - assets/images/wow.gif
+    - assets/images/wow2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
