@@ -11,15 +11,8 @@ class FbReactionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'FB REACTION',
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: FbReaction(),
+    return Material(
+      child: FbReaction(),
     );
   }
 }
@@ -366,12 +359,6 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     return GestureDetector(
       child: Column(
         children: <Widget>[
-          // Just a top space
-          // Container(
-          //   width: double.infinity,
-          //   height: 100.0,
-          // ),
-
           // main content
           Container(
             child: Stack(
@@ -390,14 +377,13 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
                 // Button like
                 renderBtnLike(),
-
                 // Icons when jump
                 // Icon like
                 whichIconUserChoose == 1 && !isDragging
                     ? Container(
                         child: Transform.scale(
                           child: Image.asset(
-                            'images/like.gif',
+                            'assets/images/like.gif',
                             width: 40.0,
                             height: 40.0,
                           ),
@@ -415,7 +401,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ? Container(
                         child: Transform.scale(
                           child: Image.asset(
-                            'images/love.gif',
+                            'assets/images/love.gif',
                             width: 40.0,
                             height: 40.0,
                           ),
@@ -433,7 +419,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ? Container(
                         child: Transform.scale(
                           child: Image.asset(
-                            'images/haha.gif',
+                            'assets/images/haha.gif',
                             width: 40.0,
                             height: 40.0,
                           ),
@@ -451,7 +437,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ? Container(
                         child: Transform.scale(
                           child: Image.asset(
-                            'images/wow.gif',
+                            'assets/images/wow.gif',
                             width: 40.0,
                             height: 40.0,
                           ),
@@ -469,7 +455,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ? Container(
                         child: Transform.scale(
                           child: Image.asset(
-                            'images/sad.gif',
+                            'assets/images/sad.gif',
                             width: 40.0,
                             height: 40.0,
                           ),
@@ -487,7 +473,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                     ? Container(
                         child: Transform.scale(
                           child: Image.asset(
-                            'images/angry.gif',
+                            'assets/images/angry.gif',
                             width: 40.0,
                             height: 40.0,
                           ),
@@ -565,7 +551,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'images/like.gif',
+                    'assets/images/like.gif',
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -607,7 +593,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'images/love.gif',
+                    'assets/images/love.gif',
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -649,7 +635,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'images/haha.gif',
+                    'assets/images/haha.gif',
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -691,7 +677,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'images/wow.gif',
+                    'assets/images/wow.gif',
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -735,7 +721,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'images/sad.gif',
+                    'assets/images/sad.gif',
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -779,7 +765,7 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'images/angry.gif',
+                    'assets/images/angry.gif',
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -917,26 +903,26 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
 
   String getImageIconBtn() {
     if (!isLongPress && isLiked) {
-      return 'images/ic_like_fill.png';
+      return 'assets/images/ic_like_fill.png';
     } else if (!isDragging) {
       switch (whichIconUserChoose) {
         case 1:
-          return 'images/ic_like_fill.png';
+          return 'assets/images/ic_like_fill.png';
         case 2:
-          return 'images/love2.png';
+          return 'assets/images/love2.png';
         case 3:
-          return 'images/haha2.png';
+          return 'assets/images/haha2.png';
         case 4:
-          return 'images/wow2.png';
+          return 'assets/images/wow2.png';
         case 5:
-          return 'images/sad2.png';
+          return 'assets/images/sad2.png';
         case 6:
-          return 'images/angry2.png';
+          return 'assets/images/angry2.png';
         default:
-          return 'images/ic_like.png';
+          return 'assets/images/ic_like.png';
       }
     } else {
-      return 'images/ic_like.png';
+      return 'assets/images/ic_like.png';
     }
   }
 
@@ -1235,8 +1221,8 @@ class FbReactionState extends State<FbReaction> with TickerProviderStateMixin {
     await file.writeAsBytes((await loadAsset(nameSound)).buffer.asUint8List());
     await audioPlayer.play(file.path, isLocal: true);
   }
-
+  //load sound
   Future loadAsset(String nameSound) async {
-    return await rootBundle.load('sounds/$nameSound');
+    return await rootBundle.load('assets/sounds/$nameSound');
   }
 }

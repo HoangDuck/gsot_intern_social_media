@@ -8,8 +8,8 @@ import 'package:social_media/ui/view/notifier/notificationpage.dart';
 import 'package:social_media/ui/view/popupadd/popupadd.dart';
 import 'package:social_media/ui/view/profilepage/profilepage.dart';
 
-class PageAfterLogin extends StatelessWidget {
-  const PageAfterLogin({Key? key}) : super(key: key);
+class TabPages extends StatelessWidget {
+  const TabPages({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +57,11 @@ class _PagesState extends State<Pages> {
               backgroundColor: Color(0xffff2C55),
               child: Icon(Icons.close),
               onPressed: () {
-                setState(() {
-                  popupAdd(context, dataConvert);
-                });
+                setState(
+                  () {
+                    popupAdd(context, dataConvert);
+                  },
+                );
               },
             ),
           ),
@@ -84,30 +86,36 @@ class _PagesState extends State<Pages> {
             ),
             Expanded(
               child: IconButton(
-                  color: Color(0xff202020),
-                  icon: Icon(LineIcons.search),
-                  onPressed: () {}),
+                color: Color(0xff202020),
+                icon: Icon(LineIcons.search),
+                onPressed: () {},
+              ),
               flex: 1,
             ),
             Expanded(
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
-                child: Image(image: AssetImage('assets/images/logo.png')),
+                child: Image(
+                  image: AssetImage('assets/images/logo.png'),
+                ),
               ),
               flex: 3,
             ),
             Expanded(
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
-                child: Image(image: AssetImage('assets/images/create-new.png')),
+                child: Image(
+                  image: AssetImage('assets/images/create-new.png'),
+                ),
               ),
               flex: 1,
             ),
             Expanded(
               child: IconButton(
-                  color: Color(0xff202020),
-                  icon: Icon(LineIcons.list),
-                  onPressed: () {}),
+                color: Color(0xff202020),
+                icon: Icon(LineIcons.list),
+                onPressed: () {},
+              ),
               flex: 1,
             ),
           ],
@@ -135,15 +143,17 @@ class _PagesState extends State<Pages> {
                   ),
                   1,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                ),
-                iconButton(
-                  Icon(
-                    LineIcons.commentDots,
-                    color: Color(0xffff2f64),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.2,
                   ),
-                  3,
+                  child: iconButton(
+                    Icon(
+                      LineIcons.commentDots,
+                      color: Color(0xffff2f64),
+                    ),
+                    3,
+                  ),
                 ),
                 iconButton(
                   Icon(
@@ -161,18 +171,18 @@ class _PagesState extends State<Pages> {
           children: <Widget>[
             HomePage(),
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
               child: NotificationPage(),
             ),
             Container(), //widget trống vì bottom appbar là popup widget
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
               child: ChatPage(),
             ),
             ProfilePage()
           ],
           physics:
-              const NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+              NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
         ),
       ),
     );
@@ -183,9 +193,11 @@ class _PagesState extends State<Pages> {
       iconSize: 30.0,
       icon: icon,
       onPressed: () {
-        setState(() {
-          _myPage.jumpToPage(indexPage);
-        });
+        setState(
+          () {
+            _myPage.jumpToPage(indexPage);
+          },
+        );
       },
     );
   }
