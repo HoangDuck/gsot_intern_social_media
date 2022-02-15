@@ -68,29 +68,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/login-bg2.jpg
-    - assets/images/logo.png
-    - assets/images/create-new.png
-    - assets/images/good-noon.png
-    - assets/images/animate-bg.png
-    - assets/images/thumb.png
-    - assets/images/heart.png
-    - assets/images/smile.png
-    - assets/images/weep.png
-    - assets/images/giphy.webp
-    - assets/images/angry.gif
-    - assets/images/angry2.png
-    - assets/images/haha.gif
-    - assets/images/haha2.png
-    - assets/images/ic_like.png
-    - assets/images/ic_like_fill.png
-    - assets/images/like.gif
-    - assets/images/love.gif
-    - assets/images/love2.png
-    - assets/images/sad.gif
-    - assets/images/sad2.png
-    - assets/images/wow.gif
-    - assets/images/wow2.png
+    - assets/images/
+    - assets/sounds/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

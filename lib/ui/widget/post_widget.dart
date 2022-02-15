@@ -36,6 +36,7 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   //tap position
   Offset? _tapPosition;
+
   //show comment box
   bool _isShowCommentBox = false;
 
@@ -57,8 +58,18 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   late Animation zoomIconLikeInBtn, tiltIconLikeInBtn, zoomTextLikeInBtn;
   late Animation fadeInBox;
   late Animation moveRightGroupIcon;
-  late Animation pushIconLikeUp, pushIconLoveUp, pushIconHahaUp, pushIconWowUp, pushIconSadUp, pushIconAngryUp;
-  late Animation zoomIconLike, zoomIconLove, zoomIconHaha, zoomIconWow, zoomIconSad, zoomIconAngry;
+  late Animation pushIconLikeUp,
+      pushIconLoveUp,
+      pushIconHahaUp,
+      pushIconWowUp,
+      pushIconSadUp,
+      pushIconAngryUp;
+  late Animation zoomIconLike,
+      zoomIconLove,
+      zoomIconHaha,
+      zoomIconWow,
+      zoomIconSad,
+      zoomIconAngry;
 
   // For short press btn
   late AnimationController animControlBtnShortPress;
@@ -100,7 +111,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   bool isDraggingOutside = false;
   bool isJustDragInside = true;
 
-
+  //store position tap on screen
   void _storePosition(TapDownDetails details) {
     _tapPosition = details.globalPosition;
   }
@@ -137,11 +148,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   initAnimationBtnLike() {
     // long press
-    animControlBtnLongPress =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationBtnLongPress));
-    zoomIconLikeInBtn = Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
-    tiltIconLikeInBtn = Tween(begin: 0.0, end: 0.2).animate(animControlBtnLongPress);
-    zoomTextLikeInBtn = Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
+    animControlBtnLongPress = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationBtnLongPress));
+    zoomIconLikeInBtn =
+        Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
+    tiltIconLikeInBtn =
+        Tween(begin: 0.0, end: 0.2).animate(animControlBtnLongPress);
+    zoomTextLikeInBtn =
+        Tween(begin: 1.0, end: 0.85).animate(animControlBtnLongPress);
 
     zoomIconLikeInBtn.addListener(() {
       setState(() {});
@@ -154,10 +169,13 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     });
 
     // short press
-    animControlBtnShortPress =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationBtnShortPress));
-    zoomIconLikeInBtn2 = Tween(begin: 1.0, end: 0.2).animate(animControlBtnShortPress);
-    tiltIconLikeInBtn2 = Tween(begin: 0.0, end: 0.8).animate(animControlBtnShortPress);
+    animControlBtnShortPress = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationBtnShortPress));
+    zoomIconLikeInBtn2 =
+        Tween(begin: 1.0, end: 0.2).animate(animControlBtnShortPress);
+    tiltIconLikeInBtn2 =
+        Tween(begin: 0.0, end: 0.8).animate(animControlBtnShortPress);
 
     zoomIconLikeInBtn2.addListener(() {
       setState(() {});
@@ -168,7 +186,8 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   initAnimationBoxAndIcons() {
-    animControlBox = AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationBox));
+    animControlBox = AnimationController(
+        vsync: this, duration: Duration(milliseconds: durationAnimationBox));
 
     // General
     moveRightGroupIcon = Tween(begin: 0.0, end: 10.0).animate(
@@ -188,45 +207,81 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
     // Icons
     pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.0, 0.5),
+      ),
     );
     zoomIconLike = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.0, 0.5),
+      ),
     );
 
     pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.1, 0.6),
+      ),
     );
     zoomIconLove = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.1, 0.6),
+      ),
     );
 
     pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.2, 0.7),
+      ),
     );
     zoomIconHaha = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.2, 0.7),
+      ),
     );
 
     pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.3, 0.8),
+      ),
     );
     zoomIconWow = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.3, 0.8),
+      ),
     );
 
     pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.4, 0.9),
+      ),
     );
     zoomIconSad = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.4, 0.9),
+      ),
     );
 
     pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.5, 1.0),
+      ),
     );
     zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+      CurvedAnimation(
+        parent: animControlBox,
+        curve: Interval(0.5, 1.0),
+      ),
     );
 
     pushIconLikeUp.addListener(() {
@@ -268,12 +323,16 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   initAnimationIconWhenDrag() {
-    animControlIconWhenDrag =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationIconWhenDrag));
+    animControlIconWhenDrag = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationIconWhenDrag));
 
-    zoomIconChosen = Tween(begin: 1.0, end: 1.8).animate(animControlIconWhenDrag);
-    zoomIconNotChosen = Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDrag);
-    zoomBoxIcon = Tween(begin: 50.0, end: 40.0).animate(animControlIconWhenDrag);
+    zoomIconChosen =
+        Tween(begin: 1.0, end: 1.8).animate(animControlIconWhenDrag);
+    zoomIconNotChosen =
+        Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDrag);
+    zoomBoxIcon =
+        Tween(begin: 50.0, end: 40.0).animate(animControlIconWhenDrag);
 
     zoomIconChosen.addListener(() {
       setState(() {});
@@ -287,27 +346,33 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   initAnimationIconWhenDragOutside() {
-    animControlIconWhenDragOutside =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationIconWhenDrag));
-    zoomIconWhenDragOutside = Tween(begin: 0.8, end: 1.0).animate(animControlIconWhenDragOutside);
+    animControlIconWhenDragOutside = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationIconWhenDrag));
+    zoomIconWhenDragOutside =
+        Tween(begin: 0.8, end: 1.0).animate(animControlIconWhenDragOutside);
     zoomIconWhenDragOutside.addListener(() {
       setState(() {});
     });
   }
 
   initAnimationBoxWhenDragOutside() {
-    animControlBoxWhenDragOutside =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationIconWhenDrag));
-    zoomBoxWhenDragOutside = Tween(begin: 40.0, end: 50.0).animate(animControlBoxWhenDragOutside);
+    animControlBoxWhenDragOutside = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationIconWhenDrag));
+    zoomBoxWhenDragOutside =
+        Tween(begin: 40.0, end: 50.0).animate(animControlBoxWhenDragOutside);
     zoomBoxWhenDragOutside.addListener(() {
       setState(() {});
     });
   }
 
   initAnimationIconWhenDragInside() {
-    animControlIconWhenDragInside =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationIconWhenDrag));
-    zoomIconWhenDragInside = Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDragInside);
+    animControlIconWhenDragInside = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationIconWhenDrag));
+    zoomIconWhenDragInside =
+        Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDragInside);
     zoomIconWhenDragInside.addListener(() {
       setState(() {});
     });
@@ -319,27 +384,35 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   initAnimationIconWhenRelease() {
-    animControlIconWhenRelease =
-        AnimationController(vsync: this, duration: Duration(milliseconds: durationAnimationIconWhenRelease));
+    animControlIconWhenRelease = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: durationAnimationIconWhenRelease));
 
-    zoomIconWhenRelease = Tween(begin: 1.8, end: 0.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    zoomIconWhenRelease = Tween(begin: 1.8, end: 0.0).animate(CurvedAnimation(
+        parent: animControlIconWhenRelease, curve: Curves.decelerate));
 
-    moveUpIconWhenRelease = Tween(begin: 180.0, end: 0.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveUpIconWhenRelease = Tween(begin: 180.0, end: 0.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
 
-    moveLeftIconLikeWhenRelease = Tween(begin: 20.0, end: 10.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
-    moveLeftIconLoveWhenRelease = Tween(begin: 68.0, end: 10.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
-    moveLeftIconHahaWhenRelease = Tween(begin: 116.0, end: 10.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
-    moveLeftIconWowWhenRelease = Tween(begin: 164.0, end: 10.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
-    moveLeftIconSadWhenRelease = Tween(begin: 212.0, end: 10.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
-    moveLeftIconAngryWhenRelease = Tween(begin: 260.0, end: 10.0)
-        .animate(CurvedAnimation(parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveLeftIconLikeWhenRelease = Tween(begin: 20.0, end: 10.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveLeftIconLoveWhenRelease = Tween(begin: 68.0, end: 10.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveLeftIconHahaWhenRelease = Tween(begin: 116.0, end: 10.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveLeftIconWowWhenRelease = Tween(begin: 164.0, end: 10.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveLeftIconSadWhenRelease = Tween(begin: 212.0, end: 10.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
+    moveLeftIconAngryWhenRelease = Tween(begin: 260.0, end: 10.0).animate(
+        CurvedAnimation(
+            parent: animControlIconWhenRelease, curve: Curves.decelerate));
 
     zoomIconWhenRelease.addListener(() {
       setState(() {});
@@ -379,6 +452,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     animControlBoxWhenDragOutside.dispose();
     animControlIconWhenRelease.dispose();
   }
+
   //expand comment box
   void _runExpand() {
     if (_isShowCommentBox) {
@@ -387,6 +461,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       expandController.reverse();
     }
   }
+
   //prepare animation for comment box
   void _prepareAnimations() {
     expandController =
@@ -407,371 +482,372 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
-              children:[
+              children: [
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 65.0,
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(
-                                  left: 10,
-                                  right: 10,
+                    SizedBox(
+                      height: 65.0,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                            ),
+                            child: SizedBox(
+                              height: 55,
+                              width: 55,
+                              child: CircleAvatar(
+                                radius: 30.0,
+                                backgroundImage: NetworkImage(
+                                  widget.data.user!.picture.toString(),
                                 ),
-                                child: SizedBox(
-                                  height: 55,
-                                  width: 55,
-                                  child: CircleAvatar(
-                                    radius: 30.0,
-                                    backgroundImage: NetworkImage(
-                                      widget.data.user!.picture.toString(),
-                                    ),
-                                    backgroundColor: Colors.transparent,
+                                backgroundColor: Colors.transparent,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.data.user!.name.toString(),
+                                  style: textSize20,
+                                ),
+                                Text(
+                                  widget.data.user!.nickname.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color(0xff92929E),
                                   ),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.data.user!.name.toString(),
-                                      style: textSize20,
-                                    ),
-                                    Text(
-                                      widget.data.user!.nickname.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xff92929E),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  alignment: Alignment.centerRight,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      final RenderBox? overlay = Overlay.of(context)!
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(right: 10),
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  final RenderBox? overlay =
+                                      Overlay.of(context)!
                                           .context
                                           .findRenderObject() as RenderBox;
-                                      showMenu(
-                                        color: Color(0xfff6f6f6),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        context: context,
-                                        position: RelativeRect.fromRect(
-                                            _tapPosition! & const Size(30, 30),
-                                            // smaller rect, the touch area
-                                            Offset.zero &
+                                  showMenu(
+                                    color: Color(0xfff6f6f6),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    context: context,
+                                    position: RelativeRect.fromRect(
+                                        _tapPosition! & const Size(30, 30),
+                                        // smaller rect, the touch area
+                                        Offset.zero &
                                             overlay!
                                                 .size // Bigger rect, the entire screen
                                         ),
-                                        items: [
-                                          PopupMenuItem(
-                                            onTap: () {
-                                              // int? idComment = comment.id;
-                                              // dataConvert.deleteDataComment(idPost!, idComment!);
-                                            },
-                                            child: dropdownMenuItemPost(
-                                              LineIcons.trash,
-                                              "Delete post",
-                                            ),
-                                          ),
-                                          PopupMenuItem(
-                                            onTap: () {
-                                              // int? idComment = comment.id;
-                                              // dataConvert.deleteDataComment(idPost!, idComment!);
-                                            },
-                                            child: dropdownMenuItemPost(
-                                              LineIcons.ban,
-                                              "Hide post",
-                                            ),
-                                          ),
-                                          PopupMenuItem(
-                                            onTap: () {
-                                              // int? idComment = comment.id;
-                                              // dataConvert.deleteDataComment(idPost!, idComment!);
-                                            },
-                                            child: dropdownMenuItemPost(
-                                              LineIcons.alternatePencil,
-                                              "Edit post",
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    onTapDown: _storePosition,
-                                    child: Icon(Icons.more_horiz),
+                                    items: [
+                                      PopupMenuItem(
+                                        onTap: () {
+                                          // int? idComment = comment.id;
+                                          // dataConvert.deleteDataComment(idPost!, idComment!);
+                                        },
+                                        child: dropdownMenuItemPost(
+                                          LineIcons.trash,
+                                          "Delete post",
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        onTap: () {
+                                          // int? idComment = comment.id;
+                                          // dataConvert.deleteDataComment(idPost!, idComment!);
+                                        },
+                                        child: dropdownMenuItemPost(
+                                          LineIcons.ban,
+                                          "Hide post",
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        onTap: () {
+                                          // int? idComment = comment.id;
+                                          // dataConvert.deleteDataComment(idPost!, idComment!);
+                                        },
+                                        child: dropdownMenuItemPost(
+                                          LineIcons.alternatePencil,
+                                          "Edit post",
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                                onTapDown: _storePosition,
+                                child: Icon(Icons.more_horiz),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        widget.data.content.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Color(0xff92A0C7),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Image.network(
+                        widget.data.image.toString(),
+                        errorBuilder: (context, error, stacktrace) {
+                          if (widget.data.image.toString() == "") {
+                            return Container();
+                          }
+                          return Image.file(
+                            File(widget.data.image.toString()),
+                            errorBuilder: (context, error, stacktrace) {
+                              return Container();
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    dottedLine(context),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                child: Image(
+                                  width: 30,
+                                  image: AssetImage('assets/images/thumb.png'),
+                                ),
+                              ),
+                              Positioned(
+                                left: 20,
+                                child: Image(
+                                  width: 30,
+                                  image: AssetImage('assets/images/heart.png'),
+                                ),
+                              ),
+                              Positioned(
+                                left: 40,
+                                child: Image(
+                                  width: 30,
+                                  image: AssetImage('assets/images/smile.png'),
+                                ),
+                              ),
+                              Positioned(
+                                left: 60,
+                                child: Image(
+                                  width: 30,
+                                  image: AssetImage('assets/images/weep.png'),
+                                ),
+                              ),
+                              Positioned(
+                                top: 5,
+                                left: 95,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "10",
+                                    style: TextStyle(fontSize: 17),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                            widget.data.content.toString(),
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Color(0xff92A0C7),
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: Image.network(
-                            widget.data.image.toString(),
-                            errorBuilder: (context, error, stacktrace) {
-                              if (widget.data.image.toString() == "") {
-                                return Container();
-                              }
-                              return Image.file(
-                                File(widget.data.image.toString()),
-                                errorBuilder: (context, error, stacktrace) {
-                                  return Container();
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                        dottedLine(context),
-                      ],
-                    ),
-                    Column(
-                      children: [
                         Row(
-                          children: [
-                            Expanded(
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    child: Image(
-                                      width: 30,
-                                      image: AssetImage('assets/images/thumb.png'),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 20,
-                                    child: Image(
-                                      width: 30,
-                                      image: AssetImage('assets/images/heart.png'),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 40,
-                                    child: Image(
-                                      width: 30,
-                                      image: AssetImage('assets/images/smile.png'),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 60,
-                                    child: Image(
-                                      width: 30,
-                                      image: AssetImage('assets/images/weep.png'),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 5,
-                                    left: 95,
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "10",
-                                        style: TextStyle(fontSize: 17),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          children: const [
+                            Icon(
+                              LineIcons.commentDots,
+                              color: Color(0xffadb2d0),
                             ),
-                            Row(
-                              children: const [
-                                Icon(
-                                  LineIcons.commentDots,
-                                  color: Color(0xffadb2d0),
-                                ),
-                                Text(
-                                  "24 Comments",
-                                  style: TextStyle(
-                                    color: Color(0xffadb2d0),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    LineIcons.shareSquare,
-                                    color: Color(0xffadb2d0),
-                                  ),
-                                  Text(
-                                    "56 Shares",
-                                    style: TextStyle(
-                                      color: Color(0xffadb2d0),
-                                    ),
-                                  )
-                                ],
+                            Text(
+                              "24 Comments",
+                              style: TextStyle(
+                                color: Color(0xffadb2d0),
                               ),
                             )
                           ],
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 10),
-                          child: SizedBox(
-                            height: 50.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  onTapDown: onTapDownBtn,
-                                  onTapUp: onTapUpBtn,
-                                  onTap: onTapBtn,
-                                  child: SizedBox(
-                                    height: 35,
-                                    width: 90,
-                                    child: TextButton(
-                                      onPressed: () {
-
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Icon(
-                                              LineIcons.heart,
-                                              color: Color(0xffadb2d0),
-                                              size: 20,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.only(left: 10),
-                                            child: Text(
-                                              "Like",
-                                              style:
-                                              TextStyle(color: Color(0xffadb2d0)),
-                                            ),
-                                          ),
-                                        ],
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                LineIcons.shareSquare,
+                                color: Color(0xffadb2d0),
+                              ),
+                              Text(
+                                "56 Shares",
+                                style: TextStyle(
+                                  color: Color(0xffadb2d0),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                        height: 50.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTapDown: onTapDownBtn,
+                              onTapUp: onTapUpBtn,
+                              onTap: onTapBtn,
+                              child: SizedBox(
+                                height: 35,
+                                width: 90,
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: whichIconUserChoose == 0
+                                            ? Icon(
+                                                LineIcons.heart,
+                                                color: Color(0xffadb2d0),
+                                                size: 20,
+                                              )
+                                            : Image.asset(
+                                                getImageIconBtn(),
+                                                width: 20.0,
+                                                height: 20.0,
+                                                fit: BoxFit.contain,
+                                                color: getTintColorIconBtn(),
+                                              ),
                                       ),
-                                      style: ButtonStyle(
-                                        backgroundColor:
+                                      Container(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          getTextBtn(),
+                                          style: TextStyle(
+                                            color: getColorTextBtn(),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  style: ButtonStyle(
+                                    backgroundColor:
                                         MaterialStateProperty.all<Color>(
                                             Color(0xfff5f4f9)),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(5.0),
-                                          ),
-                                        ),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
                                       ),
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 35,
-                                  width: 110,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _isShowCommentBox = !_isShowCommentBox;
-                                      });
-                                      _runExpand();
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Icon(
-                                            LineIcons.commentDots,
-                                            color: Color(0xffadb2d0),
-                                            size: 20,
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            "Comment",
-                                            style:
-                                            TextStyle(color: Color(0xffadb2d0)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color(0xfff5f4f9)),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(5.0),
-                                          )),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 35,
-                                  width: 90,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      popUpSharePost(context, widget.dataConvert);
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Icon(
-                                            LineIcons.shareSquare,
-                                            color: Color(0xffadb2d0),
-                                            size: 20,
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            "Share",
-                                            style: TextStyle(
-                                              color: Color(0xffadb2d0),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Color(0xfff5f4f9)),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(5.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              height: 35,
+                              width: 110,
+                              child: TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isShowCommentBox = !_isShowCommentBox;
+                                  });
+                                  _runExpand();
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Icon(
+                                        LineIcons.commentDots,
+                                        color: Color(0xffadb2d0),
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        "Comment",
+                                        style:
+                                            TextStyle(color: Color(0xffadb2d0)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Color(0xfff5f4f9)),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  )),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 35,
+                              width: 90,
+                              child: TextButton(
+                                onPressed: () {
+                                  popUpSharePost(context, widget.dataConvert);
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Icon(
+                                        LineIcons.shareSquare,
+                                        color: Color(0xffadb2d0),
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        "Share",
+                                        style: TextStyle(
+                                          color: Color(0xffadb2d0),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Color(0xfff5f4f9)),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -808,6 +884,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
     );
   }
+
   Widget renderBox() {
     return Opacity(
       child: Container(
@@ -820,9 +897,9 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
         height: isDragging
             ? (previousIconFocus == 0 ? zoomBoxIcon.value : 40.0)
             : isDraggingOutside
-            ? zoomBoxWhenDragOutside.value
-            : 50.0,
-        margin: EdgeInsets.only(bottom: 130.0,left: 10.0),
+                ? zoomBoxWhenDragOutside.value
+                : 50.0,
+        margin: EdgeInsets.only(bottom: 130.0, left: 10.0),
       ),
       opacity: fadeInBox.value,
     );
@@ -839,17 +916,19 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 children: <Widget>[
                   currentIconFocus == 1
                       ? Container(
-                    child: Text(
-                      'Like',
-                      style: TextStyle(fontSize: 8.0, color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    padding: EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                    margin: EdgeInsets.only(bottom: 8.0),
-                  )
+                          child: Text(
+                            'Like',
+                            style:
+                                TextStyle(fontSize: 8.0, color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                          padding: EdgeInsets.only(
+                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                        )
                       : Container(),
                   Image.asset(
                     'assets/images/like.gif',
@@ -865,15 +944,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 1
-                ? zoomIconChosen.value
-                : (previousIconFocus == 1
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 1
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconLike.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconLike.value,
           ),
 
           // icon love
@@ -883,15 +962,18 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 children: <Widget>[
                   currentIconFocus == 2
                       ? Container(
-                    child: Text(
-                      'Love',
-                      style: TextStyle(fontSize: 8.0, color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0), color: Colors.black.withOpacity(0.3)),
-                    padding: EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                    margin: EdgeInsets.only(bottom: 8.0),
-                  )
+                          child: Text(
+                            'Love',
+                            style:
+                                TextStyle(fontSize: 8.0, color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.black.withOpacity(0.3)),
+                          padding: EdgeInsets.only(
+                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                        )
                       : Container(),
                   Image.asset(
                     'assets/images/love.gif',
@@ -907,15 +989,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 2
-                ? zoomIconChosen.value
-                : (previousIconFocus == 2
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 2
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconLove.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconLove.value,
           ),
 
           // icon haha
@@ -925,15 +1007,18 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 children: <Widget>[
                   currentIconFocus == 3
                       ? Container(
-                    child: Text(
-                      'Haha',
-                      style: TextStyle(fontSize: 8.0, color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0), color: Colors.black.withOpacity(0.3)),
-                    padding: EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                    margin: EdgeInsets.only(bottom: 8.0),
-                  )
+                          child: Text(
+                            'Haha',
+                            style:
+                                TextStyle(fontSize: 8.0, color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.black.withOpacity(0.3)),
+                          padding: EdgeInsets.only(
+                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                        )
                       : Container(),
                   Image.asset(
                     'assets/images/haha.gif',
@@ -949,15 +1034,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 3
-                ? zoomIconChosen.value
-                : (previousIconFocus == 3
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 3
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconHaha.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconHaha.value,
           ),
 
           // icon wow
@@ -967,15 +1052,18 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 children: <Widget>[
                   currentIconFocus == 4
                       ? Container(
-                    child: Text(
-                      'Wow',
-                      style: TextStyle(fontSize: 8.0, color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0), color: Colors.black.withOpacity(0.3)),
-                    padding: EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                    margin: EdgeInsets.only(bottom: 8.0),
-                  )
+                          child: Text(
+                            'Wow',
+                            style:
+                                TextStyle(fontSize: 8.0, color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.black.withOpacity(0.3)),
+                          padding: EdgeInsets.only(
+                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                        )
                       : Container(),
                   Image.asset(
                     'assets/images/wow.gif',
@@ -991,15 +1079,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 4
-                ? zoomIconChosen.value
-                : (previousIconFocus == 4
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 4
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconWow.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconWow.value,
           ),
 
           // icon sad
@@ -1009,17 +1097,19 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 children: <Widget>[
                   currentIconFocus == 5
                       ? Container(
-                    child: Text(
-                      'Sad',
-                      style: TextStyle(fontSize: 8.0, color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    padding: EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                    margin: EdgeInsets.only(bottom: 8.0),
-                  )
+                          child: Text(
+                            'Sad',
+                            style:
+                                TextStyle(fontSize: 8.0, color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                          padding: EdgeInsets.only(
+                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                        )
                       : Container(),
                   Image.asset(
                     'assets/images/sad.gif',
@@ -1035,15 +1125,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 5
-                ? zoomIconChosen.value
-                : (previousIconFocus == 5
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 5
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconSad.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconSad.value,
           ),
 
           // icon angry
@@ -1053,17 +1143,19 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 children: <Widget>[
                   currentIconFocus == 6
                       ? Container(
-                    child: Text(
-                      'Angry',
-                      style: TextStyle(fontSize: 8.0, color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    padding: EdgeInsets.only(left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                    margin: EdgeInsets.only(bottom: 8.0),
-                  )
+                          child: Text(
+                            'Angry',
+                            style:
+                                TextStyle(fontSize: 8.0, color: Colors.white),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                          padding: EdgeInsets.only(
+                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                          margin: EdgeInsets.only(bottom: 8.0),
+                        )
                       : Container(),
                   Image.asset(
                     'assets/images/angry.gif',
@@ -1079,15 +1171,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 6
-                ? zoomIconChosen.value
-                : (previousIconFocus == 6
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 6
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconAngry.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconAngry.value,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1124,59 +1216,59 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   Color getColorTextBtn() {
     if ((!isLongPress && isLiked)) {
-      return Color(0xff3b5998);
+      return Color(0xff558AFE);
     } else if (!isDragging) {
       switch (whichIconUserChoose) {
         case 1:
-          return Color(0xff3b5998);
+          return Color(0xff558AFE);
         case 2:
           return Color(0xffED5167);
         case 3:
         case 4:
         case 5:
-          return Color(0xffFFD96A);
+          return Color(0xffF2D45C);
         case 6:
           return Color(0xffF6876B);
         default:
-          return Colors.grey;
+          return Color(0xffadb2d0);
       }
     } else {
-      return Colors.grey;
+      return Color(0xffadb2d0);
     }
   }
 
   String getImageIconBtn() {
     if (!isLongPress && isLiked) {
-      return 'images/ic_like_fill.png';
+      return 'assets/images/ic_like_fill.png';
     } else if (!isDragging) {
       switch (whichIconUserChoose) {
         case 1:
-          return 'images/ic_like_fill.png';
+          return 'assets/images/ic_like_fill.png';
         case 2:
-          return 'images/love2.png';
+          return 'assets/images/love2.png';
         case 3:
-          return 'images/haha2.png';
+          return 'assets/images/haha2.png';
         case 4:
-          return 'images/wow2.png';
+          return 'assets/images/wow2.png';
         case 5:
-          return 'images/sad2.png';
+          return 'assets/images/sad2.png';
         case 6:
-          return 'images/angry2.png';
+          return 'assets/images/angry2.png';
         default:
-          return 'images/ic_like.png';
+          return 'assets/images/ic_like.png';
       }
     } else {
-      return 'images/ic_like.png';
+      return 'assets/images/ic_like.png';
     }
   }
 
   Color? getTintColorIconBtn() {
     if (!isLongPress && isLiked) {
-      return Color(0xff3b5998);
+      return Color(0xff558AFE);
     } else if (!isDragging && whichIconUserChoose != 0) {
       return null;
     } else {
-      return Colors.grey;
+      return Color(0xffadb2d0);
     }
   }
 
@@ -1186,29 +1278,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       return value - 80.0;
     } else {
       return 160.0 - value;
-    }
-  }
-
-  Color getColorBorderBtn() {
-    if ((!isLongPress && isLiked)) {
-      return Color(0xff3b5998);
-    } else if (!isDragging) {
-      switch (whichIconUserChoose) {
-        case 1:
-          return Color(0xff3b5998);
-        case 2:
-          return Color(0xffED5167);
-        case 3:
-        case 4:
-        case 5:
-          return Color(0xffFFD96A);
-        case 6:
-          return Color(0xffF6876B);
-        default:
-          return Colors.grey;
-      }
-    } else {
-      return Colors.grey.shade400;
     }
   }
 
@@ -1230,7 +1299,8 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     // and plus the height of toolbar and the status bar
     // so the range we check is about 200 -> 500
 
-    if (dragUpdateDetail.globalPosition.dy >= 200 && dragUpdateDetail.globalPosition.dy <= 500) {
+    if (dragUpdateDetail.globalPosition.dy >= 200 &&
+        dragUpdateDetail.globalPosition.dy <= 500) {
       isDragging = true;
       isDraggingOutside = false;
 
@@ -1239,27 +1309,33 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
         animControlIconWhenDragInside.forward();
       }
 
-      if (dragUpdateDetail.globalPosition.dx >= 20 && dragUpdateDetail.globalPosition.dx < 83) {
+      if (dragUpdateDetail.globalPosition.dx >= 20 &&
+          dragUpdateDetail.globalPosition.dx < 83) {
         if (currentIconFocus != 1) {
           handleWhenDragBetweenIcon(1);
         }
-      } else if (dragUpdateDetail.globalPosition.dx >= 83 && dragUpdateDetail.globalPosition.dx < 126) {
+      } else if (dragUpdateDetail.globalPosition.dx >= 83 &&
+          dragUpdateDetail.globalPosition.dx < 126) {
         if (currentIconFocus != 2) {
           handleWhenDragBetweenIcon(2);
         }
-      } else if (dragUpdateDetail.globalPosition.dx >= 126 && dragUpdateDetail.globalPosition.dx < 180) {
+      } else if (dragUpdateDetail.globalPosition.dx >= 126 &&
+          dragUpdateDetail.globalPosition.dx < 180) {
         if (currentIconFocus != 3) {
           handleWhenDragBetweenIcon(3);
         }
-      } else if (dragUpdateDetail.globalPosition.dx >= 180 && dragUpdateDetail.globalPosition.dx < 233) {
+      } else if (dragUpdateDetail.globalPosition.dx >= 180 &&
+          dragUpdateDetail.globalPosition.dx < 233) {
         if (currentIconFocus != 4) {
           handleWhenDragBetweenIcon(4);
         }
-      } else if (dragUpdateDetail.globalPosition.dx >= 233 && dragUpdateDetail.globalPosition.dx < 286) {
+      } else if (dragUpdateDetail.globalPosition.dx >= 233 &&
+          dragUpdateDetail.globalPosition.dx < 286) {
         if (currentIconFocus != 5) {
           handleWhenDragBetweenIcon(5);
         }
-      } else if (dragUpdateDetail.globalPosition.dx >= 286 && dragUpdateDetail.globalPosition.dx < 340) {
+      } else if (dragUpdateDetail.globalPosition.dx >= 286 &&
+          dragUpdateDetail.globalPosition.dx < 340) {
         if (currentIconFocus != 6) {
           handleWhenDragBetweenIcon(6);
         }
@@ -1467,6 +1543,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   Future loadAsset(String nameSound) async {
-    return await rootBundle.load('sounds/$nameSound');
+    return await rootBundle.load('assets/sounds/$nameSound');
   }
 }

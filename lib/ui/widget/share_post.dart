@@ -66,7 +66,7 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                             color: Color(0xffEAEAEA),
                           ),
                         ),
-                        hintText: 'Write comment',
+                        hintText: 'Write something',
                         suffixIcon: IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.send),
