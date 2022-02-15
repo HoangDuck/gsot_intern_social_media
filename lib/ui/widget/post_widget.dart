@@ -1396,6 +1396,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   // when user short press the button
   void onTapBtn() {
+    print("CLGT"+isLongPress.toString());
     if (!isLongPress) {
       if (whichIconUserChoose == 0) {
         isLiked = !isLiked;
@@ -1404,10 +1405,11 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       }
       if (isLiked) {
         playSound('short_press_like.mp3');
-        animControlBtnShortPress.forward();
-      } else {
-        animControlBtnShortPress.reverse();
+        whichIconUserChoose=1;
       }
+      setState(() {
+
+      });
     }
   }
 
