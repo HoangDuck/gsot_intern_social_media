@@ -709,12 +709,28 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                             GestureDetector(
                               onTapDown: onTapDownBtn,
                               onTapUp: onTapUpBtn,
-                              onTap: onTapBtn,
                               child: SizedBox(
                                 height: 35,
                                 width: 90,
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (!isLongPress) {
+                                      setState(() {
+                                        if (whichIconUserChoose == 0) {
+                                          isLiked = !isLiked;
+                                        } else {
+                                          if(isLiked){
+                                            isLiked = !isLiked;
+                                          }
+                                          whichIconUserChoose = 0;
+                                        }
+                                        if (isLiked) {
+                                          playSound('short_press_like.mp3');
+                                          whichIconUserChoose=1;
+                                        }
+                                      });
+                                    }
+                                  },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -1392,25 +1408,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
     animControlIconWhenRelease.reset();
     animControlIconWhenRelease.forward();
-  }
-
-  // when user short press the button
-  void onTapBtn() {
-    print("CLGT"+isLongPress.toString());
-    if (!isLongPress) {
-      if (whichIconUserChoose == 0) {
-        isLiked = !isLiked;
-      } else {
-        whichIconUserChoose = 0;
-      }
-      if (isLiked) {
-        playSound('short_press_like.mp3');
-        whichIconUserChoose=1;
-      }
-      setState(() {
-
-      });
-    }
   }
 
   double handleOutputRangeZoomInIconLike(double value) {
