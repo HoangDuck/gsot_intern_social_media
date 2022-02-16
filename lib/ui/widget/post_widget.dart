@@ -48,7 +48,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   late AudioPlayer audioPlayer;
 
   int durationAnimationBox = 500;
-  int durationAnimationBtnLongPress = 150;
+  int durationAnimationBtnLongPress = 250;
   int durationAnimationBtnShortPress = 500;
   int durationAnimationIconWhenDrag = 150;
   int durationAnimationIconWhenRelease = 1000;
