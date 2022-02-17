@@ -16,7 +16,9 @@ Widget buildItemListAvatar(User data) {
               decoration: BoxDecoration(
                 gradient: colorPopupWidget,
                 image: DecorationImage(
-                  image: NetworkImage(data.picture.toString()),
+                  image: NetworkImage(
+                    data.picture.toString(),
+                  ),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(

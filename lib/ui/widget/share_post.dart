@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 
 popUpSharePost(BuildContext context, DataConvert dataConvert) {
@@ -7,9 +6,11 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         content: Stack(
-          children: <Widget>[
+          children: [
             Positioned(
               right: -40.0,
               top: -40.0,
@@ -49,40 +50,36 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xfff5f4f9),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffEAEAEA),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xfff5f4f9),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffEAEAEA),
+                            ),
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffEAEAEA),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffEAEAEA),
+                            ),
                           ),
-                        ),
-                        hintText: 'Write something',
-                        suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.send),
+                          hintText: 'Write something',
+                          suffixIcon: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.send),
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 35,
-                          width: 90,
-                          child: TextButton(
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton(
                             onPressed: () {},
                             child: Container(
                               alignment: Alignment.center,
@@ -96,7 +93,8 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                             ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xfff5f4f9)),
+                                Color(0xfff5f4f9),
+                              ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -105,11 +103,7 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 35,
-                          width: 90,
-                          child: TextButton(
+                          TextButton(
                             onPressed: () {},
                             child: Container(
                               alignment: Alignment.center,
@@ -132,11 +126,7 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 35,
-                          width: 90,
-                          child: TextButton(
+                          TextButton(
                             onPressed: () {},
                             child: Container(
                               alignment: Alignment.center,
@@ -150,7 +140,8 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                             ),
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color(0xfff5f4f9)),
+                                Color(0xfff5f4f9),
+                              ),
                               shape: MaterialStateProperty.all<
                                   RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -158,19 +149,25 @@ popUpSharePost(BuildContext context, DataConvert dataConvert) {
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
+                          )
+                        ],
+                      ),
                     ),
                     Container(
+                      padding: EdgeInsets.only(top: 10),
                       alignment: Alignment.centerLeft,
-                      child: RaisedButton(
-                        color: Color(0xffff2b55),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Color(0xffff2b55),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
                         onPressed: () {},
                         child: Text(
                           "Publish",

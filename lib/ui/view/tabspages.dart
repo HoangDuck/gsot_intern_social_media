@@ -70,11 +70,12 @@ class _PagesState extends State<Pages> {
             FloatingActionButtonLocation.miniCenterDocked,
         appBar: AppBar(
           bottom: PreferredSize(
-              child: Container(
-                color: Color(0xffff2f64),
-                height: 3.0,
-              ),
-              preferredSize: Size.fromHeight(4.0)),
+            child: Container(
+              color: Color(0xffff2f64),
+              height: 3.0,
+            ),
+            preferredSize: Size.fromHeight(4.0),
+          ),
           backgroundColor: Color(0xfff1f2f6),
           actions: [
             Expanded(
@@ -170,15 +171,9 @@ class _PagesState extends State<Pages> {
           controller: _myPage,
           children: <Widget>[
             HomePage(),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: NotificationPage(),
-            ),
+            NotificationPage(),
             Container(), //widget trống vì bottom appbar là popup widget
-            Container(
-              padding: EdgeInsets.all(10),
-              child: ChatPage(),
-            ),
+            ChatPage(),
             ProfilePage()
           ],
           physics:

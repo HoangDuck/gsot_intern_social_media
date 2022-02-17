@@ -65,11 +65,3 @@ const Color txt_color_working_day = Color(0xFFFF8A02);
 const Color shadow_button_footer_dashboard = Color(0xFF0C2D6C);
 const Color bg_fully_timekeeping = Color(0xFFCAE3F8);
 const Color bg_camera_icon = Color(0xFFE0E2E0);
-// const Paint color=LinearGradient(
-//   begin: Alignment.topLeft,
-//   end: Alignment.bottomRight,
-//   colors: <Color>[
-//     Color(0xff002fff),
-//     Color(0xff00f4ff),
-//   ],
-// ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0)) as Paint;

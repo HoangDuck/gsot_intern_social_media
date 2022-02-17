@@ -568,16 +568,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                           // dataConvert.deleteDataComment(idPost!, idComment!);
                                         },
                                         child: dropdownMenuItemPost(
-                                          LineIcons.ban,
-                                          "Hide post",
-                                        ),
-                                      ),
-                                      PopupMenuItem(
-                                        onTap: () {
-                                          // int? idComment = comment.id;
-                                          // dataConvert.deleteDataComment(idPost!, idComment!);
-                                        },
-                                        child: dropdownMenuItemPost(
                                           LineIcons.alternatePencil,
                                           "Edit post",
                                         ),

@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/core/converter/login_data_converter.dart';
 import 'package:social_media/ui/constant/button_styles.dart';
-import 'package:social_media/ui/constant/text_styles.dart';
-import 'package:social_media/ui/view/pageafterlogin.dart';
+import 'package:social_media/ui/view/tabspages.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:social_media/ui/widget/circle_social_media.dart';
@@ -25,12 +24,7 @@ class LoginPage extends StatelessWidget {
         // khi có lỗi thì sẽ treo chữ GSOT
         if (snapshot.hasError) {
           return Material(
-            child: Container(
-              color: Colors.white,
-              child: Center(
-                child: Text("GSOT", style: titleAppGsotLoginPage),
-              ),
-            ),
+            child: Container(),
           );
         }
         //khi có dữ liệu là check trong pref có data user (bằng getIdUser) nếu -1
@@ -46,14 +40,8 @@ class LoginPage extends StatelessWidget {
             ),
           );
         }
-        // mặc định là trạng thái không kết nối thì sẽ treo chữ GSOT
         return Material(
-          child: Container(
-            color: Colors.white,
-            child: Center(
-              child: Text("GSOT", style: titleAppGsotLoginPage),
-            ),
-          ),
+          child: Container(),
         );
       },
     );
