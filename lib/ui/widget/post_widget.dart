@@ -1231,9 +1231,10 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   Color getColorTextBtn() {
-    if ((!isLongPress && isLiked)) {
-      return Color(0xff558AFE);
-    } else if (!isDragging) {
+    if (!isDragging) {
+      if(isLiked&&whichIconUserChoose!=1){
+        isLiked=!isLiked;
+      }
       switch (whichIconUserChoose) {
         case 1:
           return Color(0xff558AFE);
@@ -1254,9 +1255,10 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   String getImageIconBtn() {
-    if (!isLongPress && isLiked) {
-      return 'assets/images/ic_like_fill.png';
-    } else if (!isDragging) {
+    if (!isDragging) {
+      if(isLiked&&whichIconUserChoose!=1){
+        isLiked=!isLiked;
+      }
       switch (whichIconUserChoose) {
         case 1:
           return 'assets/images/ic_like_fill.png';
@@ -1279,7 +1281,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   Color? getTintColorIconBtn() {
-    if (!isLongPress && isLiked) {
+    if (whichIconUserChoose==1) {
       return Color(0xff558AFE);
     } else if (!isDragging && whichIconUserChoose != 0) {
       return null;
@@ -1393,21 +1395,20 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       } else {
         playSound('icon_choose.mp3');
       }
+      Timer(Duration(milliseconds: durationAnimationBox), () {
+        isLongPress = false;
+      });
+
+      holdTimer.cancel();
+
+      animControlBtnLongPress.reverse();
+
+      setReverseValue();
+      animControlBox.reverse();
+
+      animControlIconWhenRelease.reset();
+      animControlIconWhenRelease.forward();
     }
-
-    Timer(Duration(milliseconds: durationAnimationBox), () {
-      isLongPress = false;
-    });
-
-    holdTimer.cancel();
-
-    animControlBtnLongPress.reverse();
-
-    setReverseValue();
-    animControlBox.reverse();
-
-    animControlIconWhenRelease.reset();
-    animControlIconWhenRelease.forward();
   }
 
   double handleOutputRangeZoomInIconLike(double value) {
