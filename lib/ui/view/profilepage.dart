@@ -4,10 +4,10 @@ import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/main.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
-import 'package:social_media/ui/view/loginregister/login_register_page.dart';
+import 'package:social_media/ui/view/login_register_page.dart';
 
-import '../../../core/converter/profile_data_converter.dart';
-import '../../../myapp.dart';
+import '../../core/converter/profile_data_converter.dart';
+import '../../myapp.dart';
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 

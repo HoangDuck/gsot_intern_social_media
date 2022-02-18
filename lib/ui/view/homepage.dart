@@ -62,14 +62,14 @@ class ListPosts extends StatefulWidget {
 class _ListPostsState extends State<ListPosts> {
   Widget storiesHeaderCard() {
     return Container(
-      padding: const EdgeInsets.only(
+      padding: EdgeInsets.only(
         left: 10,
         right: 10,
         bottom: 10,
         top: 45,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             color: Color(0xffff2f64),
@@ -88,9 +88,6 @@ class _ListPostsState extends State<ListPosts> {
                   color: Colors.black),
             ),
           ),
-          Expanded(
-            child: Container(),
-          )
         ],
       ),
     );

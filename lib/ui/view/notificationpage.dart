@@ -4,7 +4,7 @@ import 'package:social_media/core/model/notifiers.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 
-import '../../../core/converter/data_converter.dart';
+import '../../core/converter/data_converter.dart';
 class NotificationPage extends StatelessWidget {
   const NotificationPage({Key? key}) : super(key: key);
 

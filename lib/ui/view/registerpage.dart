@@ -8,7 +8,7 @@ import 'package:social_media/core/converter/profile_data_converter.dart';
 import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/button_styles.dart';
-import 'package:social_media/ui/view/notifier/popupsuccess.dart';
+import 'package:social_media/ui/view/popupsuccess.dart';
 import 'package:social_media/ui/widget/containertext20white.dart';
 import 'package:social_media/ui/widget/stateloginregistername.dart';
 import 'package:social_media/ui/widget/textformfieldlogin.dart';

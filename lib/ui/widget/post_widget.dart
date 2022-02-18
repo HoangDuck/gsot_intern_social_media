@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
+import 'package:social_media/core/util/utils_featured.dart';
+import 'package:social_media/ui/constant/app_images.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/widget/dottedline.dart';
 import 'package:social_media/ui/widget/dropdown_menu_item_post.dart';
@@ -47,6 +49,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   //audio btn like
   late AudioPlayer audioPlayer;
 
+  //time duration animation reaction icon button
   int durationAnimationBox = 500;
   int durationAnimationBtnLongPress = 250;
   int durationAnimationBtnShortPress = 500;
@@ -464,8 +467,10 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   //prepare animation for comment box
   void _prepareAnimations() {
-    expandController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    expandController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
     animation = CurvedAnimation(
       parent: expandController,
       curve: Curves.fastLinearToSlowEaseIn,
@@ -618,28 +623,28 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                               Positioned(
                                 child: Image(
                                   width: 30,
-                                  image: AssetImage('assets/images/thumb.png'),
+                                  image: AssetImage(ic_thumb_up),
                                 ),
                               ),
                               Positioned(
                                 left: 20,
                                 child: Image(
                                   width: 30,
-                                  image: AssetImage('assets/images/heart.png'),
+                                  image: AssetImage(ic_heart),
                                 ),
                               ),
                               Positioned(
                                 left: 40,
                                 child: Image(
                                   width: 30,
-                                  image: AssetImage('assets/images/smile.png'),
+                                  image: AssetImage(ic_smile),
                                 ),
                               ),
                               Positioned(
                                 left: 60,
                                 child: Image(
                                   width: 30,
-                                  image: AssetImage('assets/images/weep.png'),
+                                  image: AssetImage(ic_weep),
                                 ),
                               ),
                               Positioned(
@@ -709,14 +714,14 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                         if (whichIconUserChoose == 0) {
                                           isLiked = !isLiked;
                                         } else {
-                                          if(isLiked){
+                                          if (isLiked) {
                                             isLiked = !isLiked;
                                           }
                                           whichIconUserChoose = 0;
                                         }
                                         if (isLiked) {
                                           playSound('short_press_like.mp3');
-                                          whichIconUserChoose=1;
+                                          whichIconUserChoose = 1;
                                         }
                                       });
                                     }
@@ -937,7 +942,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'assets/images/like.gif',
+                    ic_like_gif,
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -982,7 +987,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'assets/images/love.gif',
+                    ic_heart_gif,
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -1027,7 +1032,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'assets/images/haha.gif',
+                    ic_haha_gif,
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -1072,7 +1077,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'assets/images/wow.gif',
+                    ic_wow_gif,
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -1118,7 +1123,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'assets/images/sad.gif',
+                    ic_sad_gif,
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -1164,7 +1169,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         )
                       : Container(),
                   Image.asset(
-                    'assets/images/angry.gif',
+                    ic_angry_gif,
                     width: 40.0,
                     height: 40.0,
                     fit: BoxFit.contain,
@@ -1222,23 +1227,11 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   Color getColorTextBtn() {
     if (!isDragging) {
-      if(isLiked&&whichIconUserChoose!=1){
-        isLiked=!isLiked;
+      //if button is liked and user choose other reaction icon set isLiked to false
+      if (isLiked && whichIconUserChoose != 1) {
+        isLiked = !isLiked;
       }
-      switch (whichIconUserChoose) {
-        case 1:
-          return Color(0xff558AFE);
-        case 2:
-          return Color(0xffED5167);
-        case 3:
-        case 4:
-        case 5:
-          return Color(0xffF2D45C);
-        case 6:
-          return Color(0xffF6876B);
-        default:
-          return Color(0xffadb2d0);
-      }
+      return UtilsFeatured.colorTextReactionButton(whichIconUserChoose);
     } else {
       return Color(0xffadb2d0);
     }
@@ -1246,46 +1239,37 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   String getImageIconBtn() {
     if (!isDragging) {
-      if(isLiked&&whichIconUserChoose!=1){
-        isLiked=!isLiked;
+      if (isLiked && whichIconUserChoose != 1) {
+        isLiked = !isLiked;
       }
       switch (whichIconUserChoose) {
         case 1:
-          return 'assets/images/ic_like_fill.png';
+          return ic_like2;
         case 2:
-          return 'assets/images/love2.png';
+          return ic_heart2;
         case 3:
-          return 'assets/images/haha2.png';
+          return ic_haha2;
         case 4:
-          return 'assets/images/wow2.png';
+          return ic_wow2;
         case 5:
-          return 'assets/images/sad2.png';
+          return ic_sad2;
         case 6:
-          return 'assets/images/angry2.png';
+          return ic_angry2;
         default:
-          return 'assets/images/ic_like.png';
+          return ic_thumb_up2;
       }
     } else {
-      return 'assets/images/ic_like.png';
+      return ic_thumb_up2;
     }
   }
 
   Color? getTintColorIconBtn() {
-    if (whichIconUserChoose==1) {
+    if (whichIconUserChoose == 1) {
       return Color(0xff558AFE);
     } else if (!isDragging && whichIconUserChoose != 0) {
       return null;
     } else {
       return Color(0xffadb2d0);
-    }
-  }
-
-  double processTopPosition(double value) {
-    // margin top 100 -> 40 -> 160 (value from 180 -> 0)
-    if (value >= 120.0) {
-      return value - 80.0;
-    } else {
-      return 160.0 - value;
     }
   }
 
@@ -1308,7 +1292,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     // so the range we check is about 200 -> 500
 
     if (dragUpdateDetail.globalPosition.dy >= 200 &&
-        dragUpdateDetail.globalPosition.dy <= 500) {
+        dragUpdateDetail.globalPosition.dy <= MediaQuery.of(context).size.height) {
       isDragging = true;
       isDraggingOutside = false;
 

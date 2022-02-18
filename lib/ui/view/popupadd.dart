@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
-import 'package:social_media/ui/view/homepage/uploadstatus.dart';
+import 'package:social_media/ui/view/uploadstatus.dart';
 
 popupAdd(BuildContext context, DataConvert dataConvert) {
   showDialog(

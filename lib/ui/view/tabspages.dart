@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
-import 'package:social_media/ui/view/chat/chat.dart';
-import 'package:social_media/ui/view/homepage/homepage.dart';
-import 'package:social_media/ui/view/notifier/notificationpage.dart';
-import 'package:social_media/ui/view/popupadd/popupadd.dart';
-import 'package:social_media/ui/view/profilepage/profilepage.dart';
+import 'package:social_media/ui/view/chat.dart';
+import 'package:social_media/ui/view/homepage.dart';
+import 'package:social_media/ui/view/notificationpage.dart';
+import 'package:social_media/ui/view/popupadd.dart';
+import 'package:social_media/ui/view/profilepage.dart';
 
 class TabPages extends StatelessWidget {
   const TabPages({Key? key}) : super(key: key);
@@ -146,6 +146,7 @@ class _PagesState extends State<Pages> {
                 ),
                 Container(
                   padding: EdgeInsets.only(
+                    //give this widget space left to make floating button center
                     left: MediaQuery.of(context).size.width * 0.2,
                   ),
                   child: iconButton(

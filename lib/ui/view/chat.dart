@@ -7,8 +7,8 @@ import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/shapedecorationbuttonsearch.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 
-import '../../../core/converter/data_converter.dart';
-import '../../../core/model/messages.dart';
+import '../../core/converter/data_converter.dart';
+import '../../core/model/messages.dart';
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 
