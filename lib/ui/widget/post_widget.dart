@@ -14,6 +14,7 @@ import 'package:social_media/ui/constant/app_images.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/widget/dottedline.dart';
 import 'package:social_media/ui/widget/dropdown_menu_item_post.dart';
+import 'package:social_media/ui/widget/reaction_post_statistic_widget.dart';
 import 'package:social_media/ui/widget/share_post.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
@@ -36,6 +37,7 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
+  List<Widget> listCommentWidgets=[Comment(),Comment(),Comment()];
   //tap position
   Offset? _tapPosition;
 
@@ -618,48 +620,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                     Row(
                       children: [
                         Expanded(
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Image(
-                                  width: 30,
-                                  image: AssetImage(ic_thumb_up),
-                                ),
-                              ),
-                              Positioned(
-                                left: 20,
-                                child: Image(
-                                  width: 30,
-                                  image: AssetImage(ic_heart),
-                                ),
-                              ),
-                              Positioned(
-                                left: 40,
-                                child: Image(
-                                  width: 30,
-                                  image: AssetImage(ic_smile),
-                                ),
-                              ),
-                              Positioned(
-                                left: 60,
-                                child: Image(
-                                  width: 30,
-                                  image: AssetImage(ic_weep),
-                                ),
-                              ),
-                              Positioned(
-                                top: 5,
-                                left: 95,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "10",
-                                    style: TextStyle(fontSize: 17),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          child: ReactionStatisticWidget(),
                         ),
                         Row(
                           children: const [
@@ -882,8 +843,9 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
               sizeFactor: animation,
               child: TextFormComment(),
             ),
-            Comment(),
-            Comment(),
+            Column(
+              children: listCommentWidgets,
+            ),
             Container(
               padding: EdgeInsets.only(top: 30),
               child: dottedLine(context),

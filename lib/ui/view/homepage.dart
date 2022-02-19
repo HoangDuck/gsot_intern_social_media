@@ -83,9 +83,10 @@ class _ListPostsState extends State<ListPosts> {
             child: Text(
               "Stories",
               style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
             ),
           ),
         ],
