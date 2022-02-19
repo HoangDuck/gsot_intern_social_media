@@ -18,6 +18,8 @@ const LinearGradient colorTitleApp = LinearGradient(
 );
 const Color colorBottomPost=Colors.lightBlueAccent;
 const Color colorFilterNotifier=Colors.black54;
+const Color colorButtonPost=Color(0xffadb2d0);
+const Color colorBackGroundButtonPost=Color(0xfff5f4f9);
 const Color color_title_on_boarding_1 = Color(0xFFf15a21);
 const Color color_title_on_boarding_2 = Color(0xFF45c400);
 const Color color_skip = Color(0xFF83838A);

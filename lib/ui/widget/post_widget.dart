@@ -9,7 +9,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
+import 'package:social_media/core/util/utils.dart';
 import 'package:social_media/core/util/utils_featured.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/app_images.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/widget/dottedline.dart';
@@ -37,7 +39,7 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
-  List<Widget> listCommentWidgets=[Comment(),Comment(),Comment()];
+  List<Widget> listCommentWidgets=[Comment(),Comment()];
   //tap position
   Offset? _tapPosition;
 
@@ -626,12 +628,12 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           children: const [
                             Icon(
                               LineIcons.commentDots,
-                              color: Color(0xffadb2d0),
+                              color: colorButtonPost,
                             ),
                             Text(
                               "24 Comments",
                               style: TextStyle(
-                                color: Color(0xffadb2d0),
+                                color: colorButtonPost,
                               ),
                             )
                           ],
@@ -642,12 +644,12 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                             children: const [
                               Icon(
                                 LineIcons.shareSquare,
-                                color: Color(0xffadb2d0),
+                                color: colorButtonPost,
                               ),
                               Text(
                                 "56 Shares",
                                 style: TextStyle(
-                                  color: Color(0xffadb2d0),
+                                  color: colorButtonPost,
                                 ),
                               )
                             ],
@@ -695,7 +697,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                         child: whichIconUserChoose == 0
                                             ? Icon(
                                                 LineIcons.heart,
-                                                color: Color(0xffadb2d0),
+                                                color: colorButtonPost,
                                                 size: 20,
                                               )
                                             : Image.asset(
@@ -720,7 +722,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                   style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
-                                            Color(0xfff5f4f9)),
+                                            colorBackGroundButtonPost),
                                     shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
@@ -749,7 +751,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                       alignment: Alignment.centerLeft,
                                       child: Icon(
                                         LineIcons.commentDots,
-                                        color: Color(0xffadb2d0),
+                                        color: colorButtonPost,
                                         size: 20,
                                       ),
                                     ),
@@ -758,7 +760,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                       child: Text(
                                         "Comment",
                                         style:
-                                            TextStyle(color: Color(0xffadb2d0)),
+                                            TextStyle(color: colorButtonPost),
                                       ),
                                     ),
                                   ],
@@ -766,7 +768,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Color(0xfff5f4f9)),
+                                          colorBackGroundButtonPost),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
@@ -789,7 +791,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                       alignment: Alignment.centerLeft,
                                       child: Icon(
                                         LineIcons.shareSquare,
-                                        color: Color(0xffadb2d0),
+                                        color: colorButtonPost,
                                         size: 20,
                                       ),
                                     ),
@@ -798,7 +800,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                       child: Text(
                                         "Share",
                                         style: TextStyle(
-                                          color: Color(0xffadb2d0),
+                                          color: colorButtonPost,
                                         ),
                                       ),
                                     ),
@@ -807,7 +809,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Color(0xfff5f4f9)),
+                                          colorBackGroundButtonPost),
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
@@ -1169,22 +1171,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     if (isDragging) {
       return 'Like';
     }
-    switch (whichIconUserChoose) {
-      case 1:
-        return 'Like';
-      case 2:
-        return 'Love';
-      case 3:
-        return 'Haha';
-      case 4:
-        return 'Wow';
-      case 5:
-        return 'Sad';
-      case 6:
-        return 'Angry';
-      default:
-        return 'Like';
-    }
+    return Utils.getTextReaction(whichIconUserChoose);
   }
 
   Color getColorTextBtn() {
@@ -1195,7 +1182,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       }
       return UtilsFeatured.colorTextReactionButton(whichIconUserChoose);
     } else {
-      return Color(0xffadb2d0);
+      return colorButtonPost;
     }
   }
 
@@ -1204,25 +1191,9 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       if (isLiked && whichIconUserChoose != 1) {
         isLiked = !isLiked;
       }
-      switch (whichIconUserChoose) {
-        case 1:
-          return ic_like2;
-        case 2:
-          return ic_heart2;
-        case 3:
-          return ic_haha2;
-        case 4:
-          return ic_wow2;
-        case 5:
-          return ic_sad2;
-        case 6:
-          return ic_angry2;
-        default:
-          return ic_thumb_up2;
-      }
-    } else {
-      return ic_thumb_up2;
+      return Utils.getPathIconReactionIndex(whichIconUserChoose);
     }
+    return ic_thumb_up2;
   }
 
   Color? getTintColorIconBtn() {
@@ -1231,7 +1202,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     } else if (!isDragging && whichIconUserChoose != 0) {
       return null;
     } else {
-      return Color(0xffadb2d0);
+      return colorButtonPost;
     }
   }
 
@@ -1254,7 +1225,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     // so the range we check is about 200 -> 500
 
     if (dragUpdateDetail.globalPosition.dy >= 200 &&
-        dragUpdateDetail.globalPosition.dy <= MediaQuery.of(context).size.height) {
+        dragUpdateDetail.globalPosition.dy <= MediaQuery.of(context).size.height*0.9) {
       isDragging = true;
       isDraggingOutside = false;
 
