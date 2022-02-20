@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:social_media/core/animation/expand_collapse_animation.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
@@ -37,17 +38,13 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
-  List<Widget> listCommentWidgets=[Comment(),Comment()];
+  List<Widget> listCommentWidgets = [Comment(), Comment()];
+
   //tap position
   Offset? _tapPosition;
 
   //show comment box
-  bool _isShowCommentBox = false;
-
-  late AnimationController expandController;
-
-  late Animation<double> animation;
-
+  late ExpandCollapseAnimation expandCollapseAnimation;
   //audio btn like
   //late AudioPlayer audioPlayer;
 
@@ -124,8 +121,9 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     //init animation show comment box
-    _prepareAnimations();
+    expandCollapseAnimation=ExpandCollapseAnimation(state: this);
 
     // Button Like
     initAnimationBtnLike();
@@ -456,27 +454,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     animControlIconWhenRelease.dispose();
   }
 
-  //expand comment box
-  void _runExpand() {
-    if (_isShowCommentBox) {
-      expandController.forward();
-    } else {
-      expandController.reverse();
-    }
-  }
-
-  //prepare animation for comment box
-  void _prepareAnimations() {
-    expandController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 200),
-    );
-    animation = CurvedAnimation(
-      parent: expandController,
-      curve: Curves.fastLinearToSlowEaseIn,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -637,7 +614,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             ),
             SizeTransition(
               axisAlignment: 1.0,
-              sizeFactor: animation,
+              sizeFactor: expandCollapseAnimation.animation,
               child: TextFormComment(),
             ),
             Column(
@@ -655,16 +632,14 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     );
   }
 
-  Widget moreHorizontalButton(){
+  Widget moreHorizontalButton() {
     return Container(
       padding: EdgeInsets.only(right: 10),
       alignment: Alignment.centerRight,
       child: GestureDetector(
         onTap: () {
           final RenderBox? overlay =
-          Overlay.of(context)!
-              .context
-              .findRenderObject() as RenderBox;
+              Overlay.of(context)!.context.findRenderObject() as RenderBox;
           showMenu(
             color: Color(0xfff6f6f6),
             shape: RoundedRectangleBorder(
@@ -674,10 +649,8 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             position: RelativeRect.fromRect(
                 _tapPosition! & const Size(30, 30),
                 // smaller rect, the touch area
-                Offset.zero &
-                overlay!
-                    .size // Bigger rect, the entire screen
-            ),
+                Offset.zero & overlay!.size // Bigger rect, the entire screen
+                ),
             items: [
               PopupMenuItem(
                 onTap: () {
@@ -708,7 +681,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     );
   }
 
-  Widget likeButton(){
+  Widget likeButton() {
     return GestureDetector(
       onTapDown: onTapDownBtn,
       onTapUp: onTapUpBtn,
@@ -741,17 +714,17 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                 alignment: Alignment.centerLeft,
                 child: whichIconUserChoose == 0
                     ? Icon(
-                  LineIcons.heart,
-                  color: colorButtonPost,
-                  size: 20,
-                )
+                        LineIcons.heart,
+                        color: colorButtonPost,
+                        size: 20,
+                      )
                     : Image.asset(
-                  getImageIconBtn(),
-                  width: 20.0,
-                  height: 20.0,
-                  fit: BoxFit.contain,
-                  color: getTintColorIconBtn(),
-                ),
+                        getImageIconBtn(),
+                        width: 20.0,
+                        height: 20.0,
+                        fit: BoxFit.contain,
+                        color: getTintColorIconBtn(),
+                      ),
               ),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -766,13 +739,10 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
           ),
           style: ButtonStyle(
             backgroundColor:
-            MaterialStateProperty.all<Color>(
-                colorBackGroundButtonPost),
-            shape: MaterialStateProperty.all<
-                RoundedRectangleBorder>(
+                MaterialStateProperty.all<Color>(colorBackGroundButtonPost),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(5.0),
               ),
             ),
           ),
@@ -781,7 +751,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     );
   }
 
-  Widget shareButton(){
+  Widget shareButton() {
     return SizedBox(
       height: 35,
       width: 90,
@@ -813,10 +783,8 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
         ),
         style: ButtonStyle(
           backgroundColor:
-          MaterialStateProperty.all<Color>(
-              colorBackGroundButtonPost),
-          shape: MaterialStateProperty.all<
-              RoundedRectangleBorder>(
+              MaterialStateProperty.all<Color>(colorBackGroundButtonPost),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
@@ -826,16 +794,15 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     );
   }
 
-  Widget commentButton(){
+  Widget commentButton() {
     return SizedBox(
       height: 35,
       width: 110,
       child: TextButton(
         onPressed: () {
           setState(() {
-            _isShowCommentBox = !_isShowCommentBox;
+            expandCollapseAnimation.runExpand();
           });
-          _runExpand();
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -852,21 +819,19 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 "Comment",
-                style:
-                TextStyle(color: colorButtonPost),
+                style: TextStyle(color: colorButtonPost),
               ),
             ),
           ],
         ),
         style: ButtonStyle(
           backgroundColor:
-          MaterialStateProperty.all<Color>(
-              colorBackGroundButtonPost),
-          shape: MaterialStateProperty.all<
-              RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              )),
+              MaterialStateProperty.all<Color>(colorBackGroundButtonPost),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
         ),
       ),
     );
@@ -1237,7 +1202,8 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     // so the range we check is about 200 -> 500
 
     if (dragUpdateDetail.globalPosition.dy >= 200 &&
-        dragUpdateDetail.globalPosition.dy <= MediaQuery.of(context).size.height*0.9) {
+        dragUpdateDetail.globalPosition.dy <=
+            MediaQuery.of(context).size.height * 0.9) {
       isDragging = true;
       isDraggingOutside = false;
 
