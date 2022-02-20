@@ -98,7 +98,7 @@ class _ListPostsState extends State<ListPosts> {
   Widget build(BuildContext context) {
     DataConvert dataConvert = Provider.of<DataConvert>(context);
     int length = dataConvert.listPosts.length;
-    User user = dataConvert.currentUser;
+    User user = dataConvert.currentUser;//get current account user
     return ListView.builder(
       //increase 1 index because we have to add
       // a widget which includes some items for home page

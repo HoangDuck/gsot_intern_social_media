@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
+import 'package:social_media/core/services/play_audio_services.dart';
 import 'package:social_media/core/util/utils.dart';
 import 'package:social_media/core/util/utils_featured.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
@@ -51,7 +49,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   late Animation<double> animation;
 
   //audio btn like
-  late AudioPlayer audioPlayer;
+  //late AudioPlayer audioPlayer;
 
   //time duration animation reaction icon button
   int durationAnimationBox = 500;
@@ -128,8 +126,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     super.initState();
     //init animation show comment box
     _prepareAnimations();
-    //init animation show button like
-    audioPlayer = AudioPlayer();
 
     // Button Like
     initAnimationBtnLike();
@@ -538,56 +534,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              padding: EdgeInsets.only(right: 10),
-                              alignment: Alignment.centerRight,
-                              child: GestureDetector(
-                                onTap: () {
-                                  final RenderBox? overlay =
-                                      Overlay.of(context)!
-                                          .context
-                                          .findRenderObject() as RenderBox;
-                                  showMenu(
-                                    color: Color(0xfff6f6f6),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    context: context,
-                                    position: RelativeRect.fromRect(
-                                        _tapPosition! & const Size(30, 30),
-                                        // smaller rect, the touch area
-                                        Offset.zero &
-                                            overlay!
-                                                .size // Bigger rect, the entire screen
-                                        ),
-                                    items: [
-                                      PopupMenuItem(
-                                        onTap: () {
-                                          // int? idComment = comment.id;
-                                          // dataConvert.deleteDataComment(idPost!, idComment!);
-                                        },
-                                        child: dropdownMenuItemPost(
-                                          LineIcons.trash,
-                                          "Delete post",
-                                        ),
-                                      ),
-                                      PopupMenuItem(
-                                        onTap: () {
-                                          // int? idComment = comment.id;
-                                          // dataConvert.deleteDataComment(idPost!, idComment!);
-                                        },
-                                        child: dropdownMenuItemPost(
-                                          LineIcons.alternatePencil,
-                                          "Edit post",
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                                onTapDown: _storePosition,
-                                child: Icon(Icons.more_horiz),
-                              ),
-                            ),
+                            child: moreHorizontalButton(),
                           ),
                         ],
                       ),
@@ -664,161 +611,9 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            GestureDetector(
-                              onTapDown: onTapDownBtn,
-                              onTapUp: onTapUpBtn,
-                              child: SizedBox(
-                                height: 35,
-                                width: 90,
-                                child: TextButton(
-                                  onPressed: () {
-                                    if (!isLongPress) {
-                                      setState(() {
-                                        if (whichIconUserChoose == 0) {
-                                          isLiked = !isLiked;
-                                        } else {
-                                          if (isLiked) {
-                                            isLiked = !isLiked;
-                                          }
-                                          whichIconUserChoose = 0;
-                                        }
-                                        if (isLiked) {
-                                          playSound('short_press_like.mp3');
-                                          whichIconUserChoose = 1;
-                                        }
-                                      });
-                                    }
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: whichIconUserChoose == 0
-                                            ? Icon(
-                                                LineIcons.heart,
-                                                color: colorButtonPost,
-                                                size: 20,
-                                              )
-                                            : Image.asset(
-                                                getImageIconBtn(),
-                                                width: 20.0,
-                                                height: 20.0,
-                                                fit: BoxFit.contain,
-                                                color: getTintColorIconBtn(),
-                                              ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          getTextBtn(),
-                                          style: TextStyle(
-                                            color: getColorTextBtn(),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            colorBackGroundButtonPost),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 35,
-                              width: 110,
-                              child: TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isShowCommentBox = !_isShowCommentBox;
-                                  });
-                                  _runExpand();
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Icon(
-                                        LineIcons.commentDots,
-                                        color: colorButtonPost,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "Comment",
-                                        style:
-                                            TextStyle(color: colorButtonPost),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          colorBackGroundButtonPost),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  )),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 35,
-                              width: 90,
-                              child: TextButton(
-                                onPressed: () {
-                                  popUpSharePost(context, widget.dataConvert);
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Icon(
-                                        LineIcons.shareSquare,
-                                        color: colorButtonPost,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "Share",
-                                        style: TextStyle(
-                                          color: colorButtonPost,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          colorBackGroundButtonPost),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            likeButton(),
+                            commentButton(),
+                            shareButton(),
                           ],
                         ),
                       ),
@@ -857,6 +652,223 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       ),
       onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
       onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
+    );
+  }
+
+  Widget moreHorizontalButton(){
+    return Container(
+      padding: EdgeInsets.only(right: 10),
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () {
+          final RenderBox? overlay =
+          Overlay.of(context)!
+              .context
+              .findRenderObject() as RenderBox;
+          showMenu(
+            color: Color(0xfff6f6f6),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            context: context,
+            position: RelativeRect.fromRect(
+                _tapPosition! & const Size(30, 30),
+                // smaller rect, the touch area
+                Offset.zero &
+                overlay!
+                    .size // Bigger rect, the entire screen
+            ),
+            items: [
+              PopupMenuItem(
+                onTap: () {
+                  // int? idComment = comment.id;
+                  // dataConvert.deleteDataComment(idPost!, idComment!);
+                },
+                child: dropdownMenuItemPost(
+                  LineIcons.trash,
+                  "Delete post",
+                ),
+              ),
+              PopupMenuItem(
+                onTap: () {
+                  // int? idComment = comment.id;
+                  // dataConvert.deleteDataComment(idPost!, idComment!);
+                },
+                child: dropdownMenuItemPost(
+                  LineIcons.alternatePencil,
+                  "Edit post",
+                ),
+              ),
+            ],
+          );
+        },
+        onTapDown: _storePosition,
+        child: Icon(Icons.more_horiz),
+      ),
+    );
+  }
+
+  Widget likeButton(){
+    return GestureDetector(
+      onTapDown: onTapDownBtn,
+      onTapUp: onTapUpBtn,
+      child: SizedBox(
+        height: 35,
+        width: 90,
+        child: TextButton(
+          onPressed: () {
+            if (!isLongPress) {
+              setState(() {
+                if (whichIconUserChoose == 0) {
+                  isLiked = !isLiked;
+                } else {
+                  if (isLiked) {
+                    isLiked = !isLiked;
+                  }
+                  whichIconUserChoose = 0;
+                }
+                if (isLiked) {
+                  PlayAudio.playSound('short_press_like.mp3');
+                  whichIconUserChoose = 1;
+                }
+              });
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: whichIconUserChoose == 0
+                    ? Icon(
+                  LineIcons.heart,
+                  color: colorButtonPost,
+                  size: 20,
+                )
+                    : Image.asset(
+                  getImageIconBtn(),
+                  width: 20.0,
+                  height: 20.0,
+                  fit: BoxFit.contain,
+                  color: getTintColorIconBtn(),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  getTextBtn(),
+                  style: TextStyle(
+                    color: getColorTextBtn(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          style: ButtonStyle(
+            backgroundColor:
+            MaterialStateProperty.all<Color>(
+                colorBackGroundButtonPost),
+            shape: MaterialStateProperty.all<
+                RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(5.0),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget shareButton(){
+    return SizedBox(
+      height: 35,
+      width: 90,
+      child: TextButton(
+        onPressed: () {
+          popUpSharePost(context, widget.dataConvert);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Icon(
+                LineIcons.shareSquare,
+                color: colorButtonPost,
+                size: 20,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "Share",
+                style: TextStyle(
+                  color: colorButtonPost,
+                ),
+              ),
+            ),
+          ],
+        ),
+        style: ButtonStyle(
+          backgroundColor:
+          MaterialStateProperty.all<Color>(
+              colorBackGroundButtonPost),
+          shape: MaterialStateProperty.all<
+              RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget commentButton(){
+    return SizedBox(
+      height: 35,
+      width: 110,
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            _isShowCommentBox = !_isShowCommentBox;
+          });
+          _runExpand();
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Icon(
+                LineIcons.commentDots,
+                color: colorButtonPost,
+                size: 20,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "Comment",
+                style:
+                TextStyle(color: colorButtonPost),
+              ),
+            ),
+          ],
+        ),
+        style: ButtonStyle(
+          backgroundColor:
+          MaterialStateProperty.all<Color>(
+              colorBackGroundButtonPost),
+          shape: MaterialStateProperty.all<
+              RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              )),
+        ),
+      ),
     );
   }
 
@@ -1283,7 +1295,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   void handleWhenDragBetweenIcon(int currentIcon) {
-    playSound('icon_focus.mp3');
+    PlayAudio.playSound('icon_focus.mp3');
     whichIconUserChoose = currentIcon;
     previousIconFocus = currentIconFocus;
     currentIconFocus = currentIcon;
@@ -1298,9 +1310,9 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   void onTapUpBtn(TapUpDetails? tapUpDetail) {
     if (isLongPress) {
       if (whichIconUserChoose == 0) {
-        playSound('box_down.mp3');
+        PlayAudio.playSound('box_down.mp3');
       } else {
-        playSound('icon_choose.mp3');
+        PlayAudio.playSound('icon_choose.mp3');
       }
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;
@@ -1318,28 +1330,8 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     }
   }
 
-  double handleOutputRangeZoomInIconLike(double value) {
-    if (value >= 0.8) {
-      return value;
-    } else if (value >= 0.4) {
-      return 1.6 - value;
-    } else {
-      return 0.8 + value;
-    }
-  }
-
-  double handleOutputRangeTiltIconLike(double value) {
-    if (value <= 0.2) {
-      return value;
-    } else if (value <= 0.6) {
-      return 0.4 - value;
-    } else {
-      return -(0.8 - value);
-    }
-  }
-
   void showBox() {
-    playSound('box_up.mp3');
+    PlayAudio.playSound('box_up.mp3');
     isLongPress = true;
 
     animControlBtnLongPress.forward();
@@ -1439,17 +1431,5 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
     );
-  }
-
-  Future playSound(String nameSound) async {
-    // Sometimes multiple sound will play the same time, so we'll stop all before play the newest
-    await audioPlayer.stop();
-    final file = File('${(await getTemporaryDirectory()).path}/$nameSound');
-    await file.writeAsBytes((await loadAsset(nameSound)).buffer.asUint8List());
-    await audioPlayer.play(file.path, isLocal: true);
-  }
-
-  Future loadAsset(String nameSound) async {
-    return await rootBundle.load('assets/sounds/$nameSound');
   }
 }

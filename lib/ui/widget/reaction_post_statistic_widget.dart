@@ -3,8 +3,7 @@ import 'package:social_media/core/util/utils.dart';
 
 class ReactionStatisticWidget extends StatelessWidget {
   List<String> listOfReactionsIcon = [
-    'Angry',
-    'Love',
+    'Like',
   ];
 
   //this field false is number of reaction hasn't appeared yet
@@ -42,6 +41,10 @@ class ReactionStatisticWidget extends StatelessWidget {
         Positioned(
           left: 100,
           child: _widgetReturnIcon(5),
+        ),
+        Positioned(
+          left: 120,
+          child: _widgetReturnIcon(6),
         ),
       ],
     );
@@ -82,6 +85,12 @@ class ReactionStatisticWidget extends StatelessWidget {
       listOfReactionsIcon[index];
       return true;
     } catch (e) {
+      //if there is no element at index 0 that means this post has no reaction
+      //The post has no reaction, it doesn't need to appear number of reaction widget
+      //so set isLikeNumber = true to not appear
+      if(index==0){
+        isLikeNumber=true;
+      }
       return false;
     }
   }
