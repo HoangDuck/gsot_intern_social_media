@@ -4,6 +4,7 @@ import 'package:social_media/core/util/utils.dart';
 class ReactionStatisticWidget extends StatelessWidget {
   List<String> listOfReactionsIcon = [
     'Like',
+    'Haha'
   ];
 
   //this field false is number of reaction hasn't appeared yet

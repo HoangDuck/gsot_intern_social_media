@@ -20,6 +20,7 @@ class _TextFormCommentState extends State<TextFormComment> {
     _imageFilePicker = value;
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -64,7 +65,9 @@ class _TextFormCommentState extends State<TextFormComment> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+
+                      });
                     },
                     icon: Icon(Icons.send),
                   ),

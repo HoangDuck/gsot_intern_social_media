@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/user.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
 
 import 'package:social_media/ui/widget/avatar_widget.dart';
 import 'package:social_media/ui/widget/greeting_card.dart';
@@ -98,7 +99,7 @@ class _ListPostsState extends State<ListPosts> {
   Widget build(BuildContext context) {
     DataConvert dataConvert = Provider.of<DataConvert>(context);
     int length = dataConvert.listPosts.length;
-    User user = dataConvert.currentUser;//get current account user
+    User user = dataConvert.currentUser; //get current account user
     return ListView.builder(
       //increase 1 index because we have to add
       // a widget which includes some items for home page
@@ -126,12 +127,31 @@ class _ListPostsState extends State<ListPosts> {
         //minus 1 because list have been pushed back 1 index
         int index = i - 1;
         //build post list
-        return PostWidget(
-          data: dataConvert.listPosts[length - 1 - index], //reverse post index,
-          // the newest post is the largest index
-          user: user,
-          dataConvert: dataConvert,
-        );
+        return length - 1 - index == 0
+            ? Column(
+                children: [
+                  PostWidget(
+                    data: dataConvert
+                        .listPosts[length - 1 - index], //reverse post index,
+                    // the newest post is the largest index
+                    user: user,
+                    dataConvert: dataConvert,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    child: CircularProgressIndicator(
+                      color: only_color,
+                    ),
+                  ),
+                ],
+              )
+            : PostWidget(
+                data: dataConvert
+                    .listPosts[length - 1 - index], //reverse post index,
+                // the newest post is the largest index
+                user: user,
+                dataConvert: dataConvert,
+              );
       },
     );
   }
