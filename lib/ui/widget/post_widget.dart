@@ -45,8 +45,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
-  //audio btn like
-  //late AudioPlayer audioPlayer;
 
   //time duration animation reaction icon button
   int durationAnimationBox = 500;

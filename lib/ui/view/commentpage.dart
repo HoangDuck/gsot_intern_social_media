@@ -9,7 +9,6 @@ import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/comment.dart';
 import 'package:social_media/core/model/posts.dart';
 
-//import 'package:social_media/view/uploadstatus.dart';
 class CommentPage extends StatefulWidget {
   final int? idPost;
 
@@ -40,8 +39,13 @@ class _CommentPageState extends State<CommentPage> {
         color: Colors.white,
         child: Column(
           children: [
-            Expanded(child: _buildListComments(post)),
-            Container(alignment: Alignment.topLeft, child: _previewImages()),
+            Expanded(
+              child: _buildListComments(post),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              child: _previewImages(),
+            ),
             Row(
               children: [
                 Expanded(
@@ -62,8 +66,10 @@ class _CommentPageState extends State<CommentPage> {
                   icon: Icon(Icons.image),
                   color: Color(0xff4a0072),
                   onPressed: () {
-                    _onImageButtonPressed(ImageSource.gallery,
-                        context: context);
+                    _onImageButtonPressed(
+                      ImageSource.gallery,
+                      context: context,
+                    );
                   },
                 ),
                 IconButton(
