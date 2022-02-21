@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:social_media/core/animation/expand_collapse_animation.dart';
 import 'package:social_media/core/converter/data_converter.dart';
@@ -38,7 +39,7 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
-  List<Widget> listCommentWidgets = [Comment(), Comment()];
+  List<Widget> listCommentWidgets = [];
 
   //tap position
   Offset? _tapPosition;
@@ -121,7 +122,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     super.initState();
 
     //init animation show comment box
-    expandCollapseAnimation=ExpandCollapseAnimation(state: this);
+    expandCollapseAnimation = ExpandCollapseAnimation(state: this);
 
     // Button Like
     initAnimationBtnLike();
@@ -601,7 +602,6 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                     children: <Widget>[
                       // Box
                       renderBox(),
-
                       // Icons
                       renderIcons(),
                     ],
@@ -618,6 +618,7 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
             Column(
               children: listCommentWidgets,
             ),
+            loadMoreComment(),
             Container(
               padding: EdgeInsets.only(top: 30),
               child: dottedLine(context),
@@ -627,6 +628,29 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       ),
       onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
       onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
+    );
+  }
+
+  Widget loadMoreComment() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          listCommentWidgets.add(Comment());
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+          left: 20,
+          top: 10,
+        ),
+        child: Text(
+          "Load more comments...",
+          style: TextStyle(
+            color: Color(0xffFF2B55),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     );
   }
 

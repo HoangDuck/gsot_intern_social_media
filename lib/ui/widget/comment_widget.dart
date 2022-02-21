@@ -18,6 +18,8 @@ class Comment extends StatefulWidget {
 }
 
 class _CommentState extends State<Comment> with TickerProviderStateMixin {
+  List<Widget> listCommentWidgets = [];
+
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
 
@@ -491,7 +493,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
               ),
               Positioned(
                 bottom: -100,
-                width: MediaQuery.of(context).size.width*0.9,
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: Stack(
                   children: <Widget>[
                     // Box
@@ -513,7 +515,43 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           sizeFactor: expandCollapseAnimation.animation,
           child: TextFormComment(),
         ),
+        Container(
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.07,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                children: listCommentWidgets,
+              ),
+              loadMoreComment(),
+            ],
+          ),
+        ),
       ],
+    );
+  }
+
+  Widget loadMoreComment() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          listCommentWidgets.add(Comment());
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 5,
+        ),
+        child: Text(
+          "Load more replies...",
+          style: TextStyle(
+            color: Color(0xffFF2B55),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     );
   }
 
