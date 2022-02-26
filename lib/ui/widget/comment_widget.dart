@@ -440,49 +440,48 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                             expandCollapseAnimation.runExpand();
                           });
                         },
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          child: Icon(
-                            LineIcons.reply,
-                            color: Color(0xffff2f64),
-                          ),
+                        child: Icon(
+                          LineIcons.reply,
+                          color: Color(0xffff2f64),
                         ),
                       ),
                       GestureDetector(
                         onTapDown: onTapDownBtn,
                         onTapUp: onTapUpBtn,
-                        onTap: () {
-                          if (!isLongPress) {
-                            setState(() {
-                              if (whichIconUserChoose == 0) {
-                                isLiked = !isLiked;
-                              } else {
-                                if (isLiked) {
+                        onTap: () {},
+                        child: TextButton(
+                          onPressed: () {
+                            if (!isLongPress) {
+                              setState(() {
+                                if (whichIconUserChoose == 0) {
                                   isLiked = !isLiked;
+                                } else {
+                                  if (isLiked) {
+                                    isLiked = !isLiked;
+                                  }
+                                  whichIconUserChoose = 0;
                                 }
-                                whichIconUserChoose = 0;
-                              }
-                              if (isLiked) {
-                                PlayAudio.playSound('short_press_like.mp3');
-                                whichIconUserChoose = 1;
-                              }
-                            });
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          child: whichIconUserChoose == 0
-                              ? Icon(
-                            LineIcons.heart,
-                            color: Color(0xffff2f64),
-                            size: 20,
-                          )
-                              : Image.asset(
-                            getImageIconBtn(),
-                            width: 20.0,
-                            height: 20.0,
-                            fit: BoxFit.contain,
-                            color: getTintColorIconBtn(),
+                                if (isLiked) {
+                                  PlayAudio.playSound('short_press_like.mp3');
+                                  whichIconUserChoose = 1;
+                                }
+                              });
+                            }
+                          },
+                          child: Container(
+                            child: whichIconUserChoose == 0
+                                ? Icon(
+                                    LineIcons.heart,
+                                    color: Color(0xffff2f64),
+                                    size: 20,
+                                  )
+                                : Image.asset(
+                                    getImageIconBtn(),
+                                    width: 20.0,
+                                    height: 20.0,
+                                    fit: BoxFit.contain,
+                                    color: getTintColorIconBtn(),
+                                  ),
                           ),
                         ),
                       ),
@@ -491,11 +490,13 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                 ],
               ),
               Positioned(
+                left: MediaQuery.of(context).size.width*0.7,
+                bottom: 35,
+                child: ReactionStatisticWidget(),
+              ),
+              Positioned(
                 bottom: -100,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: Stack(
                   children: <Widget>[
                     // Box
@@ -533,8 +534,8 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
         height: isDragging
             ? (previousIconFocus == 0 ? zoomBoxIcon.value : 30.0)
             : isDraggingOutside
-            ? zoomBoxWhenDragOutside.value
-            : 40.0,
+                ? zoomBoxWhenDragOutside.value
+                : 40.0,
         margin: EdgeInsets.only(bottom: 130.0, left: 10.0),
       ),
       opacity: fadeInBox.value,
@@ -560,15 +561,15 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 1
-                ? zoomIconChosen.value
-                : (previousIconFocus == 1
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 1
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconLike.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconLike.value,
           ),
 
           // icon love
@@ -586,15 +587,15 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 2
-                ? zoomIconChosen.value
-                : (previousIconFocus == 2
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 2
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconLove.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconLove.value,
           ),
 
           // icon haha
@@ -612,15 +613,15 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 3
-                ? zoomIconChosen.value
-                : (previousIconFocus == 3
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 3
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconHaha.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconHaha.value,
           ),
 
           // icon wow
@@ -638,15 +639,15 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 4
-                ? zoomIconChosen.value
-                : (previousIconFocus == 4
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 4
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconWow.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconWow.value,
           ),
 
           // icon sad
@@ -664,15 +665,15 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 5
-                ? zoomIconChosen.value
-                : (previousIconFocus == 5
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 5
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconSad.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconSad.value,
           ),
 
           // icon angry
@@ -690,15 +691,15 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ),
             scale: isDragging
                 ? (currentIconFocus == 6
-                ? zoomIconChosen.value
-                : (previousIconFocus == 6
-                ? zoomIconNotChosen.value
-                : isJustDragInside
-                ? zoomIconWhenDragInside.value
-                : 0.8))
+                    ? zoomIconChosen.value
+                    : (previousIconFocus == 6
+                        ? zoomIconNotChosen.value
+                        : isJustDragInside
+                            ? zoomIconWhenDragInside.value
+                            : 0.8))
                 : isDraggingOutside
-                ? zoomIconWhenDragOutside.value
-                : zoomIconAngry.value,
+                    ? zoomIconWhenDragOutside.value
+                    : zoomIconAngry.value,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -751,10 +752,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
 
     if (dragUpdateDetail.globalPosition.dy >= 200 &&
         dragUpdateDetail.globalPosition.dy <=
-            MediaQuery
-                .of(context)
-                .size
-                .height * 0.9) {
+            MediaQuery.of(context).size.height * 0.9) {
       isDragging = true;
       isDraggingOutside = false;
 

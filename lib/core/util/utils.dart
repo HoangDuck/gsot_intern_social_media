@@ -55,4 +55,15 @@ class Utils{
         return 'Like';
     }
   }
+  static String formatNumberReaction(int number){
+    int numberFormat=0;
+    if(number>=1000 && number<1000000){
+      numberFormat=number~/1000;
+      return numberFormat.toString() +"K";
+    }else if(number>=1000000){
+      numberFormat=number~/1000000;
+      return numberFormat.toString() +"Tr";
+    }
+    return number.toString();
+  }
 }
