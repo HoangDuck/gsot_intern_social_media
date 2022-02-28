@@ -78,7 +78,6 @@ class _TextFormCommentState extends State<TextFormComment> {
                       setState(() {
                         try{
                           stateOfCurrentComment.addReply();
-                          stateOfCurrentPost.increaseNumberOfComments();
                           return;
                         }catch(e){
                           print(e);

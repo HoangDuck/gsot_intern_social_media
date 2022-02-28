@@ -461,12 +461,8 @@ class PostWidgetState extends State<PostWidget>
     animControlIconWhenRelease.dispose();
   }
 
-  void increaseNumberOfComments(){
-    numberOfComment++;
-  }
-
   void addComment(){
-    increaseNumberOfComments();
+    numberOfComment++;
     listCommentData.add(4);
     setState(() {
 
