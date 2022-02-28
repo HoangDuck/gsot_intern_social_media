@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:social_media/core/util/utils.dart';
 
 class ReactionStatisticWidget extends StatelessWidget {
-  List<String> listOfReactionsIcon = [
-    'Like',
-    'Haha',
-    'Wow',
-  ];
+  List<String> listOfReactionsIcon = [];
 
   //this field false is number of reaction hasn't appeared yet
   //this field true is number of reaction has appeared
   bool isLikeNumber = false;
-  int numberReaction=10300;
-  ReactionStatisticWidget({Key? key}) : super(key: key);
+  int numberReaction;
+  ReactionStatisticWidget({Key? key,required this.listOfReactionsIcon,required this.numberReaction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

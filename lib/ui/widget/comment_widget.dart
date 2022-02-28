@@ -19,6 +19,9 @@ class Comment extends StatefulWidget {
 }
 
 class _CommentState extends State<Comment> with TickerProviderStateMixin {
+  //List reaction icons
+  List<String> listReactionIcons=[];
+  int numberOfReaction=0;
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
 
@@ -90,6 +93,10 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //fetch number of reactions
+    numberOfReaction=0;
+    //fetch reaction icons list
+    listReactionIcons.addAll([]);
     //init animation show comment box
     expandCollapseAnimation = ExpandCollapseAnimation(state: this);
     // Button Like
@@ -460,10 +467,14 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                                     isLiked = !isLiked;
                                   }
                                   whichIconUserChoose = 0;
+                                  numberOfReaction--;
+                                  listReactionIcons.removeLast();
                                 }
                                 if (isLiked) {
                                   PlayAudio.playSound('short_press_like.mp3');
                                   whichIconUserChoose = 1;
+                                  numberOfReaction++;
+                                  listReactionIcons.add('Like');
                                 }
                               });
                             }
@@ -490,9 +501,12 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                 ],
               ),
               Positioned(
-                left: MediaQuery.of(context).size.width*0.7,
+                left: MediaQuery.of(context).size.width * 0.7,
                 bottom: 35,
-                child: ReactionStatisticWidget(),
+                child: ReactionStatisticWidget(
+                  listOfReactionsIcon: listReactionIcons,
+                  numberReaction: numberOfReaction,
+                ),
               ),
               Positioned(
                 bottom: -100,
@@ -826,8 +840,12 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
     if (isLongPress) {
       if (whichIconUserChoose == 0) {
         PlayAudio.playSound('box_down.mp3');
+        numberOfReaction--;
+        listReactionIcons.removeLast();
       } else {
         PlayAudio.playSound('icon_choose.mp3');
+        numberOfReaction++;
+        listReactionIcons.add(Utils.getTextReaction(whichIconUserChoose));
       }
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;

@@ -23,15 +23,14 @@ class _TextFormCommentState extends State<TextFormComment> {
     _imageFilePicker = value;
   }
 
-
   @override
   Widget build(BuildContext context) {
-    var stateOfCurrentPost= Provider.of<PostWidgetState>(context);
+    var stateOfCurrentPost = Provider.of<PostWidgetState>(context);
     var stateOfCurrentComment;
-    try{
-      stateOfCurrentComment=Provider.of<CommentToPostWidgetState>(context);
-    }catch(e){
-      print(e.toString());
+    try {
+      stateOfCurrentComment = Provider.of<CommentToPostWidgetState>(context);
+    } catch (e) {
+      //print(e.toString());
     }
     return Column(
       children: [
@@ -76,15 +75,15 @@ class _TextFormCommentState extends State<TextFormComment> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        try{
+                        try {
                           stateOfCurrentComment.addReply();
                           stateOfCurrentPost.setState(() {
                             stateOfCurrentPost.numberOfRepliesPost++;
                             stateOfCurrentPost.numberOfComment++;
                           });
                           return;
-                        }catch(e){
-                          print(e);
+                        } catch (e) {
+                          //print(e);
                         }
                         stateOfCurrentPost.addComment();
                       });

@@ -61,6 +61,15 @@ class ListPosts extends StatefulWidget {
 }
 
 class _ListPostsState extends State<ListPosts> {
+
+  @override
+  void initState() {
+    super.initState();
+    //call fetch api list post from api
+    //call api get current user
+    //call api get number of posts.
+  }
+
   @override
   Widget build(BuildContext context) {
     DataConvert dataConvert = Provider.of<DataConvert>(context); //api request
@@ -93,7 +102,8 @@ class _ListPostsState extends State<ListPosts> {
         //minus 1 because list have been pushed back 1 index
         int index = i - 1;
         //build post list
-        return length - 1 - index == 0
+        return length - 1 - index == 0//if this is the last post,
+        // show the last post with circle loading animation
             ? Column(
                 children: [
                   PostWidget(
@@ -155,4 +165,5 @@ class _ListPostsState extends State<ListPosts> {
       ),
     );
   }
+
 }

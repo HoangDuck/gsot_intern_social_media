@@ -39,12 +39,20 @@ class PostWidget extends StatefulWidget {
   PostWidgetState createState() => PostWidgetState();
 }
 
-class PostWidgetState extends State<PostWidget>
-    with TickerProviderStateMixin {
+class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
+  //list reaction icon of this post
+  List<String> listReactionIcons = [];
+  int numberOfReaction=0;
+  //number of sharing post
+  int numberOfSharing=0;
+
+  //field comment data
   List<Widget> listCommentWidgets = [];
   List<dynamic> listCommentData = []; //list comment data
   int numberOfComment = 0; //request api give back number of comment this.post
-  int numberOfRepliesPost=0;
+  //number comments of this post is replies
+  int numberOfRepliesPost = 0;
+
   //tap position
   Offset? _tapPosition;
 
@@ -121,12 +129,17 @@ class PostWidgetState extends State<PostWidget>
     _tapPosition = details.globalPosition;
   }
 
-
   @override
   void initState() {
     super.initState();
+    //fetch number of reactions
+    numberOfReaction=0;
+    //fetch number of sharing post
+    numberOfSharing=0;
+    //fetch list reaction icons
+    listReactionIcons.addAll([]);
     //fetch number of replies post
-    numberOfRepliesPost=0;
+    numberOfRepliesPost = 0;
     //fetch number of comments
     numberOfComment = 0;
     //fetch 2 first comments
@@ -464,12 +477,10 @@ class PostWidgetState extends State<PostWidget>
     animControlIconWhenRelease.dispose();
   }
 
-  void addComment(){
+  void addComment() {
     numberOfComment++;
     listCommentData.add(4);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -566,7 +577,10 @@ class PostWidgetState extends State<PostWidget>
                       Row(
                         children: [
                           Expanded(
-                            child: ReactionStatisticWidget(),
+                            child: ReactionStatisticWidget(
+                              listOfReactionsIcon: listReactionIcons,
+                              numberReaction: numberOfReaction,
+                            ),
                           ),
                           Row(
                             children: [
@@ -585,13 +599,13 @@ class PostWidgetState extends State<PostWidget>
                           Container(
                             padding: EdgeInsets.only(left: 10),
                             child: Row(
-                              children: const [
+                              children: [
                                 Icon(
                                   LineIcons.shareSquare,
                                   color: colorButtonPost,
                                 ),
                                 Text(
-                                  "56 Shares",
+                                  "${Utils.formatNumberReaction(numberOfSharing)} Shares",
                                   style: TextStyle(
                                     color: colorButtonPost,
                                   ),
@@ -662,7 +676,8 @@ class PostWidgetState extends State<PostWidget>
   }
 
   Widget loadMoreComment() {
-    if (numberOfComment > 2 && listCommentData.length < numberOfComment-numberOfRepliesPost) {
+    if (numberOfComment > 2 &&
+        listCommentData.length < numberOfComment - numberOfRepliesPost) {
       //put get comment list here
       //add all list
       //reload list comment widget
@@ -757,10 +772,14 @@ class PostWidgetState extends State<PostWidget>
                     isLiked = !isLiked;
                   }
                   whichIconUserChoose = 0;
+                  numberOfReaction--;
+                  listReactionIcons.removeLast();
                 }
                 if (isLiked) {
                   PlayAudio.playSound('short_press_like.mp3');
                   whichIconUserChoose = 1;
+                  numberOfReaction++;
+                  listReactionIcons.add('Like');
                 }
               });
             }
@@ -1335,8 +1354,12 @@ class PostWidgetState extends State<PostWidget>
     if (isLongPress) {
       if (whichIconUserChoose == 0) {
         PlayAudio.playSound('box_down.mp3');
+        numberOfReaction--;
+        listReactionIcons.removeLast();
       } else {
         PlayAudio.playSound('icon_choose.mp3');
+        numberOfReaction++;
+        listReactionIcons.add(Utils.getTextReaction(whichIconUserChoose));
       }
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;

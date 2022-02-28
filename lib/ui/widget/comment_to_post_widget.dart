@@ -22,12 +22,11 @@ class CommentToPostWidgetState extends State<CommentToPostWidget> {
     //fetch two first replies of comment
     listRepliesData = [];
   }
-  void addReply(){
+
+  void addReply() {
     numberOfCommentReply++;
     listRepliesData.add(4);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
