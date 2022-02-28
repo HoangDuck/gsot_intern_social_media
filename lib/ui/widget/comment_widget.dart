@@ -19,6 +19,7 @@ class Comment extends StatefulWidget {
 }
 
 class _CommentState extends State<Comment> with TickerProviderStateMixin {
+  // dynamic t=Provider.of
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
 

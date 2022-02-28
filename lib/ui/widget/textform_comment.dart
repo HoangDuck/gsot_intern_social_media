@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:social_media/ui/widget/post_widget.dart';
 
 class TextFormComment extends StatefulWidget {
   const TextFormComment({Key? key}) : super(key: key);
@@ -23,6 +25,8 @@ class _TextFormCommentState extends State<TextFormComment> {
 
   @override
   Widget build(BuildContext context) {
+    var t= Provider.of<PostWidgetState>(context);
+
     return Column(
       children: [
         Container(
@@ -66,7 +70,7 @@ class _TextFormCommentState extends State<TextFormComment> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-
+                        t.addComment();
                       });
                     },
                     icon: Icon(Icons.send),

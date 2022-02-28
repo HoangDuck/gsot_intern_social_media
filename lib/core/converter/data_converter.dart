@@ -1,8 +1,4 @@
 import 'dart:convert';
-//import 'dart:io';
-//import 'dart:io';
-//import 'dart:math';
-//import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/json_string/json_string.dart';
@@ -11,7 +7,6 @@ import 'package:social_media/core/model/messages.dart';
 import 'package:social_media/core/model/notifiers.dart';
 import 'package:social_media/core/model/posts.dart';
 import 'package:social_media/core/model/user.dart';
-//import 'package:social_media/model/user_profile.dart';
 final String listPostsFromJsonString=posts;
 final String listMessagesFromJsonString=messages;
 final String listUsersFromJsonString=users;
@@ -119,33 +114,7 @@ class DataConvert with ChangeNotifier{
     var jsonPosts=jsonEncode(listPosts);
     prefs.setString('postsData',jsonPosts);
     notifyListeners();
-    // //insert new data to profile user: Posts number, image,...
-    // //decode profile user
-    // String stringDataUsersProfile="";
-    // stringDataUsersProfile = prefs.getString('userAvatarData') ?? listUsersFromJsonString;
-    // Iterable l = jsonDecode(stringDataUsersProfile);
-    // List<UserProfile> listUserProfile= List<UserProfile>.from(l.map((model)=> UserProfile.fromJson(model)));
-    // //get number of new posts when insert a new post
-    // int nPostCurrentUser=0,index=0;
-    // nPostCurrentUser=statisticPostNumber();
-    // for(int i=0;i<listUserProfile.length;i++){
-    //   if(listUserProfile[i].user!.id==idCurrentUser){
-    //     listUserProfile[i].posts=nPostCurrentUser;
-    //     index=i;
-    //   }
-    // }
-    // //get new image when insert new post
-    // if(image.toString()!=""){
-    //   listUserProfile[index].listImage!.add(image);
-    // }
-    // var jsonUserProfile=jsonEncode(listUserProfile);
-    // prefs.setString('profileUserData',jsonUserProfile);
   }
-  // _write(String text) async {
-  //   final Directory directory = await getApplicationDocumentsDirectory();
-  //   final File file = File('${directory.path}/my_file.txt');
-  //   await file.writeAsString(text);
-  // }
   bool onLikeButtonPress(Post post,User user,List<Post> listPosts){
     bool value=false;
     if(isUserLikeThePost(post, user)){

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media/core/animation/expand_collapse_animation.dart';
 import 'package:social_media/core/converter/data_converter.dart';
 import 'package:social_media/core/model/posts.dart';
@@ -36,12 +37,14 @@ class PostWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PostWidgetState createState() => _PostWidgetState();
+  PostWidgetState createState() => PostWidgetState();
 }
 
-class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
+class PostWidgetState extends State<PostWidget>
+    with TickerProviderStateMixin, ChangeNotifier {
   List<Widget> listCommentWidgets = [];
-
+  List<dynamic> listCommentData = []; //list comment data
+  int numberOfComment = 0; //request api give back number of comment this.post
   //tap position
   Offset? _tapPosition;
 
@@ -118,9 +121,14 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     _tapPosition = details.globalPosition;
   }
 
+
   @override
   void initState() {
     super.initState();
+    //fetch number of comments
+    numberOfComment = 5;
+    //fetch 2 first comments
+    listCommentData = [1, 2];
 
     //init animation show comment box
     expandCollapseAnimation = ExpandCollapseAnimation(state: this);
@@ -454,205 +462,231 @@ class _PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     animControlIconWhenRelease.dispose();
   }
 
+  void addComment(){
+    numberOfComment++;
+    listCommentData.add(4);
+    setState(() {
+
+    });
+    notifyListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 65.0,
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                              left: 10,
-                              right: 10,
-                            ),
-                            child: SizedBox(
-                              height: 55,
-                              width: 55,
-                              child: CircleAvatar(
-                                radius: 30.0,
-                                backgroundImage: NetworkImage(
-                                  widget.data.user!.picture.toString(),
-                                ),
-                                backgroundColor: Colors.transparent,
+    return ChangeNotifierProvider.value(
+      value: this,
+      child: GestureDetector(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 65.0,
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(
+                                left: 10,
+                                right: 10,
                               ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.data.user!.name.toString(),
-                                  style: textSize20,
-                                ),
-                                Text(
-                                  widget.data.user!.nickname.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xff92929E),
+                              child: SizedBox(
+                                height: 55,
+                                width: 55,
+                                child: CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundImage: NetworkImage(
+                                    widget.data.user!.picture.toString(),
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: moreHorizontalButton(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        widget.data.content.toString(),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xff92A0C7),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Image.network(
-                        widget.data.image.toString(),
-                        errorBuilder: (context, error, stacktrace) {
-                          if (widget.data.image.toString() == "") {
-                            return Container();
-                          }
-                          return Image.file(
-                            File(widget.data.image.toString()),
-                            errorBuilder: (context, error, stacktrace) {
-                              return Container();
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    dottedLine(context),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ReactionStatisticWidget(),
-                        ),
-                        Row(
-                          children: const [
-                            Icon(
-                              LineIcons.commentDots,
-                              color: colorButtonPost,
-                            ),
-                            Text(
-                              "24 Comments",
-                              style: TextStyle(
-                                color: colorButtonPost,
+                                  backgroundColor: Colors.transparent,
+                                ),
                               ),
-                            )
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.data.user!.name.toString(),
+                                    style: textSize20,
+                                  ),
+                                  Text(
+                                    widget.data.user!.nickname.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Color(0xff92929E),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: moreHorizontalButton(),
+                            ),
                           ],
                         ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: const [
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          widget.data.content.toString(),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Color(0xff92A0C7),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Image.network(
+                          widget.data.image.toString(),
+                          errorBuilder: (context, error, stacktrace) {
+                            if (widget.data.image.toString() == "") {
+                              return Container();
+                            }
+                            return Image.file(
+                              File(widget.data.image.toString()),
+                              errorBuilder: (context, error, stacktrace) {
+                                return Container();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      dottedLine(context),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ReactionStatisticWidget(),
+                          ),
+                          Row(
+                            children: [
                               Icon(
-                                LineIcons.shareSquare,
+                                LineIcons.commentDots,
                                 color: colorButtonPost,
                               ),
                               Text(
-                                "56 Shares",
+                                "${Utils.formatNumberReaction(numberOfComment)} Comments",
                                 style: TextStyle(
                                   color: colorButtonPost,
                                 ),
                               )
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                        height: 50.0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            likeButton(),
-                            commentButton(),
-                            shareButton(),
-                          ],
+                          Container(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  LineIcons.shareSquare,
+                                  color: colorButtonPost,
+                                ),
+                                Text(
+                                  "56 Shares",
+                                  style: TextStyle(
+                                    color: colorButtonPost,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: SizedBox(
+                          height: 50.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              likeButton(),
+                              commentButton(),
+                              shareButton(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  bottom: -60,
-                  child: Stack(
-                    children: <Widget>[
-                      // Box
-                      renderBox(),
-                      // Icons
-                      renderIcons(),
                     ],
-                    alignment: Alignment.bottomLeft,
                   ),
-                ),
-              ],
-            ),
-            SizeTransition(
-              axisAlignment: 1.0,
-              sizeFactor: expandCollapseAnimation.animation,
-              child: TextFormComment(),
-            ),
-            Column(
-              children: listCommentWidgets,
-            ),
-            loadMoreComment(),
-            Container(
-              padding: EdgeInsets.only(top: 30),
-              child: dottedLine(context),
-            ),
-          ],
+                  Positioned(
+                    bottom: -60,
+                    child: Stack(
+                      children: <Widget>[
+                        // Box
+                        renderBox(),
+                        // Icons
+                        renderIcons(),
+                      ],
+                      alignment: Alignment.bottomLeft,
+                    ),
+                  ),
+                ],
+              ),
+              SizeTransition(
+                axisAlignment: 1.0,
+                sizeFactor: expandCollapseAnimation.animation,
+                child: TextFormComment(),
+              ),
+              Column(
+                children: listCommentWidgetLoad(),
+              ),
+              loadMoreComment(),
+              Container(
+                padding: EdgeInsets.only(top: 30),
+                child: dottedLine(context),
+              ),
+            ],
+          ),
         ),
+        onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
+        onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
       ),
-      onHorizontalDragEnd: onHorizontalDragEndBoxIcon,
-      onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
     );
   }
 
+  List<Widget> listCommentWidgetLoad() {
+    listCommentWidgets.clear();
+    for (final element in listCommentData) {
+      listCommentWidgets.add(CommentToPostWidget());
+    }
+    return listCommentWidgets;
+  }
+
   Widget loadMoreComment() {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          listCommentWidgets.add(Comment());
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.only(
-          left: 20,
-          top: 10,
-        ),
-        child: Text(
-          "Load more comments...",
-          style: TextStyle(
-            color: Color(0xffFF2B55),
-            fontWeight: FontWeight.bold,
+    if (numberOfComment > 2 && listCommentData.length < numberOfComment) {
+      //put get comment list here
+      //add all list
+      //reload list comment widget
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            listCommentData.add(4);
+          });
+        },
+        child: Container(
+          padding: EdgeInsets.only(
+            left: 20,
+            top: 10,
+          ),
+          child: Text(
+            "Load more comments...",
+            style: TextStyle(
+              color: Color(0xffFF2B55),
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
+    return Container();
   }
 
   Widget moreHorizontalButton() {

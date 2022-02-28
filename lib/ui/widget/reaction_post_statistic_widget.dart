@@ -11,7 +11,7 @@ class ReactionStatisticWidget extends StatelessWidget {
   //this field false is number of reaction hasn't appeared yet
   //this field true is number of reaction has appeared
   bool isLikeNumber = false;
-  int numberReaction=1030000;
+  int numberReaction=10300;
   ReactionStatisticWidget({Key? key}) : super(key: key);
 
   @override

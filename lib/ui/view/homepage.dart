@@ -61,44 +61,10 @@ class ListPosts extends StatefulWidget {
 }
 
 class _ListPostsState extends State<ListPosts> {
-  Widget storiesHeaderCard() {
-    return Container(
-      padding: EdgeInsets.only(
-        left: 10,
-        right: 10,
-        bottom: 10,
-        top: 45,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            color: Color(0xffff2f64),
-            child: Text(
-              " ",
-              style: TextStyle(fontSize: 22),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 5),
-            child: Text(
-              "Stories",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    DataConvert dataConvert = Provider.of<DataConvert>(context);
-    int length = dataConvert.listPosts.length;
+    DataConvert dataConvert = Provider.of<DataConvert>(context); //api request
+    int length = dataConvert.listPosts.length; //api get number of post
     User user = dataConvert.currentUser; //get current account user
     return ListView.builder(
       //increase 1 index because we have to add
@@ -153,6 +119,40 @@ class _ListPostsState extends State<ListPosts> {
                 dataConvert: dataConvert,
               );
       },
+    );
+  }
+
+  Widget storiesHeaderCard() {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 10,
+        right: 10,
+        bottom: 10,
+        top: 45,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            color: Color(0xffff2f64),
+            child: Text(
+              " ",
+              style: TextStyle(fontSize: 22),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 5),
+            child: Text(
+              "Stories",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
