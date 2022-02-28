@@ -22,7 +22,6 @@ import 'package:social_media/ui/widget/share_post.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
 import 'comment_to_post_widget.dart';
-import 'comment_widget.dart';
 
 class PostWidget extends StatefulWidget {
   final Post data;
@@ -462,8 +461,12 @@ class PostWidgetState extends State<PostWidget>
     animControlIconWhenRelease.dispose();
   }
 
-  void addComment(){
+  void increaseNumberOfComments(){
     numberOfComment++;
+  }
+
+  void addComment(){
+    increaseNumberOfComments();
     listCommentData.add(4);
     setState(() {
 

@@ -6,10 +6,10 @@ class CommentToPostWidget extends StatefulWidget {
   const CommentToPostWidget({Key? key}) : super(key: key);
 
   @override
-  _CommentToPostWidgetState createState() => _CommentToPostWidgetState();
+  CommentToPostWidgetState createState() => CommentToPostWidgetState();
 }
 
-class _CommentToPostWidgetState extends State<CommentToPostWidget>
+class CommentToPostWidgetState extends State<CommentToPostWidget>
     with ChangeNotifier {
   List<Widget> listCommentReplyWidgets = [];
   List<dynamic> listRepliesData = [];
@@ -23,28 +23,39 @@ class _CommentToPostWidgetState extends State<CommentToPostWidget>
     //fetch two first replies of comment
     listRepliesData = [];
   }
+  void addReply(){
+    numberOfCommentReply++;
+    listRepliesData.add(4);
+    setState(() {
+
+    });
+    notifyListeners();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Comment(),
-        Container(
-          margin: EdgeInsets.only(left: 20),
-          child: Column(
-            children: listRepliesWidgetLoad(),
+    return ChangeNotifierProvider.value(
+      value: this,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Comment(),
+          Container(
+            margin: EdgeInsets.only(left: 20),
+            child: Column(
+              children: listRepliesWidgetLoad(),
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-            left: 20,
-            bottom: 10,
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
+              bottom: 10,
+            ),
+            child: loadMoreComment(),
           ),
-          child: loadMoreComment(),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
