@@ -40,10 +40,11 @@ class PostWidget extends StatefulWidget {
 }
 
 class PostWidgetState extends State<PostWidget>
-    with TickerProviderStateMixin, ChangeNotifier {
+    with TickerProviderStateMixin {
   List<Widget> listCommentWidgets = [];
   List<dynamic> listCommentData = []; //list comment data
   int numberOfComment = 0; //request api give back number of comment this.post
+  int numberOfRepliesPost=0;
   //tap position
   Offset? _tapPosition;
 
@@ -124,10 +125,12 @@ class PostWidgetState extends State<PostWidget>
   @override
   void initState() {
     super.initState();
+    //fetch number of replies post
+    numberOfRepliesPost=0;
     //fetch number of comments
-    numberOfComment = 5;
+    numberOfComment = 0;
     //fetch 2 first comments
-    listCommentData = [1, 2];
+    listCommentData = [];
 
     //init animation show comment box
     expandCollapseAnimation = ExpandCollapseAnimation(state: this);
@@ -467,12 +470,11 @@ class PostWidgetState extends State<PostWidget>
     setState(() {
 
     });
-    notifyListeners();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
+    return Provider.value(
       value: this,
       child: GestureDetector(
         child: Container(
@@ -660,7 +662,7 @@ class PostWidgetState extends State<PostWidget>
   }
 
   Widget loadMoreComment() {
-    if (numberOfComment > 2 && listCommentData.length < numberOfComment) {
+    if (numberOfComment > 2 && listCommentData.length < numberOfComment-numberOfRepliesPost) {
       //put get comment list here
       //add all list
       //reload list comment widget

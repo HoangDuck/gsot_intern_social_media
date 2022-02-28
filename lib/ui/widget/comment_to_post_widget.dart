@@ -9,8 +9,7 @@ class CommentToPostWidget extends StatefulWidget {
   CommentToPostWidgetState createState() => CommentToPostWidgetState();
 }
 
-class CommentToPostWidgetState extends State<CommentToPostWidget>
-    with ChangeNotifier {
+class CommentToPostWidgetState extends State<CommentToPostWidget> {
   List<Widget> listCommentReplyWidgets = [];
   List<dynamic> listRepliesData = [];
   int numberOfCommentReply = 0;
@@ -19,7 +18,7 @@ class CommentToPostWidgetState extends State<CommentToPostWidget>
   void initState() {
     super.initState();
     //fetch number of replies
-    numberOfCommentReply = 3;
+    numberOfCommentReply = 0;
     //fetch two first replies of comment
     listRepliesData = [];
   }
@@ -29,12 +28,11 @@ class CommentToPostWidgetState extends State<CommentToPostWidget>
     setState(() {
 
     });
-    notifyListeners();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
+    return Provider.value(
       value: this,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
