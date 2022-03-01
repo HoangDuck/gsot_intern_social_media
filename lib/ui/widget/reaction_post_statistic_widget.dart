@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/util/utils.dart';
+import 'package:social_media/ui/constant/constant_reaction_icon_size.dart';
 
 class ReactionStatisticWidget extends StatelessWidget {
   List<String> listOfReactionsIcon = [];
-  List<String> listOfReactionsIconDisplay=[];
+  List<String> listOfReactionsIconDisplay = [];
+
   //this field false is number of reaction hasn't appeared yet
   //this field true is number of reaction has appeared
   bool isLikeNumber = false;
   int numberReaction;
-  ReactionStatisticWidget({Key? key,required this.listOfReactionsIcon,required this.numberReaction}) : super(key: key);
+  dynamic icon_size;
 
-  void resizeListIconReaction(){
+  ReactionStatisticWidget(
+      {Key? key,
+      required this.listOfReactionsIcon,
+      required this.numberReaction,
+      this.icon_size = icon_size_big})
+      : super(key: key);
+
+  void resizeListIconReaction() {
     listOfReactionsIconDisplay.addAll(listOfReactionsIcon.toSet().toList());
-    if(listOfReactionsIconDisplay.length>3){
-      var tempList=listOfReactionsIconDisplay.sublist(0,3);
+    if (listOfReactionsIconDisplay.length > 3) {
+      var tempList = listOfReactionsIconDisplay.sublist(0, 3);
       listOfReactionsIconDisplay.clear();
       listOfReactionsIconDisplay.addAll(tempList);
     }
@@ -33,15 +42,15 @@ class ReactionStatisticWidget extends StatelessWidget {
             child: _widgetReturnIcon(0),
           ),
           Positioned(
-            left: 20,
+            left: icon_size['position'][0],
             child: _widgetReturnIcon(1),
           ),
           Positioned(
-            left: 40,
+            left: icon_size['position'][1],
             child: _widgetReturnIcon(2),
           ),
           Positioned(
-            left: 60,
+            left: icon_size['position'][2],
             child: _widgetReturnIcon(3),
           ),
         ],
@@ -50,9 +59,9 @@ class ReactionStatisticWidget extends StatelessWidget {
   }
 
   Widget _widgetReturnIcon(int index) {
-    if(checkDataIconList(index)){
+    if (checkDataIconList(index)) {
       return Image(
-        width: 24,
+        width: icon_size['icon_size'],
         image: AssetImage(
           Utils.getPathIconReaction(
             listOfReactionsIconDisplay[index],
@@ -60,8 +69,8 @@ class ReactionStatisticWidget extends StatelessWidget {
         ),
       );
     }
-    if(!isLikeNumber){
-      isLikeNumber=true;
+    if (!isLikeNumber) {
+      isLikeNumber = true;
       return Container(
         padding: EdgeInsets.only(
           left: 5,
@@ -69,7 +78,9 @@ class ReactionStatisticWidget extends StatelessWidget {
         ),
         child: Text(
           Utils.formatNumberReaction(numberReaction),
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(
+            fontSize: icon_size['number_size'],
+          ),
         ),
       );
     }
@@ -87,8 +98,8 @@ class ReactionStatisticWidget extends StatelessWidget {
       //if there is no element at index 0 that means this post has no reaction
       //The post has no reaction, it doesn't need to appear number of reaction widget
       //so set isLikeNumber = true to not appear
-      if(index==0){
-        isLikeNumber=true;
+      if (index == 0) {
+        isLikeNumber = true;
       }
       return false;
     }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:social_media/core/converter/data_converter.dart';
 
-popUpSharePost(BuildContext context, DataConvert dataConvert) {
+popUpSharePost(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {

@@ -540,7 +540,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                     widget.data.user!.nickname.toString(),
                                     style: const TextStyle(
                                       fontSize: 15,
-                                      color: Color(0xff92929E),
+                                      color: Color(0xff92929A),
                                     ),
                                   )
                                 ],
@@ -558,7 +558,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           widget.data.content.toString(),
                           style: const TextStyle(
                             fontSize: 20,
-                            color: Color(0xff92A0C7),
+                            color: Color(0xff92929A),
                           ),
                         ),
                       ),
@@ -845,7 +845,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       width: 90,
       child: TextButton(
         onPressed: () {
-          popUpSharePost(context, widget.dataConvert);
+          popUpSharePost(context);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

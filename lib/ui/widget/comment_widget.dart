@@ -9,6 +9,7 @@ import 'package:social_media/core/services/play_audio_services.dart';
 import 'package:social_media/core/util/utils.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/app_images.dart';
+import 'package:social_media/ui/constant/constant_reaction_icon_size.dart';
 import 'package:social_media/ui/widget/reaction_post_statistic_widget.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
@@ -520,6 +521,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                 child: ReactionStatisticWidget(
                   listOfReactionsIcon: listReactionIcons,
                   numberReaction: numberOfReaction,
+                  icon_size: icon_size_small,
                 ),
               ),
               Positioned(
@@ -1010,69 +1012,111 @@ class CardComment extends StatelessWidget {
           width: 30,
           child: CircleAvatar(
             radius: 30.0,
-            //backgroundImage: NetworkImage(comment.user!.picture.toString()),
+            backgroundImage: NetworkImage(
+                "https://scontent.fsgn8-2.fna.fbcdn.net/v/t39.30808-6/240665310_924080101519822_8050564051527692717_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=IsvVOdqHWzIAX_Ef_f3&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT-BsGlguK003xhsZ9jnAGjG2hWBwmFEAdpYmvMp_LXm_Q&oe=6222ED57"),
             backgroundColor: Color(0xfff5f4f9),
           ),
         ),
         SizedBox(
           width: 5,
         ),
-        Expanded(
-          child: Container(
-            decoration: ShapeDecoration(
-              color: Color(0xfff5f4f9),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-            ),
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "${contentOfComment['name']}",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "${contentOfComment['time']}",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color(0xffadb2d0),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    child: Text(
-                      "${contentOfComment['content']}",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xffadb2d0),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            contentOfComment['content'].toString() != ""
+                ? Container(
+                    decoration: ShapeDecoration(
+                      color: Color(0xfff5f4f9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                     ),
-                  ),
-                  Image.file(
-                    File("${contentOfComment['image']}"),
-                    errorBuilder: (context, error, stacktrace) {
-                      return Container();
-                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "${contentOfComment['name']}",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "${contentOfComment['time']}",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xff92929A),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Text(
+                              "${contentOfComment['content']}",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Color(0xff92929A),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   )
-                ],
+                : Container(
+                    padding: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          "${contentOfComment['name']}",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "${contentOfComment['time']}",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xff92929A),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+            contentOfComment['content'].toString() != "" && contentOfComment['image']!=""
+                ? SizedBox(
+                    height: 5,
+                  )
+                : Container(),
+            GestureDetector(
+              onTap: (){},
+              child: Image.file(
+                File("${contentOfComment['image']}"),
+                errorBuilder: (context, error, stacktrace) {
+                  return Container();
+                },
+                alignment: Alignment.topCenter,
+                width: MediaQuery.of(context).size.width * 0.4,
               ),
             ),
-          ),
-        )
+          ],
+        ),
       ],
     );
   }
