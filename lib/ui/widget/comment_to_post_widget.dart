@@ -3,7 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:social_media/ui/widget/comment_widget.dart';
 
 class CommentToPostWidget extends StatefulWidget {
-  const CommentToPostWidget({Key? key}) : super(key: key);
+  dynamic contentOfComment;
+
+  CommentToPostWidget({Key? key, required this.contentOfComment})
+      : super(key: key);
 
   @override
   CommentToPostWidgetState createState() => CommentToPostWidgetState();
@@ -23,9 +26,9 @@ class CommentToPostWidgetState extends State<CommentToPostWidget> {
     listRepliesData = [];
   }
 
-  void addReply() {
+  void addReply(dynamic reply) {
     numberOfCommentReply++;
-    listRepliesData.add(4);
+    listRepliesData.add(reply);
     setState(() {});
   }
 
@@ -37,7 +40,9 @@ class CommentToPostWidgetState extends State<CommentToPostWidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Comment(),
+          Comment(
+            contentOfComment: widget.contentOfComment,
+          ),
           Container(
             margin: EdgeInsets.only(left: 20),
             child: Column(
@@ -59,7 +64,11 @@ class CommentToPostWidgetState extends State<CommentToPostWidget> {
   List<Widget> listRepliesWidgetLoad() {
     listCommentReplyWidgets.clear();
     for (final element in listRepliesData) {
-      listCommentReplyWidgets.add(Comment());
+      listCommentReplyWidgets.add(
+        Comment(
+          contentOfComment: element,
+        ),
+      );
     }
     return listCommentReplyWidgets;
   }

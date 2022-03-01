@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,9 @@ import 'package:social_media/ui/widget/reaction_post_statistic_widget.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
 class Comment extends StatefulWidget {
-  const Comment({Key? key}) : super(key: key);
+  dynamic contentOfComment;
+
+  Comment({Key? key, required this.contentOfComment}) : super(key: key);
 
   @override
   State<Comment> createState() => _CommentState();
@@ -20,8 +23,9 @@ class Comment extends StatefulWidget {
 
 class _CommentState extends State<Comment> with TickerProviderStateMixin {
   //List reaction icons
-  List<String> listReactionIcons=[];
-  int numberOfReaction=0;
+  List<String> listReactionIcons = [];
+  int numberOfReaction = 0;
+
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
 
@@ -82,7 +86,8 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
 
   // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
   int whichIconUserChoose = 0;
-  int previousWhichIconUserChoose=0;
+  int previousWhichIconUserChoose = 0;
+
   // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
   int currentIconFocus = 0;
   int previousIconFocus = 0;
@@ -94,10 +99,10 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     //fetch which icon user choose
-    whichIconUserChoose=0;
-    previousWhichIconUserChoose=whichIconUserChoose;
+    whichIconUserChoose = 0;
+    previousWhichIconUserChoose = whichIconUserChoose;
     //fetch number of reactions
-    numberOfReaction=0;
+    numberOfReaction = 0;
     //fetch reaction icons list
     listReactionIcons.addAll([]);
     //init animation show comment box
@@ -440,7 +445,9 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             children: [
               Column(
                 children: [
-                  CardComment(),
+                  CardComment(
+                    contentOfComment: widget.contentOfComment,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -470,14 +477,16 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                                     isLiked = !isLiked;
                                   }
                                   whichIconUserChoose = 0;
-                                  previousWhichIconUserChoose=whichIconUserChoose;
+                                  previousWhichIconUserChoose =
+                                      whichIconUserChoose;
                                   numberOfReaction--;
                                   listReactionIcons.removeAt(0);
                                 }
                                 if (isLiked) {
                                   PlayAudio.playSound('short_press_like.mp3');
                                   whichIconUserChoose = 1;
-                                  previousWhichIconUserChoose=whichIconUserChoose;
+                                  previousWhichIconUserChoose =
+                                      whichIconUserChoose;
                                   numberOfReaction++;
                                   listReactionIcons.insert(0, 'Like');
                                 }
@@ -986,7 +995,9 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
 }
 
 class CardComment extends StatelessWidget {
-  const CardComment({Key? key}) : super(key: key);
+  dynamic contentOfComment;
+
+  CardComment({Key? key, required this.contentOfComment}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -1021,9 +1032,9 @@ class CardComment extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        "comment.user!.name.toString()",
+                        "${contentOfComment['name']}",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -1033,7 +1044,7 @@ class CardComment extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "time comment",
+                        "${contentOfComment['time']}",
                         style: TextStyle(
                           fontSize: 15,
                           color: Color(0xffadb2d0),
@@ -1044,19 +1055,19 @@ class CardComment extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     child: Text(
-                      "comment.content.toString()",
+                      "${contentOfComment['content']}",
                       style: TextStyle(
                         fontSize: 15,
                         color: Color(0xffadb2d0),
                       ),
                     ),
                   ),
-                  // Image.file(
-                  //   File(comment.image.toString()),
-                  //   errorBuilder: (context, error, stacktrace) {
-                  //     return Container();
-                  //   },
-                  // )
+                  Image.file(
+                    File("${contentOfComment['image']}"),
+                    errorBuilder: (context, error, stacktrace) {
+                      return Container();
+                    },
+                  )
                 ],
               ),
             ),

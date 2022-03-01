@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media/ui/widget/comment_to_post_widget.dart';
 import 'package:social_media/ui/widget/post_widget.dart';
+import 'package:path/path.dart';
 
 class TextFormComment extends StatefulWidget {
   const TextFormComment({Key? key}) : super(key: key);
@@ -41,6 +43,7 @@ class _TextFormCommentState extends State<TextFormComment> {
         Container(
           padding: EdgeInsets.all(10),
           child: TextField(
+            controller: textCommentEditingController,
             decoration: InputDecoration(
               filled: true,
               fillColor: Color(0xfff5f4f9),
@@ -73,10 +76,30 @@ class _TextFormCommentState extends State<TextFormComment> {
                     icon: Icon(Icons.image),
                   ),
                   IconButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      String pathImage,content;
+                      content=textCommentEditingController.text;
+                      try{
+                        File file=File(_imageFilePicker!.path);
+                        pathImage=await storeImageAndGetPath(file);
+                      }catch(e){
+                        pathImage="";
+                      }
+                      if(pathImage==""&&content==""){
+                        return;
+                      }else{
+                        XFile? file;
+                        _imageFilePicker=file;
+                        textCommentEditingController=TextEditingController();
+                      }
                       setState(() {
                         try {
-                          stateOfCurrentComment.addReply();
+                          stateOfCurrentComment.addReply({
+                            'name': 'Hoang Duc',
+                            'time': '2h',
+                            'content': content,
+                            'image': pathImage
+                          });
                           stateOfCurrentPost.setState(() {
                             stateOfCurrentPost.numberOfRepliesPost++;
                             stateOfCurrentPost.numberOfComment++;
@@ -85,7 +108,12 @@ class _TextFormCommentState extends State<TextFormComment> {
                         } catch (e) {
                           //print(e);
                         }
-                        stateOfCurrentPost.addComment();
+                        stateOfCurrentPost.addComment({
+                          'name': 'Hoang Duc',
+                          'time': '2h',
+                          'content': content,
+                          'image': pathImage
+                        });
                       });
                     },
                     icon: Icon(Icons.send),
@@ -113,6 +141,13 @@ class _TextFormCommentState extends State<TextFormComment> {
         _imageFile = pickedFile;
       },
     );
+  }
+
+  Future<String> storeImageAndGetPath(File file) async{
+    final Directory directory = await getApplicationDocumentsDirectory();
+    String fileName=basename(file.path);
+    final File newImage = await file.copy('${directory.path}/$fileName');
+    return newImage.path.toString();
   }
 
   Widget _previewImages() {

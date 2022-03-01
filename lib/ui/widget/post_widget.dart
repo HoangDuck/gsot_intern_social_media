@@ -482,9 +482,9 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
     animControlIconWhenRelease.dispose();
   }
 
-  void addComment() {
+  void addComment(dynamic comment) {
     numberOfComment++;
-    listCommentData.add(4);
+    listCommentData.add(comment);
     setState(() {});
   }
 
@@ -675,7 +675,11 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   List<Widget> listCommentWidgetLoad() {
     listCommentWidgets.clear();
     for (final element in listCommentData) {
-      listCommentWidgets.add(CommentToPostWidget());
+      listCommentWidgets.add(
+        CommentToPostWidget(
+          contentOfComment: element,
+        ),
+      );
     }
     return listCommentWidgets;
   }
