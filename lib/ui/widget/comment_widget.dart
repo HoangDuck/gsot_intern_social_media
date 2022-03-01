@@ -82,7 +82,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
 
   // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
   int whichIconUserChoose = 0;
-
+  int previousWhichIconUserChoose=0;
   // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
   int currentIconFocus = 0;
   int previousIconFocus = 0;
@@ -93,6 +93,9 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //fetch which icon user choose
+    whichIconUserChoose=0;
+    previousWhichIconUserChoose=whichIconUserChoose;
     //fetch number of reactions
     numberOfReaction=0;
     //fetch reaction icons list
@@ -467,14 +470,16 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                                     isLiked = !isLiked;
                                   }
                                   whichIconUserChoose = 0;
+                                  previousWhichIconUserChoose=whichIconUserChoose;
                                   numberOfReaction--;
-                                  listReactionIcons.removeLast();
+                                  listReactionIcons.removeAt(0);
                                 }
                                 if (isLiked) {
                                   PlayAudio.playSound('short_press_like.mp3');
                                   whichIconUserChoose = 1;
+                                  previousWhichIconUserChoose=whichIconUserChoose;
                                   numberOfReaction++;
-                                  listReactionIcons.add('Like');
+                                  listReactionIcons.insert(0, 'Like');
                                 }
                               });
                             }
@@ -841,11 +846,24 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
       if (whichIconUserChoose == 0) {
         PlayAudio.playSound('box_down.mp3');
         numberOfReaction--;
-        listReactionIcons.removeLast();
+        if (previousWhichIconUserChoose == 0) {
+          numberOfReaction++;
+          return;
+        }
+        listReactionIcons.removeAt(0);
+        previousWhichIconUserChoose = whichIconUserChoose;
       } else {
         PlayAudio.playSound('icon_choose.mp3');
-        numberOfReaction++;
-        listReactionIcons.add(Utils.getTextReaction(whichIconUserChoose));
+        if (previousWhichIconUserChoose == 0) {
+          numberOfReaction++;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          listReactionIcons.insert(
+              0, Utils.getTextReaction(whichIconUserChoose));
+        } else {
+          listReactionIcons.removeAt(0);
+          listReactionIcons.insert(
+              0, Utils.getTextReaction(whichIconUserChoose));
+        }
       }
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;

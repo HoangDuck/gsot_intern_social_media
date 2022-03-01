@@ -3,15 +3,25 @@ import 'package:social_media/core/util/utils.dart';
 
 class ReactionStatisticWidget extends StatelessWidget {
   List<String> listOfReactionsIcon = [];
-
+  List<String> listOfReactionsIconDisplay=[];
   //this field false is number of reaction hasn't appeared yet
   //this field true is number of reaction has appeared
   bool isLikeNumber = false;
   int numberReaction;
   ReactionStatisticWidget({Key? key,required this.listOfReactionsIcon,required this.numberReaction}) : super(key: key);
 
+  void resizeListIconReaction(){
+    listOfReactionsIconDisplay.addAll(listOfReactionsIcon.toSet().toList());
+    if(listOfReactionsIconDisplay.length>3){
+      var tempList=listOfReactionsIconDisplay.sublist(0,3);
+      listOfReactionsIconDisplay.clear();
+      listOfReactionsIconDisplay.addAll(tempList);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    resizeListIconReaction();
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Stack(
@@ -34,18 +44,6 @@ class ReactionStatisticWidget extends StatelessWidget {
             left: 60,
             child: _widgetReturnIcon(3),
           ),
-          Positioned(
-            left: 80,
-            child: _widgetReturnIcon(4),
-          ),
-          Positioned(
-            left: 100,
-            child: _widgetReturnIcon(5),
-          ),
-          Positioned(
-            left: 120,
-            child: _widgetReturnIcon(6),
-          ),
         ],
       ),
     );
@@ -57,7 +55,7 @@ class ReactionStatisticWidget extends StatelessWidget {
         width: 24,
         image: AssetImage(
           Utils.getPathIconReaction(
-            listOfReactionsIcon[index],
+            listOfReactionsIconDisplay[index],
           ),
         ),
       );
@@ -83,7 +81,7 @@ class ReactionStatisticWidget extends StatelessWidget {
   //if there is an item at the index, this function will return true
   bool checkDataIconList(int index) {
     try {
-      listOfReactionsIcon[index];
+      listOfReactionsIconDisplay[index];
       return true;
     } catch (e) {
       //if there is no element at index 0 that means this post has no reaction

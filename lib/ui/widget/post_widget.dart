@@ -42,9 +42,10 @@ class PostWidget extends StatefulWidget {
 class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   //list reaction icon of this post
   List<String> listReactionIcons = [];
-  int numberOfReaction=0;
+  int numberOfReaction = 0;
+
   //number of sharing post
-  int numberOfSharing=0;
+  int numberOfSharing = 0;
 
   //field comment data
   List<Widget> listCommentWidgets = [];
@@ -116,6 +117,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
 
   // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
   int whichIconUserChoose = 0;
+  int previousWhichIconUserChoose = 0;
 
   // 0 = nothing, 1 = like, 2 = love, 3 = haha, 4 = wow, 5 = sad, 6 = angry
   int currentIconFocus = 0;
@@ -132,10 +134,13 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //fetch which icon user choose
+    whichIconUserChoose = 0;
+    previousWhichIconUserChoose = whichIconUserChoose;
     //fetch number of reactions
-    numberOfReaction=0;
+    numberOfReaction = 0;
     //fetch number of sharing post
-    numberOfSharing=0;
+    numberOfSharing = 0;
     //fetch list reaction icons
     listReactionIcons.addAll([]);
     //fetch number of replies post
@@ -772,14 +777,16 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                     isLiked = !isLiked;
                   }
                   whichIconUserChoose = 0;
+                  previousWhichIconUserChoose = whichIconUserChoose;
                   numberOfReaction--;
-                  listReactionIcons.removeLast();
+                  listReactionIcons.removeAt(0);
                 }
                 if (isLiked) {
                   PlayAudio.playSound('short_press_like.mp3');
                   whichIconUserChoose = 1;
+                  previousWhichIconUserChoose = whichIconUserChoose;
                   numberOfReaction++;
-                  listReactionIcons.add('Like');
+                  listReactionIcons.insert(0, 'Like');
                 }
               });
             }
@@ -1355,11 +1362,24 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       if (whichIconUserChoose == 0) {
         PlayAudio.playSound('box_down.mp3');
         numberOfReaction--;
-        listReactionIcons.removeLast();
+        if (previousWhichIconUserChoose == 0) {
+          numberOfReaction++;
+          return;
+        }
+        listReactionIcons.removeAt(0);
+        previousWhichIconUserChoose = whichIconUserChoose;
       } else {
         PlayAudio.playSound('icon_choose.mp3');
-        numberOfReaction++;
-        listReactionIcons.add(Utils.getTextReaction(whichIconUserChoose));
+        if (previousWhichIconUserChoose == 0) {
+          numberOfReaction++;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          listReactionIcons.insert(
+              0, Utils.getTextReaction(whichIconUserChoose));
+        } else {
+          listReactionIcons.removeAt(0);
+          listReactionIcons.insert(
+              0, Utils.getTextReaction(whichIconUserChoose));
+        }
       }
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;
