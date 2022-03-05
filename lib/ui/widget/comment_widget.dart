@@ -317,7 +317,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
     zoomIconNotChosen =
         Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDrag);
     zoomBoxIcon =
-        Tween(begin: 50.0, end: 40.0).animate(animControlIconWhenDrag);
+        Tween(begin: 40.0, end: 30.0).animate(animControlIconWhenDrag);
 
     zoomIconChosen.addListener(() {
       setState(() {});

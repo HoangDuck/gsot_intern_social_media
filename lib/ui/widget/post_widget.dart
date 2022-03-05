@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,9 +16,9 @@ import 'package:social_media/ui/constant/app_images.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/widget/dottedline.dart';
 import 'package:social_media/ui/widget/dropdown_menu_item_post.dart';
+import 'package:social_media/ui/widget/list_image_widget.dart';
 import 'package:social_media/ui/widget/reaction_post_statistic_widget.dart';
 import 'package:social_media/ui/widget/share_post.dart';
-import 'package:social_media/ui/widget/show_full_image_widget.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
 import 'comment_to_post_widget.dart';
@@ -41,6 +40,12 @@ class PostWidget extends StatefulWidget {
 }
 
 class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
+  //number of images
+  int numberImages = 0;
+
+  //List image of post
+  List<String> listImages = [];
+
   //list reaction icon of this post
   List<String> listReactionIcons = [];
   int numberOfReaction = 0;
@@ -135,6 +140,15 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //fetch number of images
+    numberImages = 10;
+    //fetch 4 first image of post
+    listImages.addAll([
+      widget.data.image.toString(),
+      "https://www.toponseek.com/blogs/wp-content/uploads/2019/06/toi-uu-hinh-anh-optimize-image-4-1200x700.jpg",
+      "https://www.toponseek.com/blogs/wp-content/uploads/2019/06/toi-uu-hinh-anh-optimize-image-4-1200x700.jpg",
+      "https://www.toponseek.com/blogs/wp-content/uploads/2019/06/toi-uu-hinh-anh-optimize-image-4-1200x700.jpg"
+    ]);
     //fetch which icon user choose
     whichIconUserChoose = 0;
     previousWhichIconUserChoose = whichIconUserChoose;
@@ -563,34 +577,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ShowFullImageWidget(
-                                  pathImage: widget.data.image.toString(),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Image.network(
-                            widget.data.image.toString(),
-                            errorBuilder: (context, error, stacktrace) {
-                              if (widget.data.image.toString() == "") {
-                                return Container();
-                              }
-                              return Image.file(
-                                File(widget.data.image.toString()),
-                                errorBuilder: (context, error, stacktrace) {
-                                  return Container();
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                      listImagesWidget(context, listImages, numberImages),
                       dottedLine(context),
                       Row(
                         children: [
