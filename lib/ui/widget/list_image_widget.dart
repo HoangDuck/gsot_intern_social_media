@@ -126,25 +126,30 @@ Widget listImagesWidget(
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    child: Container(
-                      alignment: Alignment.center,
-                      color: Colors.black38,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "${numberOfImages - 4}",
-                            style: TextStyle(
-                              fontSize: 40,
+                    child: GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        color: Colors.black38,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              size: 40,
                               color: Colors.white,
                             ),
-                          ),
-                        ],
+                            Text(
+                              "${numberOfImages - 4}",
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
