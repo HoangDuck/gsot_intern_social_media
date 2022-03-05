@@ -11,6 +11,7 @@ import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/app_images.dart';
 import 'package:social_media/ui/constant/constant_reaction_icon_size.dart';
 import 'package:social_media/ui/widget/reaction_post_statistic_widget.dart';
+import 'package:social_media/ui/widget/show_full_image_widget.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
 class Comment extends StatefulWidget {
@@ -449,69 +450,74 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                   CardComment(
                     contentOfComment: widget.contentOfComment,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            expandCollapseAnimation.runExpand();
-                          });
-                        },
-                        child: Icon(
-                          LineIcons.reply,
-                          color: Color(0xffff2f64),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTapDown: onTapDownBtn,
-                        onTapUp: onTapUpBtn,
-                        onTap: () {},
-                        child: TextButton(
-                          onPressed: () {
-                            if (!isLongPress) {
-                              setState(() {
-                                if (whichIconUserChoose == 0) {
-                                  isLiked = !isLiked;
-                                } else {
-                                  if (isLiked) {
-                                    isLiked = !isLiked;
-                                  }
-                                  whichIconUserChoose = 0;
-                                  previousWhichIconUserChoose =
-                                      whichIconUserChoose;
-                                  numberOfReaction--;
-                                  listReactionIcons.removeAt(0);
-                                }
-                                if (isLiked) {
-                                  PlayAudio.playSound('short_press_like.mp3');
-                                  whichIconUserChoose = 1;
-                                  previousWhichIconUserChoose =
-                                      whichIconUserChoose;
-                                  numberOfReaction++;
-                                  listReactionIcons.insert(0, 'Like');
-                                }
-                              });
-                            }
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.1,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              expandCollapseAnimation.runExpand();
+                            });
                           },
-                          child: Container(
-                            child: whichIconUserChoose == 0
-                                ? Icon(
-                                    LineIcons.heart,
-                                    color: Color(0xffff2f64),
-                                    size: 20,
-                                  )
-                                : Image.asset(
-                                    getImageIconBtn(),
-                                    width: 20.0,
-                                    height: 20.0,
-                                    fit: BoxFit.contain,
-                                    color: getTintColorIconBtn(),
-                                  ),
+                          child: Icon(
+                            LineIcons.reply,
+                            color: Color(0xffff2f64),
                           ),
                         ),
-                      ),
-                    ],
+                        GestureDetector(
+                          onTapDown: onTapDownBtn,
+                          onTapUp: onTapUpBtn,
+                          onTap: () {},
+                          child: TextButton(
+                            onPressed: () {
+                              if (!isLongPress) {
+                                setState(() {
+                                  if (whichIconUserChoose == 0) {
+                                    isLiked = !isLiked;
+                                  } else {
+                                    if (isLiked) {
+                                      isLiked = !isLiked;
+                                    }
+                                    whichIconUserChoose = 0;
+                                    previousWhichIconUserChoose =
+                                        whichIconUserChoose;
+                                    numberOfReaction--;
+                                    listReactionIcons.removeAt(0);
+                                  }
+                                  if (isLiked) {
+                                    PlayAudio.playSound('short_press_like.mp3');
+                                    whichIconUserChoose = 1;
+                                    previousWhichIconUserChoose =
+                                        whichIconUserChoose;
+                                    numberOfReaction++;
+                                    listReactionIcons.insert(0, 'Like');
+                                  }
+                                });
+                              }
+                            },
+                            child: Container(
+                              child: whichIconUserChoose == 0
+                                  ? Icon(
+                                      LineIcons.heart,
+                                      color: Color(0xffff2f64),
+                                      size: 20,
+                                    )
+                                  : Image.asset(
+                                      getImageIconBtn(),
+                                      width: 20.0,
+                                      height: 20.0,
+                                      fit: BoxFit.contain,
+                                      color: getTintColorIconBtn(),
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -526,7 +532,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
               ),
               Positioned(
                 bottom: -100,
-                width: MediaQuery.of(context).size.width * 0.9,
+                //width: MediaQuery.of(context).size.width * 0.9,
                 child: Stack(
                   children: <Widget>[
                     // Box
@@ -579,11 +585,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           // icon like
           Transform.scale(
             child: Container(
-              child: Image.asset(
-                ic_like_gif,
-                width: 30.0,
-                height: 30.0,
-                fit: BoxFit.contain,
+              child: GestureDetector(
+                onTap: () {
+                  whichIconUserChoose = 1;
+                  onTapIconReaction();
+                },
+                child: Image.asset(
+                  ic_like_gif,
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.contain,
+                ),
               ),
               margin: EdgeInsets.only(bottom: pushIconLikeUp.value),
               width: 30.0,
@@ -605,11 +617,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           // icon love
           Transform.scale(
             child: Container(
-              child: Image.asset(
-                ic_heart_gif,
-                width: 30.0,
-                height: 30.0,
-                fit: BoxFit.contain,
+              child: GestureDetector(
+                onTap: () {
+                  whichIconUserChoose = 2;
+                  onTapIconReaction();
+                },
+                child: Image.asset(
+                  ic_heart_gif,
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.contain,
+                ),
               ),
               margin: EdgeInsets.only(bottom: pushIconLoveUp.value),
               width: 30.0,
@@ -631,11 +649,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           // icon haha
           Transform.scale(
             child: Container(
-              child: Image.asset(
-                ic_haha_gif,
-                width: 30.0,
-                height: 30.0,
-                fit: BoxFit.contain,
+              child: GestureDetector(
+                onTap: () {
+                  whichIconUserChoose = 3;
+                  onTapIconReaction();
+                },
+                child: Image.asset(
+                  ic_haha_gif,
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.contain,
+                ),
               ),
               margin: EdgeInsets.only(bottom: pushIconHahaUp.value),
               width: 30.0,
@@ -657,11 +681,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           // icon wow
           Transform.scale(
             child: Container(
-              child: Image.asset(
-                ic_wow_gif,
-                width: 30.0,
-                height: 30.0,
-                fit: BoxFit.contain,
+              child: GestureDetector(
+                onTap: () {
+                  whichIconUserChoose = 4;
+                  onTapIconReaction();
+                },
+                child: Image.asset(
+                  ic_wow_gif,
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.contain,
+                ),
               ),
               margin: EdgeInsets.only(bottom: pushIconWowUp.value),
               width: 30.0,
@@ -683,11 +713,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           // icon sad
           Transform.scale(
             child: Container(
-              child: Image.asset(
-                ic_sad_gif,
-                width: 30.0,
-                height: 30.0,
-                fit: BoxFit.contain,
+              child: GestureDetector(
+                onTap: () {
+                  whichIconUserChoose = 5;
+                  onTapIconReaction();
+                },
+                child: Image.asset(
+                  ic_sad_gif,
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.contain,
+                ),
               ),
               margin: EdgeInsets.only(bottom: pushIconSadUp.value),
               width: 30.0,
@@ -709,11 +745,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
           // icon angry
           Transform.scale(
             child: Container(
-              child: Image.asset(
-                ic_angry_gif,
-                width: 30.0,
-                height: 30.0,
-                fit: BoxFit.contain,
+              child: GestureDetector(
+                onTap: () {
+                  whichIconUserChoose = 6;
+                  onTapIconReaction();
+                },
+                child: Image.asset(
+                  ic_angry_gif,
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.contain,
+                ),
               ),
               margin: EdgeInsets.only(bottom: pushIconAngryUp.value),
               width: 30.0,
@@ -740,6 +782,32 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
       // uncomment here to see area of draggable
       // color: Colors.amber.withOpacity(0.5),
     );
+  }
+
+  void onTapIconReaction() {
+    PlayAudio.playSound('icon_choose.mp3');
+    if (previousWhichIconUserChoose == 0) {
+      numberOfReaction++;
+      previousWhichIconUserChoose = whichIconUserChoose;
+      listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+    } else {
+      listReactionIcons.removeAt(0);
+      listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+    }
+
+    Timer(Duration(milliseconds: durationAnimationBox), () {
+      isLongPress = false;
+    });
+
+    holdTimer.cancel();
+
+    animControlBtnLongPress.reverse();
+
+    setReverseValue();
+    animControlBox.reverse();
+
+    animControlIconWhenRelease.reset();
+    animControlIconWhenRelease.forward();
   }
 
   String getImageIconBtn() {
@@ -1061,6 +1129,9 @@ class CardComment extends StatelessWidget {
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.8,
+                            ),
                             child: Text(
                               "${contentOfComment['content']}",
                               style: TextStyle(
@@ -1099,22 +1170,39 @@ class CardComment extends StatelessWidget {
                       ],
                     ),
                   ),
-            contentOfComment['content'].toString() != "" && contentOfComment['image']!=""
+            contentOfComment['content'].toString() != "" &&
+                    contentOfComment['image'] != ""
                 ? SizedBox(
                     height: 5,
                   )
                 : Container(),
             GestureDetector(
-              onTap: (){},
-              child: Image.file(
-                File("${contentOfComment['image']}"),
-                errorBuilder: (context, error, stacktrace) {
-                  return Container();
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ShowFullImageWidget(
+                        pathImage: contentOfComment['image'],
+                      ),
+                    ),
+                  );
                 },
-                alignment: Alignment.topCenter,
-                width: MediaQuery.of(context).size.width * 0.4,
-              ),
-            ),
+                child: Image.network(
+                  contentOfComment['image'],
+                  errorBuilder: (context, error, stacktrace) {
+                    if (contentOfComment['image'] == "") {
+                      return Container();
+                    }
+                    return Image.file(
+                      File("${contentOfComment['image']}"),
+                      errorBuilder: (context, error, stacktrace) {
+                        return Container();
+                      },
+                      alignment: Alignment.topCenter,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                    );
+                  },
+                )),
           ],
         ),
       ],

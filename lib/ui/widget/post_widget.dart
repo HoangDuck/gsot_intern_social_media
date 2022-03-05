@@ -19,6 +19,7 @@ import 'package:social_media/ui/widget/dottedline.dart';
 import 'package:social_media/ui/widget/dropdown_menu_item_post.dart';
 import 'package:social_media/ui/widget/reaction_post_statistic_widget.dart';
 import 'package:social_media/ui/widget/share_post.dart';
+import 'package:social_media/ui/widget/show_full_image_widget.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
 import 'comment_to_post_widget.dart';
@@ -563,19 +564,31 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                         ),
                       ),
                       Center(
-                        child: Image.network(
-                          widget.data.image.toString(),
-                          errorBuilder: (context, error, stacktrace) {
-                            if (widget.data.image.toString() == "") {
-                              return Container();
-                            }
-                            return Image.file(
-                              File(widget.data.image.toString()),
-                              errorBuilder: (context, error, stacktrace) {
-                                return Container();
-                              },
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ShowFullImageWidget(
+                                  pathImage: widget.data.image.toString(),
+                                ),
+                              ),
                             );
                           },
+                          child: Image.network(
+                            widget.data.image.toString(),
+                            errorBuilder: (context, error, stacktrace) {
+                              if (widget.data.image.toString() == "") {
+                                return Container();
+                              }
+                              return Image.file(
+                                File(widget.data.image.toString()),
+                                errorBuilder: (context, error, stacktrace) {
+                                  return Container();
+                                },
+                              );
+                            },
+                          ),
                         ),
                       ),
                       dottedLine(context),
@@ -970,11 +983,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  Image.asset(
-                    ic_like_gif,
-                    width: 40.0,
-                    height: 40.0,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      whichIconUserChoose = 1;
+                      onTapIconReaction();
+                    },
+                    child: Image.asset(
+                      ic_like_gif,
+                      width: 40.0,
+                      height: 40.0,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -1015,11 +1034,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  Image.asset(
-                    ic_heart_gif,
-                    width: 40.0,
-                    height: 40.0,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      whichIconUserChoose = 2;
+                      onTapIconReaction();
+                    },
+                    child: Image.asset(
+                      ic_heart_gif,
+                      width: 40.0,
+                      height: 40.0,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -1060,11 +1085,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  Image.asset(
-                    ic_haha_gif,
-                    width: 40.0,
-                    height: 40.0,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      whichIconUserChoose = 3;
+                      onTapIconReaction();
+                    },
+                    child: Image.asset(
+                      ic_haha_gif,
+                      width: 40.0,
+                      height: 40.0,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -1105,11 +1136,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  Image.asset(
-                    ic_wow_gif,
-                    width: 40.0,
-                    height: 40.0,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      whichIconUserChoose = 4;
+                      onTapIconReaction();
+                    },
+                    child: Image.asset(
+                      ic_wow_gif,
+                      width: 40.0,
+                      height: 40.0,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -1151,11 +1188,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  Image.asset(
-                    ic_sad_gif,
-                    width: 40.0,
-                    height: 40.0,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      whichIconUserChoose = 5;
+                      onTapIconReaction();
+                    },
+                    child: Image.asset(
+                      ic_sad_gif,
+                      width: 40.0,
+                      height: 40.0,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -1197,11 +1240,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  Image.asset(
-                    ic_angry_gif,
-                    width: 40.0,
-                    height: 40.0,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      whichIconUserChoose = 6;
+                      onTapIconReaction();
+                    },
+                    child: Image.asset(
+                      ic_angry_gif,
+                      width: 40.0,
+                      height: 40.0,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -1230,6 +1279,32 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       // uncomment here to see area of draggable
       // color: Colors.amber.withOpacity(0.5),
     );
+  }
+
+  void onTapIconReaction() {
+    PlayAudio.playSound('icon_choose.mp3');
+    if (previousWhichIconUserChoose == 0) {
+      numberOfReaction++;
+      previousWhichIconUserChoose = whichIconUserChoose;
+      listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+    } else {
+      listReactionIcons.removeAt(0);
+      listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+    }
+
+    Timer(Duration(milliseconds: durationAnimationBox), () {
+      isLongPress = false;
+    });
+
+    holdTimer.cancel();
+
+    animControlBtnLongPress.reverse();
+
+    setReverseValue();
+    animControlBox.reverse();
+
+    animControlIconWhenRelease.reset();
+    animControlIconWhenRelease.forward();
   }
 
   String getTextBtn() {
