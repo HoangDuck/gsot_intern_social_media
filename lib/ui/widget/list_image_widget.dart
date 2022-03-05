@@ -128,20 +128,20 @@ Widget listImagesWidget(
                     right: 0,
                     child: Container(
                       alignment: Alignment.center,
-                      color: Colors.black12,
+                      color: Colors.black38,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.add,
                             size: 40,
-                            color: Color(0xffff2c55),
+                            color: Colors.white,
                           ),
                           Text(
                             "${numberOfImages - 4}",
                             style: TextStyle(
                               fontSize: 40,
-                              color: Color(0xffff2c55),
+                              color: Colors.white,
                             ),
                           ),
                         ],
