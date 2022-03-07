@@ -66,6 +66,9 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
 
+  //is display reaction box
+  bool displayed = false;
+
   //time duration animation reaction icon button
   int durationAnimationBox = 500;
   int durationAnimationBtnLongPress = 250;
@@ -141,7 +144,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     //fetch number of images
-    numberImages = 5;
+    numberImages = 4;
     //fetch 4 first image of post
     listImages.addAll([
       widget.data.image.toString(),
@@ -637,9 +640,36 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                     ],
                   ),
                   Positioned(
+                    left: 0,
+                    right: 0,
                     bottom: -60,
                     child: Stack(
                       children: <Widget>[
+                        displayed
+                            ? Positioned(
+                                left: 0,
+                                right: 0,
+                                top: -40,
+                                bottom: -40,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    displayed=false;
+                                    Timer(Duration(milliseconds: durationAnimationBox), () {
+                                      isLongPress = false;
+                                    });
+                                    holdTimer.cancel();
+
+                                    animControlBtnLongPress.reverse();
+
+                                    setReverseValue();
+                                    animControlBox.reverse();
+
+                                    animControlIconWhenRelease.reset();
+                                    animControlIconWhenRelease.forward();
+                                  },
+                                ),
+                              )
+                            : Container(),
                         // Box
                         renderBox(),
                         // Icons
@@ -1278,7 +1308,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       listReactionIcons.removeAt(0);
       listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
     }
-
+    displayed=false;
     Timer(Duration(milliseconds: durationAnimationBox), () {
       isLongPress = false;
     });
@@ -1420,6 +1450,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   void onTapDownBtn(TapDownDetails tapDownDetail) {
+    displayed=true;
     holdTimer = Timer(durationLongPress, showBox);
   }
 
@@ -1447,6 +1478,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
               0, Utils.getTextReaction(whichIconUserChoose));
         }
       }
+      displayed=false;
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;
       });
