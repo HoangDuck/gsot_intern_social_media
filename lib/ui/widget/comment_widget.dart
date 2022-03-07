@@ -1081,7 +1081,7 @@ class CardComment extends StatelessWidget {
           child: CircleAvatar(
             radius: 30.0,
             backgroundImage: NetworkImage(
-                "https://scontent.fsgn8-2.fna.fbcdn.net/v/t39.30808-6/240665310_924080101519822_8050564051527692717_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=IsvVOdqHWzIAX_Ef_f3&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT-BsGlguK003xhsZ9jnAGjG2hWBwmFEAdpYmvMp_LXm_Q&oe=6222ED57"),
+                "https://static.wikia.nocookie.net/rezero/images/0/02/Rem_Anime.png/revision/latest?cb=20210916151323"),
             backgroundColor: Color(0xfff5f4f9),
           ),
         ),
@@ -1177,32 +1177,33 @@ class CardComment extends StatelessWidget {
                   )
                 : Container(),
             GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ShowFullImageWidget(
-                        pathImage: contentOfComment['image'],
-                      ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowFullImageWidget(
+                      pathImage: contentOfComment['image'],
                     ),
+                  ),
+                );
+              },
+              child: Image.network(
+                contentOfComment['image'],
+                errorBuilder: (context, error, stacktrace) {
+                  if (contentOfComment['image'] == "") {
+                    return Container();
+                  }
+                  return Image.file(
+                    File("${contentOfComment['image']}"),
+                    errorBuilder: (context, error, stacktrace) {
+                      return Container();
+                    },
+                    alignment: Alignment.topCenter,
+                    width: MediaQuery.of(context).size.width * 0.4,
                   );
                 },
-                child: Image.network(
-                  contentOfComment['image'],
-                  errorBuilder: (context, error, stacktrace) {
-                    if (contentOfComment['image'] == "") {
-                      return Container();
-                    }
-                    return Image.file(
-                      File("${contentOfComment['image']}"),
-                      errorBuilder: (context, error, stacktrace) {
-                        return Container();
-                      },
-                      alignment: Alignment.topCenter,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                    );
-                  },
-                )),
+              ),
+            ),
           ],
         ),
       ],

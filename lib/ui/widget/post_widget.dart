@@ -141,13 +141,13 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     //fetch number of images
-    numberImages = 10;
+    numberImages = 5;
     //fetch 4 first image of post
     listImages.addAll([
       widget.data.image.toString(),
-      "https://www.toponseek.com/blogs/wp-content/uploads/2019/06/toi-uu-hinh-anh-optimize-image-4-1200x700.jpg",
-      "https://www.toponseek.com/blogs/wp-content/uploads/2019/06/toi-uu-hinh-anh-optimize-image-4-1200x700.jpg",
-      "https://www.toponseek.com/blogs/wp-content/uploads/2019/06/toi-uu-hinh-anh-optimize-image-4-1200x700.jpg"
+      "https://raw.githubusercontent.com/Sameera-Perera/flutter-carousel-slider-example/master/home.png",
+      "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80",
+      "http://www.androidcoding.in/wp-content/uploads/flutter_image_slider-1024x1024.png",
     ]);
     //fetch which icon user choose
     whichIconUserChoose = 0;
