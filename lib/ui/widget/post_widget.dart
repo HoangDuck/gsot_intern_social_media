@@ -144,7 +144,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     //fetch number of images
-    numberImages = 4;
+    numberImages = 5;
     //fetch 4 first image of post
     listImages.addAll([
       widget.data.image.toString(),

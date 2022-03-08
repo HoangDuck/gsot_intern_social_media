@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
-import 'package:social_media/ui/widget/list_image_widget.dart';
+import 'package:social_media/ui/view/slider_images.dart';
 
 class ListImagePage extends StatefulWidget {
   const ListImagePage({Key? key}) : super(key: key);
@@ -113,9 +115,37 @@ class _ListImagePageState extends State<ListImagePage> {
           }
           return Column(
             children: [
-              showImageWidget(context,listImagePaths[i-1],numberOfImages),
+              showImageWidget(context,listImagePaths[i-1]),
               Divider(),
             ],
+          );
+        },
+      ),
+    );
+  }
+  Widget showImageWidget(BuildContext context, String pathImage) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SlideImages(),
+          ),
+        );
+      },
+      child: Image.network(
+        pathImage,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stacktrace) {
+          if (pathImage == "") {
+            return Container();
+          }
+          return Image.file(
+            File(pathImage),
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stacktrace) {
+              return Container();
+            },
           );
         },
       ),

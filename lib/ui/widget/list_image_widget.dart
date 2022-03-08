@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:social_media/ui/view/list_images_page.dart';
-import 'package:social_media/ui/widget/show_full_image_widget.dart';
+import 'package:social_media/ui/view/slider_images.dart';
 
 Widget listImagesWidget(
     BuildContext context, List<String> list, int numberOfImages) {
@@ -158,9 +158,7 @@ Widget showImageWidget(BuildContext context, String pathImage,int numberOfImages
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ShowFullImageWidget(
-            pathImage: pathImage,
-          ),
+          builder: (context) => SlideImages(),
         ),
       );
     },
