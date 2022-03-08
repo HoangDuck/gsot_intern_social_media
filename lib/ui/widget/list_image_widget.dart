@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:social_media/ui/view/list_images_page.dart';
 import 'package:social_media/ui/view/slider_images.dart';
+import 'package:social_media/ui/widget/show_full_image_widget.dart';
 
 Widget listImagesWidget(
     BuildContext context, List<String> list, int numberOfImages) {
@@ -10,7 +11,7 @@ Widget listImagesWidget(
     return Container();
   } else if (numberOfImages == 1) {
     return Center(
-      child: showImageWidget(context, list[0],numberOfImages),
+      child: showImageWidget(context, list[0], numberOfImages),
     );
   } else if (numberOfImages == 2) {
     return GridView.count(
@@ -25,7 +26,7 @@ Widget listImagesWidget(
         (index) {
           return Container(
             padding: EdgeInsets.all(2),
-            child: showImageWidget(context, list[index],numberOfImages),
+            child: showImageWidget(context, list[index], numberOfImages),
           );
         },
       ),
@@ -33,7 +34,7 @@ Widget listImagesWidget(
   } else if (numberOfImages == 3) {
     return Column(
       children: [
-        showImageWidget(context, list[0],numberOfImages),
+        showImageWidget(context, list[0], numberOfImages),
         SizedBox(
           height: 2,
         ),
@@ -49,7 +50,8 @@ Widget listImagesWidget(
             (index) {
               return Container(
                 padding: EdgeInsets.all(2),
-                child: showImageWidget(context, list[index + 1],numberOfImages),
+                child:
+                    showImageWidget(context, list[index + 1], numberOfImages),
               );
             },
           ),
@@ -69,7 +71,7 @@ Widget listImagesWidget(
         (index) {
           return Container(
             padding: EdgeInsets.all(2),
-            child: showImageWidget(context, list[index],numberOfImages),
+            child: showImageWidget(context, list[index], numberOfImages),
           );
         },
       ),
@@ -90,7 +92,7 @@ Widget listImagesWidget(
               padding: EdgeInsets.all(2),
               child: Stack(
                 children: [
-                  showImageWidget(context, list[3],numberOfImages),
+                  showImageWidget(context, list[3], numberOfImages),
                   Positioned(
                     top: 0,
                     bottom: 0,
@@ -134,7 +136,7 @@ Widget listImagesWidget(
           }
           return Container(
             padding: EdgeInsets.all(2),
-            child: showImageWidget(context, list[index],numberOfImages),
+            child: showImageWidget(context, list[index], numberOfImages),
           );
         },
       ),
@@ -143,14 +145,23 @@ Widget listImagesWidget(
   return Container();
 }
 
-Widget showImageWidget(BuildContext context, String pathImage,int numberOfImages) {
+Widget showImageWidget(
+    BuildContext context, String pathImage, int numberOfImages) {
   return GestureDetector(
     onTap: () {
-      if(numberOfImages>4){
+      if (numberOfImages > 4) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ListImagePage(),
+          ),
+        );
+        return;
+      } else if (numberOfImages == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShowFullImageWidget(pathImage: pathImage),
           ),
         );
         return;

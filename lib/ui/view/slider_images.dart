@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:social_media/ui/widget/show_full_image_widget.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -17,23 +19,28 @@ class SlideImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Builder(
-        builder: (context) {
-          final double height = MediaQuery.of(context).size.height;
-          return CarouselSlider(
-            options: CarouselOptions(
-              height: height,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              // autoPlay: false,
+      body: PhotoViewGallery.builder(
+        itemCount: imgList.length,
+        builder: (context, index) {
+          return PhotoViewGalleryPageOptions(
+            imageProvider: imgList[index].contains("http")
+                ? NetworkImage(
+                    imgList[index],
+                  )
+                : FileImage(
+                    File(imgList[index]),
+                  ) as ImageProvider,
+            minScale: PhotoViewComputedScale.contained * 0.8,
+            maxScale: PhotoViewComputedScale.contained * 2,
+          );
+        },
+        loadingBuilder: (context, event) {
+          return Center(
+            child: Container(
+              alignment: Alignment.center,
+              color: Colors.black,
+              child: CircularProgressIndicator(),
             ),
-            items: imgList
-                .map(
-                  (item) => ShowFullImageWidget(
-                    pathImage: item,
-                  ),
-                )
-                .toList(),
           );
         },
       ),

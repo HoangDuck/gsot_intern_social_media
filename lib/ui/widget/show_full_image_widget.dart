@@ -11,20 +11,19 @@ class ShowFullImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          alignment: Alignment.center,
-          color: Colors.black,
-          child: PhotoView(
-            imageProvider: pathImage.contains("http")
-                ? NetworkImage(
-                    pathImage,
-                  )
-                : FileImage(
-                    File(pathImage),
-                  ) as ImageProvider,
-          ),
-        ),
+      body: PhotoView(
+        imageProvider: pathImage.contains("http")
+            ? NetworkImage(
+                pathImage,
+              )
+            : FileImage(
+                File(pathImage),
+              ) as ImageProvider,
+        minScale: PhotoViewComputedScale.contained,
+        maxScale: PhotoViewComputedScale.contained * 2,
+        loadingBuilder: (context, event) {
+          return CircularProgressIndicator();
+        },
       ),
     );
   }

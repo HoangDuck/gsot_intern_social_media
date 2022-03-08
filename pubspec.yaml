@@ -44,7 +44,6 @@ dependencies:
   fdottedline_nullsafety: ^2.0.0
   audioplayers: ^0.20.1
   photo_view: ^0.13.0
-  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:
