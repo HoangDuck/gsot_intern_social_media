@@ -51,6 +51,7 @@ class _PagesState extends State<Pages> {
     return ChangeNotifierProvider<DataConvert>.value(
       value: dataConvert,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         floatingActionButton: SizedBox(
           height: 75.0,
           width: 75.0,
