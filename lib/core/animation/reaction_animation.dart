@@ -12,8 +12,10 @@ import 'package:social_media/ui/constant/icon_reactions.dart';
 class ReactionAnimation{
   dynamic state;
   BuildContext context;
-  ReactionAnimation(this.context,{this.state});
-//is display reaction box
+  ReactionAnimation(this.context,{this.state}){
+    initAnimationReaction();
+  }
+  //is display reaction box
   bool displayed = false;
 
   //time duration animation reaction icon button
@@ -399,6 +401,7 @@ class ReactionAnimation{
     // Icon when release
     initAnimationIconWhenRelease();
   }
+
   disposeAnimationReaction(){
     animControlBtnLongPress.dispose();
     animControlBox.dispose();
@@ -420,15 +423,15 @@ class ReactionAnimation{
           }
           whichIconUserChoose = 0;
           previousWhichIconUserChoose = whichIconUserChoose;
-          //numberOfReaction--;
-          //listReactionIcons.removeAt(0);
+          state.numberOfReaction--;
+          state.listReactionIcons.removeAt(0);
         }
         if (isLiked) {
           PlayAudio.playSound('short_press_like.mp3');
           whichIconUserChoose = 1;
           previousWhichIconUserChoose = whichIconUserChoose;
-          //numberOfReaction++;
-          //listReactionIcons.insert(0, 'Like');
+          state.numberOfReaction++;
+          state.listReactionIcons.insert(0, 'Like');
         }
       });
     }
@@ -554,12 +557,12 @@ class ReactionAnimation{
   void onTapIconReaction() {
     PlayAudio.playSound('icon_choose.mp3');
     if (previousWhichIconUserChoose == 0) {
-      //numberOfReaction++;
+      state.numberOfReaction++;
       previousWhichIconUserChoose = whichIconUserChoose;
-      //listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+      state.listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
     } else {
-      //listReactionIcons.removeAt(0);
-      //listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+      state.listReactionIcons.removeAt(0);
+      state.listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
     }
     displayed = false;
     Timer(Duration(milliseconds: durationAnimationBox), () {
@@ -711,24 +714,24 @@ class ReactionAnimation{
     if (isLongPress) {
       if (whichIconUserChoose == 0) {
         PlayAudio.playSound('box_down.mp3');
-        //numberOfReaction--;
+        state.numberOfReaction--;
         if (previousWhichIconUserChoose == 0) {
-          //numberOfReaction++;
+          state.numberOfReaction++;
           return;
         }
-        //listReactionIcons.removeAt(0);
+        state.listReactionIcons.removeAt(0);
         previousWhichIconUserChoose = whichIconUserChoose;
       } else {
         PlayAudio.playSound('icon_choose.mp3');
         if (previousWhichIconUserChoose == 0) {
-          //numberOfReaction++;
+          state.numberOfReaction++;
           previousWhichIconUserChoose = whichIconUserChoose;
-          //listReactionIcons.insert(
-              //0, Utils.getTextReaction(whichIconUserChoose));
+          state.listReactionIcons.insert(
+              0, Utils.getTextReaction(whichIconUserChoose));
         } else {
-          //listReactionIcons.removeAt(0);
-          //listReactionIcons.insert(
-            //  0, Utils.getTextReaction(whichIconUserChoose));
+          state.listReactionIcons.removeAt(0);
+          state.listReactionIcons.insert(
+            0, Utils.getTextReaction(whichIconUserChoose));
         }
       }
       displayed = false;
