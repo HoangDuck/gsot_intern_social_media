@@ -26,6 +26,7 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
 
   //show comment box
   late ExpandCollapseAnimation expandCollapseAnimation;
+
   //animation reaction button
   late ReactionAnimation reactionAnimation;
 
@@ -38,12 +39,14 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
     numberOfReaction = 0;
     //fetch reaction icons list
     listReactionIcons.addAll([]);
-    //fetch which icon user choose
     //init reaction animation
-    reactionAnimation=ReactionAnimation(context,state: this);
+    reactionAnimation = ReactionAnimation(context, state: this,isPost: false);
+    //fetch which icon user choose
     reactionAnimation.whichIconUserChoose = 0;
-    reactionAnimation.previousWhichIconUserChoose = reactionAnimation.whichIconUserChoose;
+    reactionAnimation.previousWhichIconUserChoose =
+        reactionAnimation.whichIconUserChoose;
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -93,11 +96,12 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                                       size: 20,
                                     )
                                   : Image.asset(
-                                reactionAnimation.getImageIconBtn(),
+                                      reactionAnimation.getImageIconBtn(),
                                       width: 20.0,
                                       height: 20.0,
                                       fit: BoxFit.contain,
-                                      color: reactionAnimation.getTintColorIconBtn(),
+                                      color: reactionAnimation
+                                          .getTintColorIconBtn(),
                                     ),
                             ),
                           ),
@@ -120,6 +124,17 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                 bottom: -100,
                 child: Stack(
                   children: <Widget>[
+                    reactionAnimation.displayed
+                        ? Positioned(
+                      left: 0,
+                      right: 0,
+                      top: -40,
+                      bottom: -40,
+                      child: GestureDetector(
+                        onTap: reactionAnimation.outTapReactionBox,
+                      ),
+                    )
+                        : Container(),
                     // Box
                     reactionAnimation.renderBox(),
 
@@ -132,7 +147,8 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
             ],
           ),
           onHorizontalDragEnd: reactionAnimation.onHorizontalDragEndBoxIcon,
-          onHorizontalDragUpdate: reactionAnimation.onHorizontalDragUpdateBoxIcon,
+          onHorizontalDragUpdate:
+              reactionAnimation.onHorizontalDragUpdateBoxIcon,
         ),
         SizeTransition(
           axisAlignment: 1.0,
@@ -142,7 +158,6 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
       ],
     );
   }
-
 }
 
 class CardComment extends StatelessWidget {

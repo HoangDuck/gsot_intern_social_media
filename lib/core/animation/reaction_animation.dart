@@ -9,12 +9,15 @@ import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/app_images.dart';
 import 'package:social_media/ui/constant/icon_reactions.dart';
 
-class ReactionAnimation{
+class ReactionAnimation {
   dynamic state;
   BuildContext context;
-  ReactionAnimation(this.context,{this.state}){
+  bool isPost;
+
+  ReactionAnimation(this.context, {this.state, this.isPost = true}) {
     initAnimationReaction();
   }
+
   //is display reaction box
   bool displayed = false;
 
@@ -84,6 +87,11 @@ class ReactionAnimation{
   bool isDraggingOutside = false;
   bool isJustDragInside = true;
 
+  //size icon
+  double sizeIconUp = 60;
+  double sizeIconZoomMax = 50;
+  double sizeIconZoomMin = 40;
+
   initAnimationBtnLike() {
     // long press
     animControlBtnLongPress = AnimationController(
@@ -144,7 +152,7 @@ class ReactionAnimation{
     });
 
     // Icons
-    pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconLikeUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(
         parent: animControlBox,
         curve: Interval(0.0, 0.5),
@@ -157,7 +165,7 @@ class ReactionAnimation{
       ),
     );
 
-    pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconLoveUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(
         parent: animControlBox,
         curve: Interval(0.1, 0.6),
@@ -170,7 +178,7 @@ class ReactionAnimation{
       ),
     );
 
-    pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconHahaUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(
         parent: animControlBox,
         curve: Interval(0.2, 0.7),
@@ -183,7 +191,7 @@ class ReactionAnimation{
       ),
     );
 
-    pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconWowUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(
         parent: animControlBox,
         curve: Interval(0.3, 0.8),
@@ -196,7 +204,7 @@ class ReactionAnimation{
       ),
     );
 
-    pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconSadUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(
         parent: animControlBox,
         curve: Interval(0.4, 0.9),
@@ -209,7 +217,7 @@ class ReactionAnimation{
       ),
     );
 
-    pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconAngryUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(
         parent: animControlBox,
         curve: Interval(0.5, 1.0),
@@ -269,8 +277,8 @@ class ReactionAnimation{
         Tween(begin: 1.0, end: 1.8).animate(animControlIconWhenDrag);
     zoomIconNotChosen =
         Tween(begin: 1.0, end: 0.8).animate(animControlIconWhenDrag);
-    zoomBoxIcon =
-        Tween(begin: 50.0, end: 40.0).animate(animControlIconWhenDrag);
+    zoomBoxIcon = Tween(begin: sizeIconZoomMax, end: sizeIconZoomMin)
+        .animate(animControlIconWhenDrag);
 
     zoomIconChosen.addListener(() {
       state.setState(() {});
@@ -298,8 +306,8 @@ class ReactionAnimation{
     animControlBoxWhenDragOutside = AnimationController(
         vsync: state,
         duration: Duration(milliseconds: durationAnimationIconWhenDrag));
-    zoomBoxWhenDragOutside =
-        Tween(begin: 40.0, end: 50.0).animate(animControlBoxWhenDragOutside);
+    zoomBoxWhenDragOutside = Tween(begin: sizeIconZoomMin, end: sizeIconZoomMax)
+        .animate(animControlBoxWhenDragOutside);
     zoomBoxWhenDragOutside.addListener(() {
       state.setState(() {});
     });
@@ -379,7 +387,17 @@ class ReactionAnimation{
     });
   }
 
-  initAnimationReaction(){
+  initAnimationReaction() {
+    //determine size of reaction widget
+    if (isPost) {
+      sizeIconUp = 60;
+      sizeIconZoomMax = 50;
+      sizeIconZoomMin = 40;
+    } else {
+      sizeIconUp = 50;
+      sizeIconZoomMax = 40;
+      sizeIconZoomMin = 30;
+    }
     // Button Like
     initAnimationBtnLike();
 
@@ -402,7 +420,7 @@ class ReactionAnimation{
     initAnimationIconWhenRelease();
   }
 
-  disposeAnimationReaction(){
+  disposeAnimationReaction() {
     animControlBtnLongPress.dispose();
     animControlBox.dispose();
     animControlIconWhenDrag.dispose();
@@ -463,10 +481,16 @@ class ReactionAnimation{
         ),
         width: 300.0,
         height: isDragging
-            ? (previousIconFocus == 0 ? zoomBoxIcon.value : 40.0)
+            ? (previousIconFocus == 0
+                ? zoomBoxIcon.value
+                : isPost
+                    ? 40.0
+                    : 30.0)
             : isDraggingOutside
-            ? zoomBoxWhenDragOutside.value
-            : 50.0,
+                ? zoomBoxWhenDragOutside.value
+                : isPost
+                    ? 50.0
+                    : 40.0,
         margin: EdgeInsets.only(bottom: 130.0, left: 10.0),
       ),
       opacity: fadeInBox.value,
@@ -506,20 +530,22 @@ class ReactionAnimation{
       child: Container(
         child: Column(
           children: <Widget>[
-            currentIconFocus == listIconReactionsId[reactionText]
-                ? Container(
-              child: Text(
-                reactionText,
-                style: TextStyle(fontSize: 8.0, color: Colors.white),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.black.withOpacity(0.3),
-              ),
-              padding: EdgeInsets.only(
-                  left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-              margin: EdgeInsets.only(bottom: 8.0),
-            )
+            isPost
+                ? currentIconFocus == listIconReactionsId[reactionText]
+                    ? Container(
+                        child: Text(
+                          reactionText,
+                          style: TextStyle(fontSize: 8.0, color: Colors.white),
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.black.withOpacity(0.3),
+                        ),
+                        padding: EdgeInsets.only(
+                            left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                        margin: EdgeInsets.only(bottom: 8.0),
+                      )
+                    : Container()
                 : Container(),
             GestureDetector(
               onTap: () {
@@ -528,29 +554,30 @@ class ReactionAnimation{
               },
               child: Image.asset(
                 listIconReactionsImage[reactionText],
-                width: 40.0,
-                height: 40.0,
+                width: isPost ? 40.0 : 30.0,
+                height: isPost ? 40.0 : 30.0,
                 fit: BoxFit.contain,
               ),
             ),
           ],
         ),
         margin: EdgeInsets.only(bottom: animationPushIconUp.value),
-        width: 40.0,
-        height:
-        currentIconFocus == listIconReactionsId[reactionText] ? 70.0 : 40.0,
+        width: isPost ? 40.0 : 30.0,
+        height: currentIconFocus == listIconReactionsId[reactionText]
+            ? (isPost ? 70.0 : 30.0)
+            : (isPost ? 40.0 : 30.0),
       ),
       scale: isDragging
           ? (currentIconFocus == listIconReactionsId[reactionText]
-          ? zoomIconChosen.value
-          : (previousIconFocus == listIconReactionsId[reactionText]
-          ? zoomIconNotChosen.value
-          : isJustDragInside
-          ? zoomIconWhenDragInside.value
-          : 0.8))
+              ? zoomIconChosen.value
+              : (previousIconFocus == listIconReactionsId[reactionText]
+                  ? zoomIconNotChosen.value
+                  : isJustDragInside
+                      ? zoomIconWhenDragInside.value
+                      : 0.8))
           : isDraggingOutside
-          ? zoomIconWhenDragOutside.value
-          : zoomIcon.value,
+              ? zoomIconWhenDragOutside.value
+              : zoomIcon.value,
     );
   }
 
@@ -559,10 +586,12 @@ class ReactionAnimation{
     if (previousWhichIconUserChoose == 0) {
       state.numberOfReaction++;
       previousWhichIconUserChoose = whichIconUserChoose;
-      state.listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+      state.listReactionIcons
+          .insert(0, Utils.getTextReaction(whichIconUserChoose));
     } else {
       state.listReactionIcons.removeAt(0);
-      state.listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+      state.listReactionIcons
+          .insert(0, Utils.getTextReaction(whichIconUserChoose));
     }
     displayed = false;
     Timer(Duration(milliseconds: durationAnimationBox), () {
@@ -726,12 +755,12 @@ class ReactionAnimation{
         if (previousWhichIconUserChoose == 0) {
           state.numberOfReaction++;
           previousWhichIconUserChoose = whichIconUserChoose;
-          state.listReactionIcons.insert(
-              0, Utils.getTextReaction(whichIconUserChoose));
+          state.listReactionIcons
+              .insert(0, Utils.getTextReaction(whichIconUserChoose));
         } else {
           state.listReactionIcons.removeAt(0);
-          state.listReactionIcons.insert(
-            0, Utils.getTextReaction(whichIconUserChoose));
+          state.listReactionIcons
+              .insert(0, Utils.getTextReaction(whichIconUserChoose));
         }
       }
       displayed = false;
@@ -765,42 +794,42 @@ class ReactionAnimation{
   // the angry-icon will be pulled down first, not the like-icon
   void setReverseValue() {
     // Icons
-    pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconLikeUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
     );
     zoomIconLike = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
     );
 
-    pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconLoveUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
     );
     zoomIconLove = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
     );
 
-    pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconHahaUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
     );
     zoomIconHaha = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
     );
 
-    pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconWowUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
     );
     zoomIconWow = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
     );
 
-    pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconSadUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
     );
     zoomIconSad = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
     );
 
-    pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconAngryUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
     );
     zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
@@ -811,42 +840,42 @@ class ReactionAnimation{
   // When set the reverse value, we need set value to normal for the forward
   void setForwardValue() {
     // Icons
-    pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconLikeUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
     );
     zoomIconLike = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
     );
 
-    pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconLoveUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
     );
     zoomIconLove = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
     );
 
-    pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconHahaUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
     );
     zoomIconHaha = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
     );
 
-    pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconWowUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
     );
     zoomIconWow = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
     );
 
-    pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconSadUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
     );
     zoomIconSad = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
     );
 
-    pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
+    pushIconAngryUp = Tween(begin: 30.0, end: sizeIconUp).animate(
       CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
     );
     zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
