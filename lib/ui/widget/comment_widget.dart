@@ -471,7 +471,6 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
                         GestureDetector(
                           onTapDown: onTapDownBtn,
                           onTapUp: onTapUpBtn,
-                          onTap: () {},
                           child: TextButton(
                             onPressed: () {
                               if (!isLongPress) {
@@ -532,7 +531,6 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
               ),
               Positioned(
                 bottom: -100,
-                //width: MediaQuery.of(context).size.width * 0.9,
                 child: Stack(
                   children: <Widget>[
                     // Box

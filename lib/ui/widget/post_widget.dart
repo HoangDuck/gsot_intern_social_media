@@ -13,6 +13,7 @@ import 'package:social_media/core/util/utils.dart';
 import 'package:social_media/core/util/utils_featured.dart';
 import 'package:social_media/ui/constant/app_colors.dart';
 import 'package:social_media/ui/constant/app_images.dart';
+import 'package:social_media/ui/constant/icon_reactions.dart';
 import 'package:social_media/ui/constant/text_styles.dart';
 import 'package:social_media/ui/widget/dottedline.dart';
 import 'package:social_media/ui/widget/dropdown_menu_item_post.dart';
@@ -523,52 +524,49 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 65.0,
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                left: 10,
-                                right: 10,
-                              ),
-                              child: SizedBox(
-                                height: 55,
-                                width: 55,
-                                child: CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundImage: NetworkImage(
-                                    widget.data.user!.picture.toString(),
-                                  ),
-                                  backgroundColor: Colors.transparent,
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                            ),
+                            child: SizedBox(
+                              height: 55,
+                              width: 55,
+                              child: CircleAvatar(
+                                radius: 30.0,
+                                backgroundImage: NetworkImage(
+                                  widget.data.user!.picture.toString(),
                                 ),
+                                backgroundColor: Colors.transparent,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.data.user!.name.toString(),
-                                    style: textSize20,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.data.user!.name.toString(),
+                                  style: textSize20,
+                                ),
+                                Text(
+                                  widget.data.user!.nickname.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color(0xff92929A),
                                   ),
-                                  Text(
-                                    widget.data.user!.nickname.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Color(0xff92929A),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                            Expanded(
-                              child: moreHorizontalButton(),
-                            ),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                            child: moreHorizontalButton(),
+                          ),
+                        ],
                       ),
                       Container(
                         padding: const EdgeInsets.all(15),
@@ -652,21 +650,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
                                 top: -40,
                                 bottom: -40,
                                 child: GestureDetector(
-                                  onTap: () {
-                                    displayed=false;
-                                    Timer(Duration(milliseconds: durationAnimationBox), () {
-                                      isLongPress = false;
-                                    });
-                                    holdTimer.cancel();
-
-                                    animControlBtnLongPress.reverse();
-
-                                    setReverseValue();
-                                    animControlBox.reverse();
-
-                                    animControlIconWhenRelease.reset();
-                                    animControlIconWhenRelease.forward();
-                                  },
+                                  onTap: outTapReactionBox,
                                 ),
                               )
                             : Container(),
@@ -700,6 +684,47 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
         onHorizontalDragUpdate: onHorizontalDragUpdateBoxIcon,
       ),
     );
+  }
+
+  void shortPressLikeButton() {
+    if (!isLongPress) {
+      setState(() {
+        if (whichIconUserChoose == 0) {
+          isLiked = !isLiked;
+        } else {
+          if (isLiked) {
+            isLiked = !isLiked;
+          }
+          whichIconUserChoose = 0;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          numberOfReaction--;
+          listReactionIcons.removeAt(0);
+        }
+        if (isLiked) {
+          PlayAudio.playSound('short_press_like.mp3');
+          whichIconUserChoose = 1;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          numberOfReaction++;
+          listReactionIcons.insert(0, 'Like');
+        }
+      });
+    }
+  }
+
+  void outTapReactionBox() {
+    displayed = false;
+    Timer(Duration(milliseconds: durationAnimationBox), () {
+      isLongPress = false;
+    });
+    holdTimer.cancel();
+
+    animControlBtnLongPress.reverse();
+
+    setReverseValue();
+    animControlBox.reverse();
+
+    animControlIconWhenRelease.reset();
+    animControlIconWhenRelease.forward();
   }
 
   List<Widget> listCommentWidgetLoad() {
@@ -801,30 +826,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
         height: 35,
         width: 90,
         child: TextButton(
-          onPressed: () {
-            if (!isLongPress) {
-              setState(() {
-                if (whichIconUserChoose == 0) {
-                  isLiked = !isLiked;
-                } else {
-                  if (isLiked) {
-                    isLiked = !isLiked;
-                  }
-                  whichIconUserChoose = 0;
-                  previousWhichIconUserChoose = whichIconUserChoose;
-                  numberOfReaction--;
-                  listReactionIcons.removeAt(0);
-                }
-                if (isLiked) {
-                  PlayAudio.playSound('short_press_like.mp3');
-                  whichIconUserChoose = 1;
-                  previousWhichIconUserChoose = whichIconUserChoose;
-                  numberOfReaction++;
-                  listReactionIcons.insert(0, 'Like');
-                }
-              });
-            }
-          },
+          onPressed: shortPressLikeButton,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -980,313 +982,17 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       child: Row(
         children: <Widget>[
           // icon like
-          Transform.scale(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  currentIconFocus == 1
-                      ? Container(
-                          child: Text(
-                            'Like',
-                            style:
-                                TextStyle(fontSize: 8.0, color: Colors.white),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.black.withOpacity(0.3),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                          margin: EdgeInsets.only(bottom: 8.0),
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      whichIconUserChoose = 1;
-                      onTapIconReaction();
-                    },
-                    child: Image.asset(
-                      ic_like_gif,
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-              margin: EdgeInsets.only(bottom: pushIconLikeUp.value),
-              width: 40.0,
-              height: currentIconFocus == 1 ? 70.0 : 40.0,
-            ),
-            scale: isDragging
-                ? (currentIconFocus == 1
-                    ? zoomIconChosen.value
-                    : (previousIconFocus == 1
-                        ? zoomIconNotChosen.value
-                        : isJustDragInside
-                            ? zoomIconWhenDragInside.value
-                            : 0.8))
-                : isDraggingOutside
-                    ? zoomIconWhenDragOutside.value
-                    : zoomIconLike.value,
-          ),
-
+          transformIconWidget('Like', pushIconLikeUp, zoomIconLike),
           // icon love
-          Transform.scale(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  currentIconFocus == 2
-                      ? Container(
-                          child: Text(
-                            'Love',
-                            style:
-                                TextStyle(fontSize: 8.0, color: Colors.white),
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.black.withOpacity(0.3)),
-                          padding: EdgeInsets.only(
-                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                          margin: EdgeInsets.only(bottom: 8.0),
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      whichIconUserChoose = 2;
-                      onTapIconReaction();
-                    },
-                    child: Image.asset(
-                      ic_heart_gif,
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-              margin: EdgeInsets.only(bottom: pushIconLoveUp.value),
-              width: 40.0,
-              height: currentIconFocus == 2 ? 70.0 : 40.0,
-            ),
-            scale: isDragging
-                ? (currentIconFocus == 2
-                    ? zoomIconChosen.value
-                    : (previousIconFocus == 2
-                        ? zoomIconNotChosen.value
-                        : isJustDragInside
-                            ? zoomIconWhenDragInside.value
-                            : 0.8))
-                : isDraggingOutside
-                    ? zoomIconWhenDragOutside.value
-                    : zoomIconLove.value,
-          ),
-
+          transformIconWidget('Love', pushIconLoveUp, zoomIconLove),
           // icon haha
-          Transform.scale(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  currentIconFocus == 3
-                      ? Container(
-                          child: Text(
-                            'Haha',
-                            style:
-                                TextStyle(fontSize: 8.0, color: Colors.white),
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.black.withOpacity(0.3)),
-                          padding: EdgeInsets.only(
-                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                          margin: EdgeInsets.only(bottom: 8.0),
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      whichIconUserChoose = 3;
-                      onTapIconReaction();
-                    },
-                    child: Image.asset(
-                      ic_haha_gif,
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-              margin: EdgeInsets.only(bottom: pushIconHahaUp.value),
-              width: 40.0,
-              height: currentIconFocus == 3 ? 70.0 : 40.0,
-            ),
-            scale: isDragging
-                ? (currentIconFocus == 3
-                    ? zoomIconChosen.value
-                    : (previousIconFocus == 3
-                        ? zoomIconNotChosen.value
-                        : isJustDragInside
-                            ? zoomIconWhenDragInside.value
-                            : 0.8))
-                : isDraggingOutside
-                    ? zoomIconWhenDragOutside.value
-                    : zoomIconHaha.value,
-          ),
-
+          transformIconWidget('Haha', pushIconHahaUp, zoomIconHaha),
           // icon wow
-          Transform.scale(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  currentIconFocus == 4
-                      ? Container(
-                          child: Text(
-                            'Wow',
-                            style:
-                                TextStyle(fontSize: 8.0, color: Colors.white),
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.black.withOpacity(0.3)),
-                          padding: EdgeInsets.only(
-                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                          margin: EdgeInsets.only(bottom: 8.0),
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      whichIconUserChoose = 4;
-                      onTapIconReaction();
-                    },
-                    child: Image.asset(
-                      ic_wow_gif,
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-              margin: EdgeInsets.only(bottom: pushIconWowUp.value),
-              width: 40.0,
-              height: currentIconFocus == 4 ? 70.0 : 40.0,
-            ),
-            scale: isDragging
-                ? (currentIconFocus == 4
-                    ? zoomIconChosen.value
-                    : (previousIconFocus == 4
-                        ? zoomIconNotChosen.value
-                        : isJustDragInside
-                            ? zoomIconWhenDragInside.value
-                            : 0.8))
-                : isDraggingOutside
-                    ? zoomIconWhenDragOutside.value
-                    : zoomIconWow.value,
-          ),
-
+          transformIconWidget('Wow', pushIconWowUp, zoomIconWow),
           // icon sad
-          Transform.scale(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  currentIconFocus == 5
-                      ? Container(
-                          child: Text(
-                            'Sad',
-                            style:
-                                TextStyle(fontSize: 8.0, color: Colors.white),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.black.withOpacity(0.3),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                          margin: EdgeInsets.only(bottom: 8.0),
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      whichIconUserChoose = 5;
-                      onTapIconReaction();
-                    },
-                    child: Image.asset(
-                      ic_sad_gif,
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-              margin: EdgeInsets.only(bottom: pushIconSadUp.value),
-              width: 40.0,
-              height: currentIconFocus == 5 ? 70.0 : 40.0,
-            ),
-            scale: isDragging
-                ? (currentIconFocus == 5
-                    ? zoomIconChosen.value
-                    : (previousIconFocus == 5
-                        ? zoomIconNotChosen.value
-                        : isJustDragInside
-                            ? zoomIconWhenDragInside.value
-                            : 0.8))
-                : isDraggingOutside
-                    ? zoomIconWhenDragOutside.value
-                    : zoomIconSad.value,
-          ),
-
+          transformIconWidget('Sad', pushIconSadUp, zoomIconSad),
           // icon angry
-          Transform.scale(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  currentIconFocus == 6
-                      ? Container(
-                          child: Text(
-                            'Angry',
-                            style:
-                                TextStyle(fontSize: 8.0, color: Colors.white),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.black.withOpacity(0.3),
-                          ),
-                          padding: EdgeInsets.only(
-                              left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
-                          margin: EdgeInsets.only(bottom: 8.0),
-                        )
-                      : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      whichIconUserChoose = 6;
-                      onTapIconReaction();
-                    },
-                    child: Image.asset(
-                      ic_angry_gif,
-                      width: 40.0,
-                      height: 40.0,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-              margin: EdgeInsets.only(bottom: pushIconAngryUp.value),
-              width: 40.0,
-              height: currentIconFocus == 6 ? 70.0 : 40.0,
-            ),
-            scale: isDragging
-                ? (currentIconFocus == 6
-                    ? zoomIconChosen.value
-                    : (previousIconFocus == 6
-                        ? zoomIconNotChosen.value
-                        : isJustDragInside
-                            ? zoomIconWhenDragInside.value
-                            : 0.8))
-                : isDraggingOutside
-                    ? zoomIconWhenDragOutside.value
-                    : zoomIconAngry.value,
-          ),
+          transformIconWidget('Angry', pushIconAngryUp, zoomIconAngry),
         ],
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       ),
@@ -1295,6 +1001,60 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       margin: EdgeInsets.only(left: moveRightGroupIcon.value, top: 65.0),
       // uncomment here to see area of draggable
       // color: Colors.amber.withOpacity(0.5),
+    );
+  }
+
+  Widget transformIconWidget(
+      String reactionText, Animation animationPushIconUp, Animation zoomIcon) {
+    return Transform.scale(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            currentIconFocus == listIconReactionsId[reactionText]
+                ? Container(
+                    child: Text(
+                      reactionText,
+                      style: TextStyle(fontSize: 8.0, color: Colors.white),
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.black.withOpacity(0.3),
+                    ),
+                    padding: EdgeInsets.only(
+                        left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+                    margin: EdgeInsets.only(bottom: 8.0),
+                  )
+                : Container(),
+            GestureDetector(
+              onTap: () {
+                whichIconUserChoose = listIconReactionsId[reactionText];
+                onTapIconReaction();
+              },
+              child: Image.asset(
+                listIconReactionsImage[reactionText],
+                width: 40.0,
+                height: 40.0,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ],
+        ),
+        margin: EdgeInsets.only(bottom: animationPushIconUp.value),
+        width: 40.0,
+        height:
+            currentIconFocus == listIconReactionsId[reactionText] ? 70.0 : 40.0,
+      ),
+      scale: isDragging
+          ? (currentIconFocus == listIconReactionsId[reactionText]
+              ? zoomIconChosen.value
+              : (previousIconFocus == listIconReactionsId[reactionText]
+                  ? zoomIconNotChosen.value
+                  : isJustDragInside
+                      ? zoomIconWhenDragInside.value
+                      : 0.8))
+          : isDraggingOutside
+              ? zoomIconWhenDragOutside.value
+              : zoomIcon.value,
     );
   }
 
@@ -1308,7 +1068,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
       listReactionIcons.removeAt(0);
       listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
     }
-    displayed=false;
+    displayed = false;
     Timer(Duration(milliseconds: durationAnimationBox), () {
       isLongPress = false;
     });
@@ -1450,7 +1210,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
   }
 
   void onTapDownBtn(TapDownDetails tapDownDetail) {
-    displayed=true;
+    displayed = true;
     holdTimer = Timer(durationLongPress, showBox);
   }
 
@@ -1478,7 +1238,7 @@ class PostWidgetState extends State<PostWidget> with TickerProviderStateMixin {
               0, Utils.getTextReaction(whichIconUserChoose));
         }
       }
-      displayed=false;
+      displayed = false;
       Timer(Duration(milliseconds: durationAnimationBox), () {
         isLongPress = false;
       });
