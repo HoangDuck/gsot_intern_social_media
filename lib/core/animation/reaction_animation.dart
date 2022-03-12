@@ -1,10 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
+import 'package:social_media/core/services/play_audio_services.dart';
+import 'package:social_media/core/util/utils.dart';
+import 'package:social_media/core/util/utils_featured.dart';
+import 'package:social_media/ui/constant/app_colors.dart';
+import 'package:social_media/ui/constant/app_images.dart';
+import 'package:social_media/ui/constant/icon_reactions.dart';
 
 class ReactionAnimation{
   dynamic state;
-  ReactionAnimation({this.state});
+  BuildContext context;
+  ReactionAnimation(this.context,{this.state});
 //is display reaction box
   bool displayed = false;
 
@@ -401,4 +409,445 @@ class ReactionAnimation{
     animControlIconWhenRelease.dispose();
   }
 
+  void shortPressLikeButton() {
+    if (!isLongPress) {
+      state.setState(() {
+        if (whichIconUserChoose == 0) {
+          isLiked = !isLiked;
+        } else {
+          if (isLiked) {
+            isLiked = !isLiked;
+          }
+          whichIconUserChoose = 0;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          //numberOfReaction--;
+          //listReactionIcons.removeAt(0);
+        }
+        if (isLiked) {
+          PlayAudio.playSound('short_press_like.mp3');
+          whichIconUserChoose = 1;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          //numberOfReaction++;
+          //listReactionIcons.insert(0, 'Like');
+        }
+      });
+    }
+  }
+
+  void outTapReactionBox() {
+    displayed = false;
+    Timer(Duration(milliseconds: durationAnimationBox), () {
+      isLongPress = false;
+    });
+    holdTimer.cancel();
+
+    animControlBtnLongPress.reverse();
+
+    setReverseValue();
+    animControlBox.reverse();
+
+    animControlIconWhenRelease.reset();
+    animControlIconWhenRelease.forward();
+  }
+
+  Widget renderBox() {
+    return Opacity(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30.0),
+          border: Border.all(color: Colors.grey.shade300, width: 0.3),
+        ),
+        width: 300.0,
+        height: isDragging
+            ? (previousIconFocus == 0 ? zoomBoxIcon.value : 40.0)
+            : isDraggingOutside
+            ? zoomBoxWhenDragOutside.value
+            : 50.0,
+        margin: EdgeInsets.only(bottom: 130.0, left: 10.0),
+      ),
+      opacity: fadeInBox.value,
+    );
+  }
+
+  Widget renderIcons() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          // icon like
+          transformIconWidget('Like', pushIconLikeUp, zoomIconLike),
+          // icon love
+          transformIconWidget('Love', pushIconLoveUp, zoomIconLove),
+          // icon haha
+          transformIconWidget('Haha', pushIconHahaUp, zoomIconHaha),
+          // icon wow
+          transformIconWidget('Wow', pushIconWowUp, zoomIconWow),
+          // icon sad
+          transformIconWidget('Sad', pushIconSadUp, zoomIconSad),
+          // icon angry
+          transformIconWidget('Angry', pushIconAngryUp, zoomIconAngry),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      ),
+      width: 300.0,
+      height: 250.0,
+      margin: EdgeInsets.only(left: moveRightGroupIcon.value, top: 65.0),
+      // uncomment here to see area of draggable
+      // color: Colors.amber.withOpacity(0.5),
+    );
+  }
+
+  Widget transformIconWidget(
+      String reactionText, Animation animationPushIconUp, Animation zoomIcon) {
+    return Transform.scale(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            currentIconFocus == listIconReactionsId[reactionText]
+                ? Container(
+              child: Text(
+                reactionText,
+                style: TextStyle(fontSize: 8.0, color: Colors.white),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.black.withOpacity(0.3),
+              ),
+              padding: EdgeInsets.only(
+                  left: 7.0, right: 7.0, top: 2.0, bottom: 2.0),
+              margin: EdgeInsets.only(bottom: 8.0),
+            )
+                : Container(),
+            GestureDetector(
+              onTap: () {
+                whichIconUserChoose = listIconReactionsId[reactionText];
+                onTapIconReaction();
+              },
+              child: Image.asset(
+                listIconReactionsImage[reactionText],
+                width: 40.0,
+                height: 40.0,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ],
+        ),
+        margin: EdgeInsets.only(bottom: animationPushIconUp.value),
+        width: 40.0,
+        height:
+        currentIconFocus == listIconReactionsId[reactionText] ? 70.0 : 40.0,
+      ),
+      scale: isDragging
+          ? (currentIconFocus == listIconReactionsId[reactionText]
+          ? zoomIconChosen.value
+          : (previousIconFocus == listIconReactionsId[reactionText]
+          ? zoomIconNotChosen.value
+          : isJustDragInside
+          ? zoomIconWhenDragInside.value
+          : 0.8))
+          : isDraggingOutside
+          ? zoomIconWhenDragOutside.value
+          : zoomIcon.value,
+    );
+  }
+
+  void onTapIconReaction() {
+    PlayAudio.playSound('icon_choose.mp3');
+    if (previousWhichIconUserChoose == 0) {
+      //numberOfReaction++;
+      previousWhichIconUserChoose = whichIconUserChoose;
+      //listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+    } else {
+      //listReactionIcons.removeAt(0);
+      //listReactionIcons.insert(0, Utils.getTextReaction(whichIconUserChoose));
+    }
+    displayed = false;
+    Timer(Duration(milliseconds: durationAnimationBox), () {
+      isLongPress = false;
+    });
+
+    holdTimer.cancel();
+
+    animControlBtnLongPress.reverse();
+
+    setReverseValue();
+    animControlBox.reverse();
+
+    animControlIconWhenRelease.reset();
+    animControlIconWhenRelease.forward();
+  }
+
+  String getTextBtn() {
+    if (isDragging) {
+      return 'Like';
+    }
+    return Utils.getTextReaction(whichIconUserChoose);
+  }
+
+  Color getColorTextBtn() {
+    if (!isDragging) {
+      //if button is liked and user choose other reaction icon set isLiked to false
+      if (isLiked && whichIconUserChoose != 1) {
+        isLiked = !isLiked;
+      }
+      return UtilsFeatured.colorTextReactionButton(whichIconUserChoose);
+    } else {
+      return colorButtonPost;
+    }
+  }
+
+  String getImageIconBtn() {
+    if (!isDragging) {
+      if (isLiked && whichIconUserChoose != 1) {
+        isLiked = !isLiked;
+      }
+      return Utils.getPathIconReactionIndex(whichIconUserChoose);
+    }
+    return ic_thumb_up2;
+  }
+
+  Color? getTintColorIconBtn() {
+    if (whichIconUserChoose == 1) {
+      return Color(0xff558AFE);
+    } else if (!isDragging && whichIconUserChoose != 0) {
+      return null;
+    } else {
+      return colorButtonPost;
+    }
+  }
+
+  void onHorizontalDragEndBoxIcon(DragEndDetails dragEndDetail) {
+    isDragging = false;
+    isDraggingOutside = false;
+    isJustDragInside = true;
+    previousIconFocus = 0;
+    currentIconFocus = 0;
+
+    onTapUpBtn(null);
+  }
+
+  void onHorizontalDragUpdateBoxIcon(DragUpdateDetails dragUpdateDetail) {
+    // return if the drag is drag without press button
+    if (!isLongPress) return;
+
+    // the margin top the box is 150
+    // and plus the height of toolbar and the status bar
+    // so the range we check is about 200 -> 500
+
+    if (dragUpdateDetail.globalPosition.dy >= 200 &&
+        dragUpdateDetail.globalPosition.dy <=
+            MediaQuery.of(context).size.height * 0.9) {
+      isDragging = true;
+      isDraggingOutside = false;
+
+      if (isJustDragInside && !animControlIconWhenDragInside.isAnimating) {
+        animControlIconWhenDragInside.reset();
+        animControlIconWhenDragInside.forward();
+      }
+
+      if (dragUpdateDetail.globalPosition.dx >= 20 &&
+          dragUpdateDetail.globalPosition.dx < 83) {
+        if (currentIconFocus != 1) {
+          handleWhenDragBetweenIcon(1);
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 83 &&
+          dragUpdateDetail.globalPosition.dx < 126) {
+        if (currentIconFocus != 2) {
+          handleWhenDragBetweenIcon(2);
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 126 &&
+          dragUpdateDetail.globalPosition.dx < 180) {
+        if (currentIconFocus != 3) {
+          handleWhenDragBetweenIcon(3);
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 180 &&
+          dragUpdateDetail.globalPosition.dx < 233) {
+        if (currentIconFocus != 4) {
+          handleWhenDragBetweenIcon(4);
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 233 &&
+          dragUpdateDetail.globalPosition.dx < 286) {
+        if (currentIconFocus != 5) {
+          handleWhenDragBetweenIcon(5);
+        }
+      } else if (dragUpdateDetail.globalPosition.dx >= 286 &&
+          dragUpdateDetail.globalPosition.dx < 340) {
+        if (currentIconFocus != 6) {
+          handleWhenDragBetweenIcon(6);
+        }
+      }
+    } else {
+      whichIconUserChoose = 0;
+      previousIconFocus = 0;
+      currentIconFocus = 0;
+      isJustDragInside = true;
+
+      if (isDragging && !isDraggingOutside) {
+        isDragging = false;
+        isDraggingOutside = true;
+        animControlIconWhenDragOutside.reset();
+        animControlIconWhenDragOutside.forward();
+        animControlBoxWhenDragOutside.reset();
+        animControlBoxWhenDragOutside.forward();
+      }
+    }
+  }
+
+  void handleWhenDragBetweenIcon(int currentIcon) {
+    PlayAudio.playSound('icon_focus.mp3');
+    whichIconUserChoose = currentIcon;
+    previousIconFocus = currentIconFocus;
+    currentIconFocus = currentIcon;
+    animControlIconWhenDrag.reset();
+    animControlIconWhenDrag.forward();
+  }
+
+  void onTapDownBtn(TapDownDetails tapDownDetail) {
+    displayed = true;
+    holdTimer = Timer(durationLongPress, showBox);
+  }
+
+  void onTapUpBtn(TapUpDetails? tapUpDetail) {
+    if (isLongPress) {
+      if (whichIconUserChoose == 0) {
+        PlayAudio.playSound('box_down.mp3');
+        //numberOfReaction--;
+        if (previousWhichIconUserChoose == 0) {
+          //numberOfReaction++;
+          return;
+        }
+        //listReactionIcons.removeAt(0);
+        previousWhichIconUserChoose = whichIconUserChoose;
+      } else {
+        PlayAudio.playSound('icon_choose.mp3');
+        if (previousWhichIconUserChoose == 0) {
+          //numberOfReaction++;
+          previousWhichIconUserChoose = whichIconUserChoose;
+          //listReactionIcons.insert(
+              //0, Utils.getTextReaction(whichIconUserChoose));
+        } else {
+          //listReactionIcons.removeAt(0);
+          //listReactionIcons.insert(
+            //  0, Utils.getTextReaction(whichIconUserChoose));
+        }
+      }
+      displayed = false;
+      Timer(Duration(milliseconds: durationAnimationBox), () {
+        isLongPress = false;
+      });
+
+      holdTimer.cancel();
+
+      animControlBtnLongPress.reverse();
+
+      setReverseValue();
+      animControlBox.reverse();
+
+      animControlIconWhenRelease.reset();
+      animControlIconWhenRelease.forward();
+    }
+  }
+
+  void showBox() {
+    PlayAudio.playSound('box_up.mp3');
+    isLongPress = true;
+
+    animControlBtnLongPress.forward();
+
+    setForwardValue();
+    animControlBox.forward();
+  }
+
+  // We need to set the value for reverse because if not
+  // the angry-icon will be pulled down first, not the like-icon
+  void setReverseValue() {
+    // Icons
+    pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+    );
+    zoomIconLike = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+    );
+
+    pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+    );
+    zoomIconLove = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+    );
+
+    pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+    );
+    zoomIconHaha = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+    );
+
+    pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+    );
+    zoomIconWow = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+    );
+
+    pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+    );
+    zoomIconSad = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+    );
+
+    pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+    );
+    zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+    );
+  }
+
+  // When set the reverse value, we need set value to normal for the forward
+  void setForwardValue() {
+    // Icons
+    pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+    );
+    zoomIconLike = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+    );
+
+    pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+    );
+    zoomIconLove = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+    );
+
+    pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+    );
+    zoomIconHaha = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+    );
+
+    pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+    );
+    zoomIconWow = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+    );
+
+    pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+    );
+    zoomIconSad = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+    );
+
+    pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+    );
+    zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+    );
+  }
 }
