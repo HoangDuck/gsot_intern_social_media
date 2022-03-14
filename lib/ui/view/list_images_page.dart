@@ -100,6 +100,21 @@ class _ListImagePageState extends State<ListImagePage> {
           if (i == 0) {
             return PageHeader();
           }
+          else if(i==listImagePaths.length){
+            return Column(
+              children: [
+                ItemListImage(
+                  pathImage: listImagePaths[i - 1],
+                ),
+                Container(
+                  padding: EdgeInsets.all(30),
+                  child: CircularProgressIndicator(
+                    color: only_color,
+                  ),
+                ),
+              ],
+            );
+          }
           return ItemListImage(
             pathImage: listImagePaths[i - 1],
           );
@@ -212,24 +227,26 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "widget.data.user!.name.toString()",
-                                style: textSize20,
-                              ),
-                              Text(
-                                "widget.data.user!.nickname.toString()",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Color(0xff92929A),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "widget.data.user!.name.toString()",
+                                  style: textSize20,
                                 ),
-                              )
-                            ],
+                                Text(
+                                  "widget.data.user!.nickname.toString()",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Color(0xff92929A),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -337,11 +354,8 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
             Column(
               children: listCommentWidgetLoad(),
             ),
-            //loadMoreComment(),
-            Container(
-              padding: EdgeInsets.only(top: 30),
-              child: dottedLine(context),
-            ),
+            loadMoreComment(),
+            dottedLine(context),
           ],
         ),
       ),
@@ -671,7 +685,6 @@ class _ItemListImageState extends State<ItemListImage>
                         ),
                       ),
                     ),
-                    dottedLine(context),
                   ],
                 ),
                 Positioned(
@@ -701,6 +714,16 @@ class _ItemListImageState extends State<ItemListImage>
                 ),
               ],
             ),
+            // SizeTransition(
+            //   axisAlignment: 1.0,
+            //   sizeFactor: expandCollapseAnimation.animation,
+            //   child: TextFormComment(),
+            // ),
+            Column(
+              children: listCommentWidgetLoad(),
+            ),
+            loadMoreComment(),
+            dottedLine(context),
           ],
         ),
       ),
