@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media/ui/view/list_images_page.dart';
 import 'package:social_media/ui/widget/comment_to_post_widget.dart';
 import 'package:social_media/ui/widget/post_widget.dart';
 import 'package:path/path.dart';
@@ -27,7 +28,26 @@ class _TextFormCommentState extends State<TextFormComment> {
 
   @override
   Widget build(BuildContext context) {
-    var stateOfCurrentPost = Provider.of<PostWidgetState>(context);
+    var stateOfCurrentPost;
+    try{
+      stateOfCurrentPost = Provider.of<PostWidgetState>(context);
+    }catch(e){
+      //print(e.toString());
+    }
+    finally{
+      try{
+        stateOfCurrentPost = Provider.of<PageHeaderState>(context);
+      }catch(e){
+        //print(e.toString());
+      }
+      finally{
+        try{
+          stateOfCurrentPost=Provider.of<ItemListImage>(context);
+        }catch(e){
+          //print(e.toString());
+        }
+      }
+    }
     var stateOfCurrentComment;
     try {
       stateOfCurrentComment = Provider.of<CommentToPostWidgetState>(context);

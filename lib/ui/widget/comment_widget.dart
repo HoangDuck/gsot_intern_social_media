@@ -11,9 +11,9 @@ import 'package:social_media/ui/widget/show_full_image_widget.dart';
 import 'package:social_media/ui/widget/textform_comment.dart';
 
 class Comment extends StatefulWidget {
-  dynamic contentOfComment;
+  final dynamic contentOfComment;
 
-  Comment({Key? key, required this.contentOfComment}) : super(key: key);
+  const Comment({Key? key, required this.contentOfComment}) : super(key: key);
 
   @override
   State<Comment> createState() => _CommentState();
@@ -161,9 +161,9 @@ class _CommentState extends State<Comment> with TickerProviderStateMixin {
 }
 
 class CardComment extends StatelessWidget {
-  dynamic contentOfComment;
+  final dynamic contentOfComment;
 
-  CardComment({Key? key, required this.contentOfComment}) : super(key: key);
+  const CardComment({Key? key, required this.contentOfComment}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

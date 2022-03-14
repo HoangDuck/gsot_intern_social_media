@@ -195,172 +195,175 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                          ),
-                          child: SizedBox(
-                            height: 55,
-                            width: 55,
-                            child: CircleAvatar(
-                              radius: 30.0,
-                              backgroundImage: NetworkImage(
-                                "https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK",
-                              ),
-                              backgroundColor: Colors.transparent,
+    return Provider.value(
+      value:this,
+      child: GestureDetector(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(
+                              left: 10,
+                              right: 10,
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "widget.data.user!.name.toString()",
-                                  style: textSize20,
+                            child: SizedBox(
+                              height: 55,
+                              width: 55,
+                              child: CircleAvatar(
+                                radius: 30.0,
+                                backgroundImage: NetworkImage(
+                                  "https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK",
                                 ),
-                                Text(
-                                  "widget.data.user!.nickname.toString()",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xff92929A),
-                                  ),
-                                )
-                              ],
+                                backgroundColor: Colors.transparent,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        "widget.data.content.toString()",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xff92929A),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "widget.data.user!.name.toString()",
+                                    style: textSize20,
+                                  ),
+                                  Text(
+                                    "widget.data.user!.nickname.toString()",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Color(0xff92929A),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          "widget.data.content.toString()",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Color(0xff92929A),
+                          ),
                         ),
                       ),
-                    ),
-                    dottedLine(context),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ReactionStatisticWidget(
-                            listOfReactionsIcon: listReactionIcons,
-                            numberReaction: numberOfReaction,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              LineIcons.commentDots,
-                              color: colorButtonPost,
+                      dottedLine(context),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ReactionStatisticWidget(
+                              listOfReactionsIcon: listReactionIcons,
+                              numberReaction: numberOfReaction,
                             ),
-                            Text(
-                              "${Utils.formatNumberReaction(numberOfComment)} Comments",
-                              style: TextStyle(
-                                color: colorButtonPost,
-                              ),
-                            )
-                          ],
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Row(
+                          ),
+                          Row(
                             children: [
                               Icon(
-                                LineIcons.shareSquare,
+                                LineIcons.commentDots,
                                 color: colorButtonPost,
                               ),
                               Text(
-                                "${Utils.formatNumberReaction(numberOfSharing)} Shares",
+                                "${Utils.formatNumberReaction(numberOfComment)} Comments",
                                 style: TextStyle(
                                   color: colorButtonPost,
                                 ),
                               )
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                        height: 50.0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            likeButton(),
-                            commentButton(),
-                            shareButton(),
-                          ],
+                          Container(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  LineIcons.shareSquare,
+                                  color: colorButtonPost,
+                                ),
+                                Text(
+                                  "${Utils.formatNumberReaction(numberOfSharing)} Shares",
+                                  style: TextStyle(
+                                    color: colorButtonPost,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: SizedBox(
+                          height: 50.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              likeButton(),
+                              commentButton(),
+                              shareButton(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: -60,
-                  child: Stack(
-                    children: <Widget>[
-                      reactionAnimation.displayed
-                          ? Positioned(
-                              left: 0,
-                              right: 0,
-                              top: -40,
-                              bottom: -40,
-                              child: GestureDetector(
-                                onTap: reactionAnimation.outTapReactionBox,
-                              ),
-                            )
-                          : Container(),
-                      // Box
-                      reactionAnimation.renderBox(),
-                      // Icons
-                      reactionAnimation.renderIcons(),
                     ],
-                    alignment: Alignment.bottomLeft,
                   ),
-                ),
-              ],
-            ),
-            // SizeTransition(
-            //   axisAlignment: 1.0,
-            //   sizeFactor: expandCollapseAnimation.animation,
-            //   child: TextFormComment(),
-            // ),
-            Column(
-              children: listCommentWidgetLoad(),
-            ),
-            loadMoreComment(),
-            dottedLine(context),
-          ],
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: -60,
+                    child: Stack(
+                      children: <Widget>[
+                        reactionAnimation.displayed
+                            ? Positioned(
+                                left: 0,
+                                right: 0,
+                                top: -40,
+                                bottom: -40,
+                                child: GestureDetector(
+                                  onTap: reactionAnimation.outTapReactionBox,
+                                ),
+                              )
+                            : Container(),
+                        // Box
+                        reactionAnimation.renderBox(),
+                        // Icons
+                        reactionAnimation.renderIcons(),
+                      ],
+                      alignment: Alignment.bottomLeft,
+                    ),
+                  ),
+                ],
+              ),
+              SizeTransition(
+                axisAlignment: 1.0,
+                sizeFactor: expandCollapseAnimation.animation,
+                child: TextFormComment(),
+              ),
+              Column(
+                children: listCommentWidgetLoad(),
+              ),
+              loadMoreComment(),
+              dottedLine(context),
+            ],
+          ),
         ),
+        onHorizontalDragEnd: reactionAnimation.onHorizontalDragEndBoxIcon,
+        onHorizontalDragUpdate: reactionAnimation.onHorizontalDragUpdateBoxIcon,
       ),
-      onHorizontalDragEnd: reactionAnimation.onHorizontalDragEndBoxIcon,
-      onHorizontalDragUpdate: reactionAnimation.onHorizontalDragUpdateBoxIcon,
     );
   }
 
@@ -547,15 +550,15 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
 }
 
 class ItemListImage extends StatefulWidget {
-  String pathImage;
+  final String pathImage;
 
-  ItemListImage({Key? key, required this.pathImage}) : super(key: key);
+  const ItemListImage({Key? key, required this.pathImage}) : super(key: key);
 
   @override
-  _ItemListImageState createState() => _ItemListImageState();
+  ItemListImageState createState() => ItemListImageState();
 }
 
-class _ItemListImageState extends State<ItemListImage>
+class ItemListImageState extends State<ItemListImage>
     with TickerProviderStateMixin {
   //list reaction icon of this post
   List<String> listReactionIcons = [];
@@ -619,116 +622,119 @@ class _ItemListImageState extends State<ItemListImage>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    showImageWidget(context, widget.pathImage),
-                    dottedLine(context),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ReactionStatisticWidget(
-                            listOfReactionsIcon: listReactionIcons,
-                            numberReaction: numberOfReaction,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              LineIcons.commentDots,
-                              color: colorButtonPost,
+    return Provider.value(
+      value: this,
+      child: GestureDetector(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      showImageWidget(context, widget.pathImage),
+                      dottedLine(context),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ReactionStatisticWidget(
+                              listOfReactionsIcon: listReactionIcons,
+                              numberReaction: numberOfReaction,
                             ),
-                            Text(
-                              "${Utils.formatNumberReaction(numberOfComment)} Comments",
-                              style: TextStyle(
-                                color: colorButtonPost,
-                              ),
-                            )
-                          ],
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Row(
+                          ),
+                          Row(
                             children: [
                               Icon(
-                                LineIcons.shareSquare,
+                                LineIcons.commentDots,
                                 color: colorButtonPost,
                               ),
                               Text(
-                                "${Utils.formatNumberReaction(numberOfSharing)} Shares",
+                                "${Utils.formatNumberReaction(numberOfComment)} Comments",
                                 style: TextStyle(
                                   color: colorButtonPost,
                                 ),
                               )
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: SizedBox(
-                        height: 50.0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            likeButton(),
-                            commentButton(),
-                            shareButton(),
-                          ],
+                          Container(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  LineIcons.shareSquare,
+                                  color: colorButtonPost,
+                                ),
+                                Text(
+                                  "${Utils.formatNumberReaction(numberOfSharing)} Shares",
+                                  style: TextStyle(
+                                    color: colorButtonPost,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: SizedBox(
+                          height: 50.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              likeButton(),
+                              commentButton(),
+                              shareButton(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: -60,
-                  child: Stack(
-                    children: <Widget>[
-                      reactionAnimation.displayed
-                          ? Positioned(
-                              left: 0,
-                              right: 0,
-                              top: -40,
-                              bottom: -40,
-                              child: GestureDetector(
-                                onTap: reactionAnimation.outTapReactionBox,
-                              ),
-                            )
-                          : Container(),
-                      // Box
-                      reactionAnimation.renderBox(),
-                      // Icons
-                      reactionAnimation.renderIcons(),
                     ],
-                    alignment: Alignment.bottomLeft,
                   ),
-                ),
-              ],
-            ),
-            // SizeTransition(
-            //   axisAlignment: 1.0,
-            //   sizeFactor: expandCollapseAnimation.animation,
-            //   child: TextFormComment(),
-            // ),
-            Column(
-              children: listCommentWidgetLoad(),
-            ),
-            loadMoreComment(),
-            dottedLine(context),
-          ],
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: -60,
+                    child: Stack(
+                      children: <Widget>[
+                        reactionAnimation.displayed
+                            ? Positioned(
+                                left: 0,
+                                right: 0,
+                                top: -40,
+                                bottom: -40,
+                                child: GestureDetector(
+                                  onTap: reactionAnimation.outTapReactionBox,
+                                ),
+                              )
+                            : Container(),
+                        // Box
+                        reactionAnimation.renderBox(),
+                        // Icons
+                        reactionAnimation.renderIcons(),
+                      ],
+                      alignment: Alignment.bottomLeft,
+                    ),
+                  ),
+                ],
+              ),
+              SizeTransition(
+                axisAlignment: 1.0,
+                sizeFactor: expandCollapseAnimation.animation,
+                child: TextFormComment(),
+              ),
+              Column(
+                children: listCommentWidgetLoad(),
+              ),
+              loadMoreComment(),
+              dottedLine(context),
+            ],
+          ),
         ),
+        onHorizontalDragEnd: reactionAnimation.onHorizontalDragEndBoxIcon,
+        onHorizontalDragUpdate: reactionAnimation.onHorizontalDragUpdateBoxIcon,
       ),
-      onHorizontalDragEnd: reactionAnimation.onHorizontalDragEndBoxIcon,
-      onHorizontalDragUpdate: reactionAnimation.onHorizontalDragUpdateBoxIcon,
     );
   }
 
