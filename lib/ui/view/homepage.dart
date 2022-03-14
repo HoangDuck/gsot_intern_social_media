@@ -165,5 +165,4 @@ class _ListPostsState extends State<ListPosts> {
       ),
     );
   }
-
 }

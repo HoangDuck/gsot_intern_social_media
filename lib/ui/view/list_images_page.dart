@@ -24,16 +24,6 @@ class ListImagePage extends StatefulWidget {
 }
 
 class _ListImagePageState extends State<ListImagePage> {
-  //number of comments
-  int numberOfComment = 0;
-
-  //list reaction icon of this post
-  List<String> listReactionIcons = [];
-  int numberOfReaction = 0;
-
-  //number of sharing
-  int numberOfSharing = 0;
-
   //Scroll controller
   late ScrollController listImagesController;
 
@@ -79,14 +69,6 @@ class _ListImagePageState extends State<ListImagePage> {
       "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80",
       "http://www.androidcoding.in/wp-content/uploads/flutter_image_slider-1024x1024.png",
     ]);
-    //fetch number of sharing
-    numberOfSharing = 0;
-    //fetch number of reactions
-    numberOfReaction = 0;
-    //fetch number of sharing post
-    numberOfSharing = 0;
-    //fetch list reaction icons
-    listReactionIcons.addAll([]);
   }
 
   @override
@@ -99,8 +81,7 @@ class _ListImagePageState extends State<ListImagePage> {
         itemBuilder: (context, i) {
           if (i == 0) {
             return PageHeader();
-          }
-          else if(i==listImagePaths.length){
+          } else if (i == listImagePaths.length) {
             return Column(
               children: [
                 ItemListImage(
@@ -132,6 +113,12 @@ class PageHeader extends StatefulWidget {
 }
 
 class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
+  //current user
+  dynamic currentUser;
+
+  //current post
+  dynamic currentPost;
+
   //list reaction icon of this post
   List<String> listReactionIcons = [];
   int numberOfReaction = 0;
@@ -155,6 +142,17 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //get current user
+    currentUser = {
+      'image':
+          "https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK",
+      'name': 'Hoàng Đức',
+      'nickname': 'duckute',
+    };
+    //get current post
+    currentPost = {
+      'content': 'Hello world',
+    };
     //fetch number of comment
     numberOfComment = 0;
     //fetch list and number of reactions
@@ -196,7 +194,7 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Provider.value(
-      value:this,
+      value: this,
       child: GestureDetector(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -223,7 +221,7 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
                               child: CircleAvatar(
                                 radius: 30.0,
                                 backgroundImage: NetworkImage(
-                                  "https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK",
+                                  currentUser['image'],
                                 ),
                                 backgroundColor: Colors.transparent,
                               ),
@@ -235,13 +233,13 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
-                                    "widget.data.user!.name.toString()",
+                                    currentUser['name'],
                                     style: textSize20,
                                   ),
                                   Text(
-                                    "widget.data.user!.nickname.toString()",
+                                    currentUser['nickname'],
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Color(0xff92929A),
@@ -254,10 +252,10 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
                         ],
                       ),
                       Container(
-                        padding: const EdgeInsets.all(15),
+                        padding: EdgeInsets.all(15),
                         child: Text(
-                          "widget.data.content.toString()",
-                          style: const TextStyle(
+                          currentPost['content'],
+                          style: TextStyle(
                             fontSize: 20,
                             color: Color(0xff92929A),
                           ),

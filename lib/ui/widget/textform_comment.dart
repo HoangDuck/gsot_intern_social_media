@@ -18,7 +18,14 @@ class TextFormComment extends StatefulWidget {
 }
 
 class _TextFormCommentState extends State<TextFormComment> {
+  //edit text controller
   late TextEditingController textCommentEditingController;
+  //state Object of post widget/list Image item widget
+  late dynamic stateOfCurrentPost;
+  //state Object of current comment to post/
+  //header page of post in list image item/
+  //list item image widget
+  late dynamic stateOfCurrentComment;
   final ImagePicker _picker = ImagePicker();
   XFile? _imageFilePicker;
 
@@ -27,33 +34,14 @@ class _TextFormCommentState extends State<TextFormComment> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    textCommentEditingController = TextEditingController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var stateOfCurrentPost;
-    try{
-      stateOfCurrentPost = Provider.of<PostWidgetState>(context);
-    }catch(e){
-      //print(e.toString());
-    }
-    finally{
-      try{
-        stateOfCurrentPost = Provider.of<PageHeaderState>(context);
-      }catch(e){
-        //print(e.toString());
-      }
-      finally{
-        try{
-          stateOfCurrentPost=Provider.of<ItemListImage>(context);
-        }catch(e){
-          //print(e.toString());
-        }
-      }
-    }
-    var stateOfCurrentComment;
-    try {
-      stateOfCurrentComment = Provider.of<CommentToPostWidgetState>(context);
-    } catch (e) {
-      //print(e.toString());
-    }
+    initStateVariable(context);
     return Column(
       children: [
         Container(
@@ -84,58 +72,15 @@ class _TextFormCommentState extends State<TextFormComment> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      setState(
-                        () {
-                          _onImageButtonPressed(
-                            ImageSource.gallery,
-                            context: context,
-                          );
-                        },
+                      _onImageButtonPressed(
+                        ImageSource.gallery,
+                        context: context,
                       );
                     },
                     icon: Icon(Icons.image),
                   ),
                   IconButton(
-                    onPressed: () async {
-                      String pathImage,content;
-                      content=textCommentEditingController.text;
-                      try{
-                        File file=File(_imageFilePicker!.path);
-                        pathImage=await storeImageAndGetPath(file);
-                      }catch(e){
-                        pathImage="";
-                      }
-                      if(pathImage==""&&content==""){
-                        return;
-                      }else{
-                        XFile? file;
-                        _imageFilePicker=file;
-                        textCommentEditingController=TextEditingController();
-                      }
-                      setState(() {
-                        try {
-                          stateOfCurrentComment.addReply({
-                            'name': 'Hoang Duc',
-                            'time': '2h',
-                            'content': content,
-                            'image': pathImage
-                          });
-                          stateOfCurrentPost.setState(() {
-                            stateOfCurrentPost.numberOfRepliesPost++;
-                            stateOfCurrentPost.numberOfComment++;
-                          });
-                          return;
-                        } catch (e) {
-                          //print(e);
-                        }
-                        stateOfCurrentPost.addComment({
-                          'name': 'Hoang Duc',
-                          'time': '2h',
-                          'content': content,
-                          'image': pathImage
-                        });
-                      });
-                    },
+                    onPressed: _onTextFormButtonPressed,
                     icon: Icon(Icons.send),
                   ),
                 ],
@@ -147,10 +92,79 @@ class _TextFormCommentState extends State<TextFormComment> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    textCommentEditingController = TextEditingController();
+  // this method to get state of Object from their parents stateful widget
+  //receive state Object through Provider library
+  void initStateVariable(BuildContext context){
+    //stateOfCurrentPost variable can be state Object one of 3 widget below:
+    //+ Post widget
+    //+ header page widget in list image of post page
+    //+ Image item in list image of post page
+    //using try catch to assign them if two of them not exists
+    //stateOfCurrentPost variable will be set to last stateObject
+    try {
+      stateOfCurrentPost = Provider.of<PostWidgetState>(context);
+    } catch (e) {
+      //print(e.toString());
+    } finally {
+      try {
+        stateOfCurrentPost = Provider.of<PageHeaderState>(context);
+      } catch (e) {
+        //print(e.toString());
+      } finally {
+        try {
+          stateOfCurrentPost = Provider.of<ItemListImageState>(context);
+        } catch (e) {
+          //print(e.toString());
+        }
+      }
+    }
+    //init state variable of comment to post to add comment reply
+    try {
+      stateOfCurrentComment = Provider.of<CommentToPostWidgetState>(context);
+    } catch (e) {
+      //print(e.toString());
+    }
+  }
+
+  void _onTextFormButtonPressed() async {
+    String pathImage, content;
+    content = textCommentEditingController.text;
+    try {
+      File file = File(_imageFilePicker!.path);
+      pathImage = await storeImageAndGetPath(file);
+    } catch (e) {
+      pathImage = "";
+    }
+    if (pathImage == "" && content == "") {
+      return;
+    } else {
+      XFile? file;
+      _imageFilePicker = file;
+      textCommentEditingController = TextEditingController();
+    }
+    setState(() {
+      try {
+        stateOfCurrentComment.addReply({
+          'name': 'Hoang Duc',
+          'time': '2h',
+          'content': content,
+          'image': pathImage
+        });
+        stateOfCurrentPost.setState(() {
+          stateOfCurrentPost.numberOfRepliesPost++;
+          stateOfCurrentPost.numberOfComment++;
+        });
+        return;
+      } catch (e) {
+        //print(e);
+      }
+      stateOfCurrentPost.addComment({
+        'name': 'Hoang Duc',
+        'time': '2h',
+        'content': content,
+        'image': pathImage
+      });
+    });
   }
 
   void _onImageButtonPressed(ImageSource source,
@@ -163,9 +177,9 @@ class _TextFormCommentState extends State<TextFormComment> {
     );
   }
 
-  Future<String> storeImageAndGetPath(File file) async{
+  Future<String> storeImageAndGetPath(File file) async {
     final Directory directory = await getApplicationDocumentsDirectory();
-    String fileName=basename(file.path);
+    String fileName = basename(file.path);
     final File newImage = await file.copy('${directory.path}/$fileName');
     return newImage.path.toString();
   }
