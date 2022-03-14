@@ -666,9 +666,9 @@ class ReactionAnimation {
     // and plus the height of toolbar and the status bar
     // so the range we check is about 200 -> 500
 
-    if (dragUpdateDetail.globalPosition.dy >= 200 &&
+    if (dragUpdateDetail.globalPosition.dy >= 100 &&
         dragUpdateDetail.globalPosition.dy <=
-            MediaQuery.of(context).size.height * 0.9) {
+            MediaQuery.of(context).size.height*0.9) {
       isDragging = true;
       isDraggingOutside = false;
 
