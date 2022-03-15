@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/core/model/user.dart';
 import 'package:social_media/ui/constant/app_colors.dart';

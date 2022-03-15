@@ -147,7 +147,7 @@ class PageHeaderState extends State<PageHeader> with TickerProviderStateMixin {
       'image':
           "https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK",
       'name': 'Hoàng Đức',
-      'nickname': 'duckute',
+      'nickname': '@duckute',
     };
     //get current post
     currentPost = {
